@@ -1,1196 +1,773 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dadiamrit – Prakriti ka Sparsh</title>
-  <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Tiro+Devanagari+Hindi:ital@0;1&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
- 
-  <!-- Firebase config placeholder - add when hosting -->
-  <!-- To enable Firebase: replace this script with Firebase SDK and your config -->
-  <script>
-    // Orders stored locally for now - replace with Firebase when hosting
-    window.submitOrder = async function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.textContent = 'Order ho raha hai...';
- 
-      // Simulate short delay
-      await new Promise(r => setTimeout(r, 800));
- 
-      const orderData = {
-        naam: document.getElementById('naam').value,
-        phone: document.getElementById('phone').value,
-        address: document.getElementById('address').value,
-        city: document.getElementById('city').value,
-        pincode: document.getElementById('pincode').value,
-        product: document.getElementById('quantity').value,
-        payment: document.getElementById('payment').value,
-        timestamp: new Date().toISOString()
-      };
- 
-      // Save to localStorage as backup
-      const orders = JSON.parse(localStorage.getItem('dadiamrit_orders') || '[]');
-      orders.push(orderData);
-      localStorage.setItem('dadiamrit_orders', JSON.stringify(orders));
- 
-      btn.disabled = false;
-      btn.textContent = 'Abhi Order Karein';
-      showSuccess();
-    };
-  </script>
- 
-  <style>
-    :root {
-      --saffron: #E8710A;
-      --deep-green: #1A3A1A;
-      --gold: #C8960C;
-      --cream: #FDF6E3;
-      --brown: #5C3317;
-      --light-green: #4A7C3F;
-      --bg: #FFFBF0;
-    }
- 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
- 
-    html { scroll-behavior: smooth; }
- 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg);
-      color: var(--brown);
-      overflow-x: hidden;
-    }
- 
-    /* ===== NOISE TEXTURE OVERLAY ===== */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
-    }
- 
-    /* ===== NAV ===== */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(253,246,227,0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(200,150,12,0.2);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
- 
-    .nav-logo-wrap { display: flex; align-items: center; gap: 10px; }
-    .nav-brand { font-family: 'Yatra One', cursive; font-size: 1.3rem; color: var(--deep-green); line-height: 1.2; }
-    .nav-tagline { font-size: 0.68rem; color: var(--gold); font-weight: 500; letter-spacing: 0.5px; }
- 
-    .nav-links a {
-      color: var(--brown);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-left: 28px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--saffron); }
- 
-    /* ===== BOTTOM NAV ===== */
-    #bottom-nav {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 200;
-      background: white;
-      border-top: 1px solid rgba(200,150,12,0.15);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 8px 0 12px;
-      box-shadow: 0 -4px 20px rgba(92,51,23,0.08);
-    }
- 
-    .bnav-item {
-      display: flex; flex-direction: column; align-items: center; gap: 3px;
-      cursor: pointer; color: #aaa;
-      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
-      transition: color 0.2s; padding: 2px 12px;
-      border: none; background: none; font-family: 'Poppins', sans-serif;
-    }
-    .bnav-item svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .bnav-item.active { color: var(--deep-green); }
-    .bnav-item.active svg { stroke: var(--deep-green); }
-    .bnav-item .active-bar { width: 20px; height: 2.5px; background: var(--deep-green); border-radius: 2px; opacity: 0; transition: opacity 0.2s; }
-    .bnav-item.active .active-bar { opacity: 1; }
- 
-    .bnav-icon-wrap { position: relative; }
-    .cart-badge { position: absolute; top: -4px; right: -4px; background: var(--saffron); color: white; font-size: 0.6rem; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
- 
-    /* ===== PAGES ===== */
-    .page { display: none; }
-    .page.active { display: block; }
-    body { padding-bottom: 70px; }
- 
-    /* Profile Page */
-    #page-profile { min-height: 80vh; padding: 100px 20px 40px; background: #F5F0E8; }
-    .profile-avatar { width: 90px; height: 90px; background: rgba(26,58,26,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-    .profile-avatar svg { width: 44px; height: 44px; stroke: var(--deep-green); fill: none; stroke-width: 1.5; stroke-linecap: round; }
-    .profile-name { text-align: center; font-size: 1.3rem; font-weight: 700; color: var(--deep-green); margin-bottom: 4px; }
-    .profile-sub { text-align: center; font-size: 0.85rem; color: #999; margin-bottom: 32px; }
-    .menu-card { background: white; border-radius: 16px; margin-bottom: 14px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; border: 1px solid rgba(200,150,12,0.08); }
-    .menu-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(26,58,26,0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .menu-icon svg { width: 20px; height: 20px; stroke: var(--deep-green); fill: none; stroke-width: 1.8; stroke-linecap: round; }
-    .menu-text { flex: 1; }
-    .menu-title { font-weight: 700; font-size: 0.95rem; color: var(--deep-green); }
-    .menu-desc { font-size: 0.78rem; color: #999; margin-top: 2px; }
-    .menu-arrow { color: #ccc; font-size: 1.1rem; }
- 
-    /* Contact Page */
-    #page-contact { min-height: 80vh; padding: 100px 20px 40px; background: #F5F0E8; }
-    .contact-heading { font-size: 1.5rem; font-weight: 800; color: var(--deep-green); margin-bottom: 6px; }
-    .contact-sub { font-size: 0.88rem; color: #888; margin-bottom: 28px; }
- 
-    /* Settings Page */
-    #page-settings { min-height: 80vh; padding: 100px 20px 40px; background: #F5F0E8; }
-    .settings-heading { font-size: 1.5rem; font-weight: 800; color: var(--deep-green); margin-bottom: 24px; }
-    .setting-card { background: white; border-radius: 16px; margin-bottom: 14px; padding: 18px 20px; border: 1px solid rgba(200,150,12,0.08); }
-    .setting-row { display: flex; align-items: center; gap: 14px; }
-    .setting-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(200,150,12,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .setting-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; }
-    .setting-text { flex: 1; }
-    .setting-title { font-weight: 700; font-size: 0.95rem; color: var(--deep-green); }
-    .setting-desc { font-size: 0.78rem; color: #999; margin-top: 2px; }
-    .toggle { width: 48px; height: 26px; background: #ddd; border-radius: 13px; position: relative; cursor: pointer; transition: background 0.3s; border: none; flex-shrink: 0; }
-    .toggle.on { background: var(--deep-green); }
-    .toggle::after { content: ''; position: absolute; width: 20px; height: 20px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: left 0.3s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
-    .toggle.on::after { left: 25px; }
-    .lang-toggle { display: flex; gap: 8px; margin-top: 14px; }
-    .lang-btn { flex: 1; padding: 10px; border-radius: 10px; border: none; font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s; }
-    .lang-btn.active-lang { background: var(--deep-green); color: white; }
-    .lang-btn:not(.active-lang) { background: #eee; color: #666; }
-    .admin-icon-bg { background: rgba(232,113,10,0.1) !important; }
-    .admin-icon-bg svg { stroke: var(--saffron) !important; }
- 
-    /* Cart Page */
-    #page-cart { min-height: 80vh; padding: 100px 20px 40px; background: #F5F0E8; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .cart-empty { text-align: center; }
-    .cart-empty svg { width: 64px; height: 64px; stroke: #ccc; fill: none; stroke-width: 1.2; margin-bottom: 16px; }
-    .cart-empty p { font-size: 1rem; color: #aaa; margin-bottom: 20px; }
-    .cart-empty button { background: var(--deep-green); color: white; border: none; padding: 12px 28px; border-radius: 30px; font-size: 0.9rem; font-weight: 600; cursor: pointer; font-family: 'Poppins', sans-serif; }
- 
-    /* ===== HERO ===== */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 100px 40px 60px;
-      background:
-        radial-gradient(ellipse at 20% 50%, rgba(232,113,10,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(74,124,63,0.1) 0%, transparent 50%),
-        var(--bg);
-      overflow: hidden;
-    }
- 
-    /* Mandala background */
-    #hero::before {
-      content: '';
-      position: absolute;
-      right: -100px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 600px;
-      height: 600px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='90' fill='none' stroke='%23C8960C' stroke-width='0.5' opacity='0.15'/%3E%3Ccircle cx='100' cy='100' r='70' fill='none' stroke='%23C8960C' stroke-width='0.5' opacity='0.15'/%3E%3Ccircle cx='100' cy='100' r='50' fill='none' stroke='%23E8710A' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='100' cy='100' r='30' fill='none' stroke='%23E8710A' stroke-width='1' opacity='0.2'/%3E%3Cpath d='M100 10 L110 90 L190 100 L110 110 L100 190 L90 110 L10 100 L90 90 Z' fill='none' stroke='%23C8960C' stroke-width='0.5' opacity='0.15'/%3E%3Cpath d='M100 30 L107 93 L170 100 L107 107 L100 170 L93 107 L30 100 L93 93 Z' fill='none' stroke='%23E8710A' stroke-width='0.5' opacity='0.1'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-size: contain;
-      opacity: 0.5;
-      animation: rotateSlow 30s linear infinite;
-    }
- 
-    @keyframes rotateSlow { to { transform: translateY(-50%) rotate(360deg); } }
- 
-    .hero-content { max-width: 600px; animation: fadeUp 0.9s ease both; }
- 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
- 
-    .hero-tag {
-      display: inline-block;
-      background: rgba(232,113,10,0.12);
-      border: 1px solid var(--saffron);
-      color: var(--saffron);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 6px 16px;
-      border-radius: 30px;
-      margin-bottom: 20px;
-    }
- 
-    .hero-title {
-      font-family: 'Yatra One', cursive;
-      font-size: clamp(3rem, 6vw, 5rem);
-      color: var(--deep-green);
-      line-height: 1.1;
-      margin-bottom: 10px;
-    }
- 
-    .hero-title span { color: var(--saffron); }
- 
-    .hero-sub {
-      font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: 1.2rem;
-      color: var(--light-green);
-      margin-bottom: 24px;
-      font-style: italic;
-    }
- 
-    .hero-desc {
-      font-size: 0.95rem;
-      line-height: 1.8;
-      color: #5a4020;
-      margin-bottom: 36px;
-      max-width: 480px;
-    }
- 
-    .hero-cta {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--saffron), #c45c00);
-      color: white;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 16px 40px;
-      border-radius: 50px;
-      text-decoration: none;
-      letter-spacing: 0.5px;
-      box-shadow: 0 8px 30px rgba(232,113,10,0.35);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
- 
-    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(232,113,10,0.45); }
- 
-    .hero-stats {
-      display: flex;
-      gap: 40px;
-      margin-top: 48px;
-      animation: fadeUp 0.9s 0.3s ease both;
-    }
- 
-    .stat-item { text-align: center; }
-    .stat-num {
-      font-family: 'Yatra One', cursive;
-      font-size: 2rem;
-      color: var(--saffron);
-    }
-    .stat-label { font-size: 0.75rem; color: #8a6040; text-transform: uppercase; letter-spacing: 1px; }
- 
-    /* ===== DIVIDER ===== */
-    .divider {
-      text-align: center;
-      padding: 10px 0;
-      font-size: 1.5rem;
-      color: var(--gold);
-      letter-spacing: 12px;
-      opacity: 0.5;
-    }
- 
-    /* ===== SECTION BASE ===== */
-    section { padding: 80px 40px; max-width: 1100px; margin: 0 auto; }
- 
-    .section-heading {
-      font-family: 'Yatra One', cursive;
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--deep-green);
-      text-align: center;
-      margin-bottom: 8px;
-    }
- 
-    .section-sub {
-      text-align: center;
-      color: var(--saffron);
-      font-size: 0.85rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 50px;
-    }
- 
-    /* ===== PRODUCTS ===== */
-    #products { background: none; }
- 
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-    }
- 
-    .product-card {
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(200,150,12,0.15);
-      box-shadow: 0 4px 20px rgba(92,51,23,0.07);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
- 
-    .product-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(92,51,23,0.13); }
- 
-    .product-img {
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 5rem;
-      background: linear-gradient(135deg, #FFF8EC, #FEF0D0);
-      position: relative;
-    }
- 
-    .product-badge {
-      position: absolute;
-      top: 14px; right: 14px;
-      background: var(--saffron);
-      color: white;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 20px;
-    }
- 
-    .product-body { padding: 24px; }
- 
-    .product-name {
-      font-family: 'Yatra One', cursive;
-      font-size: 1.3rem;
-      color: var(--deep-green);
-      margin-bottom: 8px;
-    }
- 
-    .product-desc { font-size: 0.85rem; color: #7a5535; line-height: 1.6; margin-bottom: 16px; }
- 
-    .product-price {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--saffron);
-      margin-bottom: 4px;
-    }
- 
-    .product-mrp {
-      font-size: 0.8rem;
-      color: #aaa;
-      text-decoration: line-through;
-      margin-bottom: 16px;
-    }
- 
-    .order-btn {
-      width: 100%;
-      background: linear-gradient(135deg, var(--deep-green), var(--light-green));
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      letter-spacing: 0.5px;
-      transition: opacity 0.2s;
-    }
- 
-    .order-btn:hover { opacity: 0.88; }
- 
-    /* ===== ABOUT ===== */
-    #about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 80px 40px;
-    }
- 
-    .about-visual {
-      background: linear-gradient(135deg, #FFF8EC, #FEF0D0);
-      border-radius: 24px;
-      height: 420px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8rem;
-      border: 2px solid rgba(200,150,12,0.2);
-      position: relative;
-      overflow: hidden;
-    }
- 
-    .about-visual::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 30% 70%, rgba(232,113,10,0.08), transparent 60%);
-    }
- 
-    .about-content h2 {
-      font-family: 'Yatra One', cursive;
-      font-size: 2.2rem;
-      color: var(--deep-green);
-      margin-bottom: 8px;
-    }
- 
-    .about-content .gold-line {
-      width: 60px;
-      height: 3px;
-      background: var(--gold);
-      margin-bottom: 20px;
-      border-radius: 3px;
-    }
- 
-    .about-content p {
-      font-size: 0.95rem;
-      line-height: 1.9;
-      color: #5a4020;
-      margin-bottom: 16px;
-    }
- 
-    .herb-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
-    }
- 
-    .herb-tag {
-      background: rgba(74,124,63,0.1);
-      border: 1px solid rgba(74,124,63,0.3);
-      color: var(--light-green);
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 20px;
-    }
- 
-    /* ===== TESTIMONIALS ===== */
-    #testimonials { background: none; }
- 
-    .test-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
- 
-    .test-card {
-      background: white;
-      border-radius: 16px;
-      padding: 28px;
-      border: 1px solid rgba(200,150,12,0.15);
-      position: relative;
-    }
- 
-    .test-card::before {
-      content: '"';
-      position: absolute;
-      top: 16px; right: 20px;
-      font-family: 'Yatra One', cursive;
-      font-size: 4rem;
-      color: var(--gold);
-      opacity: 0.2;
-      line-height: 1;
-    }
- 
-    .stars { color: var(--gold); font-size: 1.1rem; margin-bottom: 12px; }
- 
-    .test-text { font-size: 0.9rem; line-height: 1.7; color: #5a4020; margin-bottom: 16px; font-style: italic; }
- 
-    .test-author { font-weight: 700; color: var(--deep-green); font-size: 0.85rem; }
-    .test-place { font-size: 0.75rem; color: #aaa; }
- 
-    /* ===== ORDER SECTION ===== */
-    #order {
-      background: linear-gradient(135deg, var(--deep-green) 0%, #0f2a0f 100%);
-      padding: 80px 40px;
-      position: relative;
-      overflow: hidden;
-    }
- 
-    #order::before {
-      content: '🌿';
-      position: absolute;
-      font-size: 20rem;
-      opacity: 0.04;
-      top: -40px;
-      right: -40px;
-      transform: rotate(20deg);
-    }
- 
-    .order-inner { max-width: 700px; margin: 0 auto; }
- 
-    #order .section-heading { color: var(--cream); }
-    #order .section-sub { color: var(--gold); }
- 
-    .order-form {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(200,150,12,0.25);
-      border-radius: 24px;
-      padding: 40px;
-      backdrop-filter: blur(10px);
-    }
- 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-    .form-group { margin-bottom: 0; }
- 
-    .form-group label {
-      display: block;
-      color: #c8b89a;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
- 
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(200,150,12,0.25);
-      color: var(--cream);
-      padding: 13px 16px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-family: 'Poppins', sans-serif;
-      outline: none;
-      transition: border-color 0.2s, background 0.2s;
-    }
- 
-    .form-group input::placeholder,
-    .form-group textarea::placeholder { color: rgba(253,246,227,0.35); }
- 
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--saffron);
-      background: rgba(255,255,255,0.1);
-    }
- 
-    .form-group select option { background: #1a3a1a; color: white; }
- 
-    .form-full { margin-bottom: 16px; }
- 
-    .price-display {
-      background: rgba(232,113,10,0.12);
-      border: 1px solid rgba(232,113,10,0.3);
-      border-radius: 12px;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
- 
-    .price-label { color: #c8b89a; font-size: 0.9rem; }
-    .price-total { font-size: 1.4rem; font-weight: 700; color: var(--saffron); font-family: 'Yatra One', cursive; }
- 
-    .submit-btn {
-      width: 100%;
-      background: linear-gradient(135deg, var(--saffron), #c45c00);
-      color: white;
-      border: none;
-      padding: 18px;
-      border-radius: 14px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.5px;
-      box-shadow: 0 8px 30px rgba(232,113,10,0.4);
-      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-    }
- 
-    .submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(232,113,10,0.5); }
-    .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
- 
-    /* ===== SUCCESS MODAL ===== */
-    #successModal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(10,30,10,0.75);
-      z-index: 999;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(6px);
-    }
- 
-    #successModal.show { display: flex; }
- 
-    .success-box {
-      background: var(--cream);
-      border-radius: 24px;
-      padding: 50px 40px;
-      text-align: center;
-      max-width: 420px;
-      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
-    }
- 
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.7); }
-      to   { opacity: 1; transform: scale(1); }
-    }
- 
-    .success-icon { font-size: 4rem; margin-bottom: 16px; }
- 
-    .success-box h3 {
-      font-family: 'Yatra One', cursive;
-      font-size: 1.8rem;
-      color: var(--deep-green);
-      margin-bottom: 10px;
-    }
- 
-    .success-box p { color: #5a4020; font-size: 0.95rem; line-height: 1.7; margin-bottom: 24px; }
- 
-    .close-modal {
-      background: var(--saffron);
-      color: white;
-      border: none;
-      padding: 14px 32px;
-      border-radius: 30px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
- 
-    /* ===== FOOTER ===== */
-    footer {
-      background: var(--deep-green);
-      color: #c8b89a;
-      text-align: center;
-      padding: 28px 40px;
-      font-size: 0.85rem;
-      border-top: 1px solid rgba(200,150,12,0.2);
-    }
- 
-    footer strong { color: var(--gold); font-family: 'Yatra One', cursive; }
- 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      nav { padding: 12px 20px; }
-      .nav-links { display: none; }
-      section, #order { padding: 60px 20px; }
-      #about { grid-template-columns: 1fr; gap: 30px; padding: 60px 20px; }
-      .about-visual { height: 220px; font-size: 5rem; }
-      .form-row { grid-template-columns: 1fr; }
-      .order-form { padding: 24px 18px; }
-      .hero-stats { gap: 24px; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DadiAmrit – Parampara se Rahat</title>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --green: #1A3A1A;
+  --lgreen: #4A7C3F;
+  --gold: #C8960C;
+  --saffron: #E8710A;
+  --cream: #F5F0E8;
+  --white: #ffffff;
+  --gray: #888;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Poppins',sans-serif; background:var(--cream); color:#333; padding-bottom:70px; }
+
+/* NAV */
+.topnav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(245,240,232,0.97);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(200,150,12,0.2);
+  padding:10px 16px;
+  display:flex; align-items:center; gap:10px;
+}
+.logo-svg { width:36px; height:36px; flex-shrink:0; }
+.logo-text { font-family:'Yatra One',cursive; font-size:1.25rem; color:var(--green); line-height:1.1; }
+.logo-sub { font-size:0.65rem; color:var(--gold); }
+
+/* PAGES */
+.page { display:none; }
+.page.active { display:block; }
+
+/* HOME */
+#page-home { padding-top:65px; }
+
+/* HERO BANNER */
+.hero {
+  background: linear-gradient(135deg, var(--green) 0%, #2d5a2d 100%);
+  padding: 28px 20px 32px;
+  position:relative; overflow:hidden;
+}
+.hero::after {
+  content:''; position:absolute; right:-30px; top:-30px;
+  width:180px; height:180px;
+  border-radius:50%;
+  background:rgba(200,150,12,0.1);
+}
+.hero-badge {
+  display:inline-block;
+  background:rgba(200,150,12,0.2);
+  border:1px solid var(--gold);
+  color:var(--gold);
+  font-size:0.7rem; font-weight:600;
+  padding:4px 12px; border-radius:20px;
+  margin-bottom:12px; letter-spacing:1px;
+}
+.hero h1 {
+  font-family:'Yatra One',cursive;
+  font-size:2.4rem; color:white; line-height:1.1;
+  margin-bottom:6px;
+}
+.hero h1 span { color:var(--gold); }
+.hero-tagline { color:rgba(255,255,255,0.75); font-size:0.9rem; margin-bottom:20px; }
+.hero-tags { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+.hero-tag {
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);
+  color:white; font-size:0.75rem; font-weight:600;
+  padding:5px 12px; border-radius:20px;
+}
+.hero-cta {
+  display:inline-block;
+  background:linear-gradient(135deg, var(--saffron), #c45c00);
+  color:white; font-weight:700; font-size:0.95rem;
+  padding:13px 28px; border-radius:30px;
+  text-decoration:none;
+  box-shadow:0 6px 20px rgba(232,113,10,0.4);
+}
+
+/* STATS */
+.stats-row {
+  display:flex; background:white;
+  border-bottom:1px solid rgba(200,150,12,0.12);
+}
+.stat-box {
+  flex:1; text-align:center; padding:14px 8px;
+  border-right:1px solid rgba(200,150,12,0.12);
+}
+.stat-box:last-child { border-right:none; }
+.stat-n { font-family:'Yatra One',cursive; font-size:1.4rem; color:var(--saffron); }
+.stat-l { font-size:0.65rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.5px; }
+
+/* SECTION TITLE */
+.sec-title {
+  font-family:'Yatra One',cursive;
+  font-size:1.4rem; color:var(--green);
+  padding:24px 16px 4px;
+}
+.sec-sub { font-size:0.78rem; color:var(--gray); padding:0 16px 16px; }
+
+/* PRODUCT CARDS */
+.products-list { padding:0 16px; display:flex; flex-direction:column; gap:14px; }
+
+.pcard {
+  background:white; border-radius:16px;
+  display:flex; gap:14px; padding:16px;
+  border:1px solid rgba(200,150,12,0.1);
+  box-shadow:0 2px 12px rgba(0,0,0,0.05);
+}
+.pcard-img {
+  width:80px; height:80px; border-radius:12px; flex-shrink:0;
+  background:linear-gradient(135deg, #FFF8EC, #FEF0D0);
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.2rem; position:relative;
+}
+.pbadge {
+  position:absolute; top:-6px; right:-6px;
+  background:var(--saffron); color:white;
+  font-size:0.58rem; font-weight:700;
+  padding:2px 7px; border-radius:10px;
+}
+.pcard-info { flex:1; }
+.pcard-name { font-weight:700; font-size:0.95rem; color:var(--green); margin-bottom:3px; }
+.pcard-desc { font-size:0.75rem; color:var(--gray); line-height:1.5; margin-bottom:8px; }
+.pcard-bottom { display:flex; align-items:center; justify-content:space-between; }
+.pcard-price { font-size:1.1rem; font-weight:700; color:var(--saffron); }
+.pcard-mrp { font-size:0.7rem; color:#bbb; text-decoration:line-through; margin-left:4px; }
+.stars { color:var(--gold); font-size:0.75rem; margin-bottom:4px; }
+.buy-btn {
+  background:var(--green); color:white;
+  border:none; padding:7px 16px;
+  border-radius:20px; font-size:0.78rem; font-weight:600;
+  cursor:pointer; font-family:'Poppins',sans-serif;
+}
+
+/* WHY US */
+.why-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:0 16px 24px; }
+.why-card {
+  background:white; border-radius:14px; padding:16px 14px;
+  border:1px solid rgba(200,150,12,0.1);
+  text-align:center;
+}
+.why-icon { font-size:1.8rem; margin-bottom:8px; }
+.why-title { font-weight:700; font-size:0.85rem; color:var(--green); margin-bottom:4px; }
+.why-desc { font-size:0.72rem; color:var(--gray); line-height:1.5; }
+
+/* TESTIMONIALS */
+.test-list { padding:0 16px 24px; display:flex; flex-direction:column; gap:12px; }
+.test-card {
+  background:white; border-radius:14px; padding:16px;
+  border:1px solid rgba(200,150,12,0.1);
+}
+.test-stars { color:var(--gold); font-size:0.85rem; margin-bottom:6px; }
+.test-text { font-size:0.82rem; color:#555; line-height:1.6; font-style:italic; margin-bottom:10px; }
+.test-name { font-weight:700; font-size:0.8rem; color:var(--green); }
+.test-place { font-size:0.72rem; color:var(--gray); }
+
+/* ABOUT */
+.about-box {
+  margin:0 16px 24px;
+  background:var(--green);
+  border-radius:16px; padding:22px 18px; color:white;
+}
+.about-box h3 { font-family:'Yatra One',cursive; font-size:1.3rem; margin-bottom:10px; color:var(--gold); }
+.about-box p { font-size:0.82rem; line-height:1.7; color:rgba(255,255,255,0.85); margin-bottom:12px; }
+.herb-chips { display:flex; flex-wrap:wrap; gap:7px; }
+.herb-chip {
+  background:rgba(200,150,12,0.2); border:1px solid rgba(200,150,12,0.4);
+  color:var(--gold); font-size:0.72rem; font-weight:600;
+  padding:4px 10px; border-radius:15px;
+}
+
+/* ORDER FORM */
+.order-section {
+  background:var(--green);
+  padding:28px 16px;
+}
+.order-section .sec-title { color:var(--gold); padding-left:0; }
+.order-section .sec-sub { color:rgba(255,255,255,0.6); padding-left:0; }
+
+.oform {
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(200,150,12,0.25);
+  border-radius:18px; padding:20px 16px;
+}
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+.fg { margin-bottom:12px; }
+.fg label {
+  display:block; color:rgba(255,255,255,0.65);
+  font-size:0.72rem; font-weight:600; letter-spacing:0.8px;
+  text-transform:uppercase; margin-bottom:6px;
+}
+.fg input, .fg select {
+  width:100%;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(200,150,12,0.25);
+  color:white; padding:11px 14px;
+  border-radius:10px; font-size:0.85rem;
+  font-family:'Poppins',sans-serif; outline:none;
+  transition:border-color 0.2s;
+}
+.fg input::placeholder { color:rgba(255,255,255,0.3); }
+.fg input:focus, .fg select:focus { border-color:var(--saffron); }
+.fg select option { background:#1A3A1A; color:white; }
+
+.price-box {
+  background:rgba(232,113,10,0.12);
+  border:1px solid rgba(232,113,10,0.3);
+  border-radius:10px; padding:13px 16px;
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:16px;
+}
+.price-box span { color:rgba(255,255,255,0.7); font-size:0.85rem; }
+.price-box strong { color:var(--saffron); font-size:1.3rem; font-family:'Yatra One',cursive; }
+
+.submit-btn {
+  width:100%;
+  background:linear-gradient(135deg, var(--saffron), #c45c00);
+  color:white; border:none; padding:15px;
+  border-radius:12px; font-size:1rem; font-weight:700;
+  cursor:pointer; font-family:'Poppins',sans-serif;
+  box-shadow:0 6px 20px rgba(232,113,10,0.35);
+  transition:opacity 0.2s;
+}
+.submit-btn:disabled { opacity:0.65; cursor:not-allowed; }
+
+/* PROFILE PAGE */
+#page-profile { padding-top:65px; min-height:90vh; background:var(--cream); }
+.profile-top { text-align:center; padding:30px 20px 20px; }
+.avatar {
+  width:80px; height:80px; border-radius:50%;
+  background:rgba(26,58,26,0.1);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 12px; font-size:2.5rem;
+}
+.pname { font-weight:700; font-size:1.2rem; color:var(--green); }
+.psub { font-size:0.8rem; color:var(--gray); }
+.menu-list { padding:0 16px; display:flex; flex-direction:column; gap:10px; margin-top:10px; }
+.mitem {
+  background:white; border-radius:14px; padding:16px;
+  display:flex; align-items:center; gap:14px;
+  border:1px solid rgba(200,150,12,0.08); cursor:pointer;
+}
+.micon {
+  width:40px; height:40px; border-radius:10px;
+  background:rgba(26,58,26,0.08);
+  display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0;
+}
+.mtitle { font-weight:700; font-size:0.9rem; color:var(--green); }
+.mdesc { font-size:0.75rem; color:var(--gray); }
+.marrow { margin-left:auto; color:#ccc; font-size:1.2rem; }
+
+/* CONTACT PAGE */
+#page-contact { padding-top:65px; min-height:90vh; background:var(--cream); }
+.page-header { padding:24px 16px 8px; }
+.page-header h2 { font-family:'Yatra One',cursive; font-size:1.5rem; color:var(--green); }
+.page-header p { font-size:0.82rem; color:var(--gray); margin-top:4px; }
+
+/* CART PAGE */
+#page-cart {
+  padding-top:65px; min-height:90vh;
+  background:var(--cream);
+  display:flex; align-items:center; justify-content:center;
+}
+.cart-empty { text-align:center; padding:20px; }
+.cart-empty .cart-icon { font-size:4rem; margin-bottom:12px; opacity:0.3; }
+.cart-empty p { color:var(--gray); font-size:0.95rem; margin-bottom:20px; }
+.cart-empty button {
+  background:var(--green); color:white;
+  border:none; padding:12px 28px;
+  border-radius:30px; font-size:0.9rem; font-weight:600;
+  cursor:pointer; font-family:'Poppins',sans-serif;
+}
+
+/* SETTINGS PAGE */
+#page-settings { padding-top:65px; min-height:90vh; background:var(--cream); }
+.scard {
+  background:white; border-radius:14px; margin:0 16px 12px;
+  padding:16px; border:1px solid rgba(200,150,12,0.08);
+}
+.srow { display:flex; align-items:center; gap:14px; }
+.sicon {
+  width:40px; height:40px; border-radius:10px;
+  background:rgba(200,150,12,0.1);
+  display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;
+}
+.stitle { font-weight:700; font-size:0.9rem; color:var(--green); flex:1; }
+.sdesc { font-size:0.75rem; color:var(--gray); }
+.toggle {
+  width:46px; height:25px; background:#ddd;
+  border-radius:13px; position:relative;
+  cursor:pointer; border:none; transition:background 0.3s;
+}
+.toggle.on { background:var(--green); }
+.toggle::after {
+  content:''; position:absolute;
+  width:19px; height:19px; background:white;
+  border-radius:50%; top:3px; left:3px;
+  transition:left 0.3s; box-shadow:0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle.on::after { left:24px; }
+.lang-btns { display:flex; gap:8px; margin-top:12px; }
+.lbtn {
+  flex:1; padding:9px; border-radius:9px; border:none;
+  font-family:'Poppins',sans-serif; font-size:0.88rem; font-weight:600; cursor:pointer;
+}
+.lbtn.act { background:var(--green); color:white; }
+.lbtn:not(.act) { background:#eee; color:#666; }
+
+/* BOTTOM NAV */
+.bnav {
+  position:fixed; bottom:0; left:0; right:0; z-index:200;
+  background:white; border-top:1px solid rgba(200,150,12,0.15);
+  display:flex; justify-content:space-around;
+  padding:8px 0 10px;
+  box-shadow:0 -3px 16px rgba(0,0,0,0.07);
+}
+.bitem {
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  background:none; border:none; cursor:pointer;
+  color:#bbb; font-size:0.6rem; font-weight:600;
+  text-transform:uppercase; letter-spacing:0.5px;
+  font-family:'Poppins',sans-serif; padding:2px 14px;
+  transition:color 0.2s;
+}
+.bitem.active { color:var(--green); }
+.bitem svg { width:22px; height:22px; }
+.bbar { width:18px; height:2.5px; background:var(--green); border-radius:2px; opacity:0; transition:opacity 0.2s; }
+.bitem.active .bbar { opacity:1; }
+
+/* SUCCESS MODAL */
+.modal-bg {
+  display:none; position:fixed; inset:0; z-index:999;
+  background:rgba(0,0,0,0.6); backdrop-filter:blur(4px);
+  align-items:center; justify-content:center;
+}
+.modal-bg.show { display:flex; }
+.modal-box {
+  background:white; border-radius:22px;
+  padding:36px 28px; text-align:center; max-width:320px; margin:20px;
+  animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes popIn { from{opacity:0;transform:scale(0.7)} to{opacity:1;transform:scale(1)} }
+.modal-box .micon { font-size:3.5rem; margin-bottom:12px; }
+.modal-box h3 { font-family:'Yatra One',cursive; font-size:1.5rem; color:var(--green); margin-bottom:8px; }
+.modal-box p { font-size:0.85rem; color:#666; line-height:1.6; margin-bottom:20px; }
+.modal-close {
+  background:var(--saffron); color:white; border:none;
+  padding:12px 28px; border-radius:25px; font-size:0.9rem;
+  font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif;
+}
+
+@media(max-width:380px) {
+  .frow { grid-template-columns:1fr; }
+  .why-grid { grid-template-columns:1fr; }
+}
+</style>
 </head>
 <body>
- 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo-wrap">
-    <svg width="38" height="38" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <!-- Oil drop -->
-      <path d="M50 10 C50 10 75 40 75 60 C75 74 63.8 85 50 85 C36.2 85 25 74 25 60 C25 40 50 10 50 10Z" fill="#C8960C"/>
-      <!-- Knee joint inside drop -->
-      <g transform="translate(50,55) scale(0.28)">
-        <rect x="-18" y="-30" width="36" height="18" rx="6" fill="white" opacity="0.9"/>
-        <rect x="-18" y="12" width="36" height="18" rx="6" fill="white" opacity="0.9"/>
-        <ellipse cx="0" cy="0" rx="14" ry="14" fill="white" opacity="0.85"/>
-        <ellipse cx="0" cy="0" rx="8" ry="8" fill="#C8960C" opacity="0.6"/>
-      </g>
-      <!-- Leaf branch -->
-      <g transform="translate(26,45)">
-        <path d="M0 20 Q-12 10 -8 -5 Q-4 -18 8 -20 Q2 -8 0 20Z" fill="#1A3A1A"/>
-        <path d="M0 14 Q-10 6 -7 -3 Q-3 -12 6 -14 Q1 -5 0 14Z" fill="#4A7C3F"/>
-        <path d="M0 8 Q-8 2 -5 -2 Q-2 -8 4 -8 Q0 -2 0 8Z" fill="#6aaa5a"/>
-        <line x1="0" y1="20" x2="0" y2="-20" stroke="#1A3A1A" stroke-width="1.5"/>
-      </g>
-    </svg>
-    <div>
-      <div class="nav-brand">DadiAmrit</div>
-      <div class="nav-tagline">Parampara se rahat</div>
-    </div>
-  </div>
-  <div class="nav-links">
-    <a href="#products">Products</a>
-    <a href="#about">Hamare Baare Mein</a>
-    <a href="#testimonials">Reviews</a>
-    <a href="#order">Order Karein</a>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 8 C50 8 76 40 76 61 C76 75 64.6 86 50 86 C35.4 86 24 75 24 61 C24 40 50 8 50 8Z" fill="#C8960C"/>
+    <g transform="translate(50,56) scale(0.27)">
+      <rect x="-18" y="-30" width="36" height="17" rx="5" fill="white" opacity="0.9"/>
+      <rect x="-18" y="13" width="36" height="17" rx="5" fill="white" opacity="0.9"/>
+      <ellipse cx="0" cy="0" rx="13" ry="13" fill="white" opacity="0.85"/>
+      <ellipse cx="0" cy="0" rx="7" ry="7" fill="#C8960C" opacity="0.5"/>
+    </g>
+    <g transform="translate(27,46)">
+      <line x1="0" y1="20" x2="0" y2="-18" stroke="#1A3A1A" stroke-width="1.8"/>
+      <path d="M0 16 Q-10 8 -7 -2 Q-3 -13 6 -15 Q1 -4 0 16Z" fill="#2d5a2d"/>
+      <path d="M0 8 Q-7 2 -5 -2 Q-1 -8 5 -8 Q0 -1 0 8Z" fill="#4A7C3F"/>
+    </g>
+  </svg>
+  <div>
+    <div class="logo-text">DadiAmrit</div>
+    <div class="logo-sub">Parampara se rahat</div>
   </div>
 </nav>
- 
-<!-- HOME PAGE -->
+
+<!-- ===== HOME PAGE ===== -->
 <div id="page-home" class="page active">
- 
-<!-- HERO -->
-<div id="hero">
-  <div class="hero-content">
-    <span class="hero-tag">🌿 100% Ayurvedic</span>
-    <h1 class="hero-title">Dadi<span>amrit</span></h1>
-    <p class="hero-sub">दादी की दुआ, प्रकृति का उपहार</p>
-    <p class="hero-desc">
-      Saalon ki takleef ab pal mein door. Hamara special body pain relief oil
-      pure Ayurvedic jadibutiyon se bana hai — bina kisi side effect ke.
-      Dard ko jadd se khatam karo.
-    </p>
-    <a href="#order" class="hero-cta">Abhi Order Karein – ₹299</a>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-num">50K+</div>
-        <div class="stat-label">Happy Customers</div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-badge">🌿 100% AYURVEDIC</span>
+    <h1>Dadi<span>Amrit</span></h1>
+    <p class="hero-tagline">Dadi ke nuskhe, har dard me rahat</p>
+    <div class="hero-tags">
+      <span class="hero-tag">✓ 100% Ayurvedic</span>
+      <span class="hero-tag">✓ Safe & Natural</span>
+    </div>
+    <a href="#order-sec" class="hero-cta">Abhi Order Karein ₹149</a>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-n">50K+</div><div class="stat-l">Customers</div></div>
+    <div class="stat-box"><div class="stat-n">100%</div><div class="stat-l">Natural</div></div>
+    <div class="stat-box"><div class="stat-n">15+</div><div class="stat-l">Herbs</div></div>
+    <div class="stat-box"><div class="stat-n">4.8⭐</div><div class="stat-l">Rating</div></div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="sec-title">Hamare Products</div>
+  <div class="sec-sub">Chunein apna ilaj</div>
+  <div class="products-list">
+
+    <div class="pcard">
+      <div class="pcard-img">🫙<span class="pbadge">BEST</span></div>
+      <div class="pcard-info">
+        <div class="stars">★★★★★</div>
+        <div class="pcard-name">DadiAmrit Pain Relief Oil</div>
+        <div class="pcard-desc">Traditional Ayurvedic formula for fast, natural pain relief. Pure herbal ingredients.</div>
+        <div class="pcard-bottom">
+          <div><span class="pcard-price">₹149</span><span class="pcard-mrp">₹299</span></div>
+          <button class="buy-btn" onclick="goOrder('pain')">Buy Now</button>
+        </div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">100%</div>
-        <div class="stat-label">Natural</div>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-img">🌿<span class="pbadge">NEW</span></div>
+      <div class="pcard-info">
+        <div class="stars">★★★★★</div>
+        <div class="pcard-name">DadiAmrit Herbal Hair Oil</div>
+        <div class="pcard-desc">Bhringraj, Amla & Coconut oil. Strengthens roots and promotes growth.</div>
+        <div class="pcard-bottom">
+          <div><span class="pcard-price">₹199</span><span class="pcard-mrp">₹399</span></div>
+          <button class="buy-btn" onclick="goOrder('hair')">Buy Now</button>
+        </div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">15+</div>
-        <div class="stat-label">Ayurvedic Herbs</div>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-img">🌸</div>
+      <div class="pcard-info">
+        <div class="stars">★★★★½</div>
+        <div class="pcard-name">DadiAmrit Ayurvedic Balm</div>
+        <div class="pcard-desc">Headaches, body aches, cold relief. Pocket-friendly and travel-ready.</div>
+        <div class="pcard-bottom">
+          <div><span class="pcard-price">₹99</span><span class="pcard-mrp">₹199</span></div>
+          <button class="buy-btn" onclick="goOrder('balm')">Buy Now</button>
+        </div>
       </div>
+    </div>
+
+  </div>
+
+  <!-- WHY US -->
+  <div class="sec-title" style="margin-top:24px;">Why DadiAmrit?</div>
+  <div class="sec-sub">Isliye log humpe bharosa karte hain</div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🌱</div>
+      <div class="why-title">100% Natural</div>
+      <div class="why-desc">Koi chemical nahi, pure jadibutiyan</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">⚡</div>
+      <div class="why-title">Fast Relief</div>
+      <div class="why-desc">20 minute mein asar dikhta hai</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🏅</div>
+      <div class="why-title">Tested & Safe</div>
+      <div class="why-desc">GMP certified facility mein bana</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🚚</div>
+      <div class="why-title">Free Delivery</div>
+      <div class="why-desc">₹499 se upar free delivery</div>
     </div>
   </div>
-</div>
- 
-<div class="divider">✦ ॐ ✦ ॐ ✦ ॐ ✦</div>
- 
-<!-- PRODUCTS -->
-<section id="products">
-  <p class="section-sub">Hamare Products</p>
-  <h2 class="section-heading">Chunein Apna Ilaj</h2>
- 
-  <div class="products-grid">
- 
-    <div class="product-card">
-      <div class="product-img">
-        🫙
-        <span class="product-badge">Best Seller</span>
-      </div>
-      <div class="product-body">
-        <div class="product-name">Dadiamrit Classic Oil</div>
-        <p class="product-desc">Ghutno ka dard, kamar dard, aur muscle pain ke liye. 15 Ayurvedic jadibutiyon ka tadka.</p>
-        <div class="product-price">₹299</div>
-        <div class="product-mrp">₹599 MRP</div>
-        <button class="order-btn" onclick="scrollToOrder('Classic Oil (50ml)')">Order Karein →</button>
-      </div>
-    </div>
- 
-    <div class="product-card">
-      <div class="product-img">
-        🌿
-        <span class="product-badge">New</span>
-      </div>
-      <div class="product-body">
-        <div class="product-name">Dadiamrit Power Pack</div>
-        <p class="product-desc">Double strength formula. Athletes aur heavy workers ke liye. Instant relief guaranteed.</p>
-        <div class="product-price">₹499</div>
-        <div class="product-mrp">₹999 MRP</div>
-        <button class="order-btn" onclick="scrollToOrder('Power Pack (100ml)')">Order Karein →</button>
-      </div>
-    </div>
- 
-    <div class="product-card">
-      <div class="product-img">
-        🌸
-      </div>
-      <div class="product-body">
-        <div class="product-name">Dadiamrit Family Pack</div>
-        <p class="product-desc">Poore parivar ke liye. 3 bottles ka combo. Bacche se budhape tak sab ke kaam ka.</p>
-        <div class="product-price">₹749</div>
-        <div class="product-mrp">₹1499 MRP</div>
-        <button class="order-btn" onclick="scrollToOrder('Family Pack (3 bottles)')">Order Karein →</button>
-      </div>
-    </div>
- 
-  </div>
-</section>
- 
-<div class="divider">✦ ✦ ✦</div>
- 
-<!-- ABOUT -->
-<div id="about">
-  <div class="about-visual">🌱</div>
-  <div class="about-content">
-    <h2>Hamare Baare Mein</h2>
-    <div class="gold-line"></div>
-    <p>
-      Dadiamrit ki kahani shuru hui ek dadi ki rasoi se — jahan generations se
-      dard ka ilaj Ayurvedic nuskhon se hota aaya hai. Humne us wirasaat ko
-      modern packaging mein laya hai.
-    </p>
-    <p>
-      Hamara har bottle GMP certified facility mein banta hai. Koi chemical
-      nahi, koi adulteration nahi — sirf seedhe khet se jadibutiyan.
-    </p>
-    <div class="herb-list">
-      <span class="herb-tag">🌿 Nirgundi</span>
-      <span class="herb-tag">🌱 Ashwagandha</span>
-      <span class="herb-tag">🍋 Mahanarayan Tel</span>
-      <span class="herb-tag">🌺 Kapoor</span>
-      <span class="herb-tag">🫚 Til Tel</span>
-      <span class="herb-tag">🌿 Ajwain</span>
+
+  <!-- ABOUT -->
+  <div class="sec-title" style="margin-top:8px;">Hamare Baare Mein</div>
+  <div class="about-box">
+    <h3>Dadi ki Parampara</h3>
+    <p>DadiAmrit ki kahani shuru hui ek dadi ki rasoi se — jahan generations se dard ka ilaj Ayurvedic nuskhon se hota aaya hai. Humne us wirasaat ko modern packaging mein laya hai.</p>
+    <p>Hamara har bottle GMP certified facility mein banta hai. Koi chemical nahi — sirf seedhe khet se jadibutiyan.</p>
+    <div class="herb-chips">
+      <span class="herb-chip">🌿 Nirgundi</span>
+      <span class="herb-chip">🌱 Ashwagandha</span>
+      <span class="herb-chip">🫚 Mahanarayan Tel</span>
+      <span class="herb-chip">🌺 Kapoor</span>
+      <span class="herb-chip">🌿 Ajwain</span>
+      <span class="herb-chip">🍃 Til Tel</span>
     </div>
   </div>
-</div>
- 
-<div class="divider">✦ ✦ ✦</div>
- 
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <p class="section-sub">Customer Reviews</p>
-  <h2 class="section-heading">Log Kya Kehte Hain</h2>
- 
-  <div class="test-grid">
- 
+
+  <!-- TESTIMONIALS -->
+  <div class="sec-title">Customer Reviews</div>
+  <div class="sec-sub">Log kya kehte hain</div>
+  <div class="test-list">
     <div class="test-card">
-      <div class="stars">★★★★★</div>
-      <p class="test-text">
-        "5 saal se ghutne ka dard tha. Doctor ne operation bola tha.
-        Dadiamrit use kiya 3 hafte — ab seedha chal sakta hoon.
-        Allah ka shukar hai."
-      </p>
-      <div class="test-author">Mohammad Rashid</div>
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"5 saal se ghutne ka dard tha. Dadiamrit use kiya 3 hafte — ab seedha chal sakta hoon."</p>
+      <div class="test-name">Mohammad Rashid</div>
       <div class="test-place">Lucknow, UP</div>
     </div>
- 
     <div class="test-card">
-      <div class="stars">★★★★★</div>
-      <p class="test-text">
-        "Office mein ghanton baithne se kamar dard ho gaya tha.
-        Yeh oil lagayi raat ko — subah fresh feel kiya.
-        Puri family use karti hai ab."
-      </p>
-      <div class="test-author">Sunita Devi</div>
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Office mein ghanton baithne se kamar dard tha. Yeh oil lagayi raat ko — subah fresh!"</p>
+      <div class="test-name">Sunita Devi</div>
       <div class="test-place">Kanpur, UP</div>
     </div>
- 
     <div class="test-card">
-      <div class="stars">★★★★☆</div>
-      <p class="test-text">
-        "Mujhe cricket ke baad shoulder pain hota tha.
-        Coaches ne recommend kiya. Genuine Ayurvedic smell
-        aur fast relief. 4 stars sirf isliye kyunki delivery
-        thodi slow thi."
-      </p>
-      <div class="test-author">Arjun Verma</div>
+      <div class="test-stars">★★★★☆</div>
+      <p class="test-text">"Cricket ke baad shoulder pain hota tha. Genuine Ayurvedic smell aur fast relief!"</p>
+      <div class="test-name">Arjun Verma</div>
       <div class="test-place">Varanasi, UP</div>
     </div>
- 
   </div>
-</section>
- 
-<!-- ORDER -->
-<div id="order">
-  <div class="order-inner">
-    <p class="section-sub">Order Karein</p>
-    <h2 class="section-heading">Ghar Baithke Mangwaao</h2>
- 
-    <form class="order-form" onsubmit="window.submitOrder(event)">
-      <div class="form-row">
-        <div class="form-group">
+
+  <!-- ORDER FORM -->
+  <div class="order-section" id="order-sec">
+    <div class="sec-title">Order Karein</div>
+    <div class="sec-sub">Ghar baithke mangwaao</div>
+
+    <form class="oform" onsubmit="placeOrder(event)">
+      <div class="frow">
+        <div class="fg">
           <label>Aapka Naam *</label>
-          <input type="text" id="naam" placeholder="Poora naam likhein" required />
+          <input type="text" id="naam" placeholder="Poora naam" required/>
         </div>
-        <div class="form-group">
-          <label>Phone Number *</label>
-          <input type="tel" id="phone" placeholder="10 digit number" required pattern="[0-9]{10}" />
+        <div class="fg">
+          <label>Phone *</label>
+          <input type="tel" id="phone" placeholder="10 digit" required pattern="[0-9]{10}"/>
         </div>
       </div>
- 
-      <div class="form-full form-group">
+      <div class="fg">
         <label>Delivery Address *</label>
-        <input type="text" id="address" placeholder="Ghar/mohalla/colony ka address" required />
+        <input type="text" id="address" placeholder="Ghar/mohalla/colony" required/>
       </div>
- 
-      <div class="form-row">
-        <div class="form-group">
-          <label>Sheher / Zila *</label>
-          <input type="text" id="city" placeholder="City ya district" required />
+      <div class="frow">
+        <div class="fg">
+          <label>Sheher *</label>
+          <input type="text" id="city" placeholder="City" required/>
         </div>
-        <div class="form-group">
+        <div class="fg">
           <label>PIN Code *</label>
-          <input type="text" id="pincode" placeholder="6 digit PIN" required pattern="[0-9]{6}" />
+          <input type="text" id="pincode" placeholder="6 digit" required pattern="[0-9]{6}"/>
         </div>
       </div>
- 
-      <div class="form-row">
-        <div class="form-group">
-          <label>Product & Quantity *</label>
-          <select id="quantity" required onchange="updatePrice()">
+      <div class="frow">
+        <div class="fg">
+          <label>Product *</label>
+          <select id="product" required onchange="calcPrice()">
             <option value="">Chunein...</option>
-            <option value="1">Classic Oil – ₹299</option>
-            <option value="2">Power Pack – ₹499</option>
-            <option value="3">Family Pack – ₹749</option>
+            <option value="pain_149">Pain Relief Oil – ₹149</option>
+            <option value="hair_199">Herbal Hair Oil – ₹199</option>
+            <option value="balm_99">Ayurvedic Balm – ₹99</option>
+            <option value="combo_399">Combo Pack (3) – ₹399</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Payment Method *</label>
+        <div class="fg">
+          <label>Payment *</label>
           <select id="payment" required>
             <option value="">Chunein...</option>
-            <option value="cod">Cash on Delivery (COD)</option>
-            <option value="upi">UPI / GPay / PhonePe</option>
+            <option value="cod">Cash on Delivery</option>
+            <option value="upi">UPI / GPay</option>
             <option value="netbanking">Net Banking</option>
           </select>
         </div>
       </div>
- 
-      <div class="price-display">
-        <span class="price-label">Aapka Total:</span>
-        <span class="price-total" id="priceTotal">—</span>
+
+      <div class="price-box">
+        <span>Total Amount:</span>
+        <strong id="totalAmt">—</strong>
       </div>
- 
-      <button class="submit-btn" type="submit" id="submitBtn">
-        🛒 Abhi Order Karein
-      </button>
+
+      <button class="submit-btn" type="submit" id="submitBtn">🛒 Abhi Order Karein</button>
     </form>
   </div>
-</div>
- 
-<!-- SUCCESS MODAL -->
-<div id="successModal">
-  <div class="success-box">
-    <div class="success-icon">🎉</div>
-    <h3>Order Ho Gaya!</h3>
-    <p>
-      Shukriya! Aapka order hamare paas pahunch gaya hai.
-      Hamari team jald hi aapko <strong>confirm call</strong> karegi.
-      2–5 working days mein delivery hogi.
-    </p>
-    <button class="close-modal" onclick="closeModal()">Theek Hai ✓</button>
-  </div>
-</div>
- 
-<!-- FOOTER -->
-<footer>
-  <strong>Dadiamrit</strong> · Prakriti ka Sparsh · Made with 🌿 in India<br/>
-  <small style="opacity:0.6; margin-top:6px; display:block;">© 2024 Dadiamrit. Sab haq surakshit hain.</small>
-</footer>
- 
+
 </div><!-- end page-home -->
- 
-<!-- CART PAGE -->
+
+<!-- ===== CART PAGE ===== -->
 <div id="page-cart" class="page">
   <div class="cart-empty">
-    <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <div class="cart-icon">🛒</div>
     <p>Aapka cart khali hai</p>
     <button onclick="switchPage('home')">Shopping Karein →</button>
   </div>
 </div>
- 
-<!-- PROFILE PAGE -->
+
+<!-- ===== PROFILE PAGE ===== -->
 <div id="page-profile" class="page">
-  <div class="profile-avatar">
-    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  <div class="profile-top">
+    <div class="avatar">👤</div>
+    <div class="pname">Guest User</div>
+    <div class="psub">Welcome to DadiAmrit</div>
   </div>
-  <div class="profile-name">Guest User</div>
-  <div class="profile-sub">Welcome to DadiAmrit</div>
- 
-  <div class="menu-card">
-    <div class="menu-icon">
-      <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+  <div class="menu-list">
+    <div class="mitem">
+      <div class="micon">📦</div>
+      <div><div class="mtitle">Order History</div><div class="mdesc">View your past orders</div></div>
+      <span class="marrow">›</span>
     </div>
-    <div class="menu-text">
-      <div class="menu-title">Order History</div>
-      <div class="menu-desc">View your past orders</div>
+    <div class="mitem">
+      <div class="micon">❓</div>
+      <div><div class="mtitle">Help & Support</div><div class="mdesc">Get help with your orders</div></div>
+      <span class="marrow">›</span>
     </div>
-    <span class="menu-arrow">›</span>
-  </div>
- 
-  <div class="menu-card">
-    <div class="menu-icon">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    </div>
-    <div class="menu-text">
-      <div class="menu-title">Help & Support</div>
-      <div class="menu-desc">Get help with your orders</div>
-    </div>
-    <span class="menu-arrow">›</span>
-  </div>
- 
-  <div style="text-align:center; margin-top:40px;">
-    <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="opacity:0.25">
-      <path d="M50 10 C50 10 75 40 75 60 C75 74 63.8 85 50 85 C36.2 85 25 74 25 60 C25 40 50 10 50 10Z" fill="#C8960C"/>
-      <g transform="translate(26,45)">
-        <path d="M0 20 Q-12 10 -8 -5 Q-4 -18 8 -20 Q2 -8 0 20Z" fill="#1A3A1A"/>
-      </g>
-    </svg>
-    <div style="font-size:0.75rem; color:#bbb; margin-top:4px;">DadiAmrit</div>
   </div>
 </div>
- 
-<!-- CONTACT PAGE -->
+
+<!-- ===== CONTACT PAGE ===== -->
 <div id="page-contact" class="page">
-  <div class="contact-heading">Contact Us</div>
-  <div class="contact-sub">We're here to help you with any questions</div>
- 
-  <div class="menu-card">
-    <div class="menu-icon">
-      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.39 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
-    </div>
-    <div class="menu-text">
-      <div class="menu-title">Call Us</div>
-      <div class="menu-desc">+91 98765 43210</div>
-    </div>
-    <span class="menu-arrow">›</span>
+  <div class="page-header">
+    <h2>Contact Us</h2>
+    <p>We're here to help you with any questions</p>
   </div>
- 
-  <div class="menu-card">
-    <div class="menu-icon" style="background:rgba(200,150,12,0.1);">
-      <svg viewBox="0 0 24 24" style="stroke:var(--gold)"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+  <div class="menu-list">
+    <div class="mitem">
+      <div class="micon">📞</div>
+      <div><div class="mtitle">Call Us</div><div class="mdesc">+91 98765 43210</div></div>
+      <span class="marrow">›</span>
     </div>
-    <div class="menu-text">
-      <div class="menu-title">Email</div>
-      <div class="menu-desc">support@dadiamrit.com</div>
+    <div class="mitem">
+      <div class="micon">📧</div>
+      <div><div class="mtitle">Email</div><div class="mdesc">support@dadiamrit.com</div></div>
+      <span class="marrow">›</span>
     </div>
-    <span class="menu-arrow">›</span>
-  </div>
- 
-  <div class="menu-card">
-    <div class="menu-icon" style="background:rgba(37,211,102,0.1);">
-      <svg viewBox="0 0 24 24" style="stroke:#25D366"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <div class="mitem">
+      <div class="micon">💬</div>
+      <div><div class="mtitle">WhatsApp</div><div class="mdesc">Chat with us</div></div>
+      <span class="marrow">›</span>
     </div>
-    <div class="menu-text">
-      <div class="menu-title">WhatsApp</div>
-      <div class="menu-desc">Chat with us</div>
-    </div>
-    <span class="menu-arrow">›</span>
   </div>
 </div>
- 
-<!-- SETTINGS PAGE -->
+
+<!-- ===== SETTINGS PAGE ===== -->
 <div id="page-settings" class="page">
-  <div class="settings-heading">Settings</div>
- 
-  <div class="setting-card">
-    <div class="setting-row">
-      <div class="setting-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      </div>
-      <div class="setting-text">
-        <div class="setting-title">Dark Mode</div>
-        <div class="setting-desc" id="darkModeDesc">Disabled</div>
-      </div>
-      <button class="toggle" id="darkToggle" onclick="toggleDark()"></button>
+  <div class="page-header">
+    <h2>Settings</h2>
+  </div>
+
+  <div class="scard">
+    <div class="srow">
+      <div class="sicon">☀️</div>
+      <div class="stitle">Dark Mode<br><span class="sdesc" id="darkDesc">Disabled</span></div>
+      <button class="toggle" id="darkBtn" onclick="toggleDark()"></button>
     </div>
   </div>
- 
-  <div class="setting-card">
-    <div class="setting-row">
-      <div class="setting-icon" style="background:rgba(26,58,26,0.08);">
-        <svg viewBox="0 0 24 24" style="stroke:var(--deep-green)"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      </div>
-      <div class="setting-text">
-        <div class="setting-title">Language</div>
-        <div class="setting-desc">Select your preferred language</div>
-      </div>
+
+  <div class="scard">
+    <div class="srow">
+      <div class="sicon">🌐</div>
+      <div><div class="stitle">Language</div><div class="sdesc">Select your preferred language</div></div>
     </div>
-    <div class="lang-toggle">
-      <button class="lang-btn active-lang" id="langEn" onclick="setLang('en')">English</button>
-      <button class="lang-btn" id="langHi" onclick="setLang('hi')">हिंदी</button>
+    <div class="lang-btns">
+      <button class="lbtn act" id="lEn" onclick="setLang('en')">English</button>
+      <button class="lbtn" id="lHi" onclick="setLang('hi')">हिंदी</button>
     </div>
   </div>
- 
-  <div class="setting-card" style="cursor:pointer;" onclick="alert('Admin Panel — Firebase se connect karein!')">
-    <div class="setting-row">
-      <div class="setting-icon admin-icon-bg">
-        <svg viewBox="0 0 24 24" style="stroke:var(--saffron)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      </div>
-      <div class="setting-text">
-        <div class="setting-title">🛡 Admin Panel</div>
-        <div class="setting-desc">Products manage karo, orders dekho</div>
-      </div>
-      <span class="menu-arrow">›</span>
+
+  <div class="scard" style="cursor:pointer">
+    <div class="srow">
+      <div class="sicon">🛡️</div>
+      <div><div class="stitle">Admin Panel</div><div class="sdesc">Products manage karo, orders dekho</div></div>
+      <span class="marrow">›</span>
     </div>
   </div>
 </div>
- 
+
+<!-- SUCCESS MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <div class="micon">🎉</div>
+    <h3>Order Ho Gaya!</h3>
+    <p>Shukriya! Aapka order mil gaya. Hamari team jald hi <strong>confirm call</strong> karegi. 2–5 din mein delivery hogi.</p>
+    <button class="modal-close" onclick="closeModal()">Theek Hai ✓</button>
+  </div>
+</div>
+
 <!-- BOTTOM NAV -->
-<nav id="bottom-nav">
-  <button class="bnav-item active" id="btn-home" onclick="switchPage('home')">
-    <div class="active-bar"></div>
-    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+<nav class="bnav">
+  <button class="bitem active" id="btn-home" onclick="switchPage('home')">
+    <div class="bbar"></div>
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
     Home
   </button>
-  <button class="bnav-item" id="btn-cart" onclick="switchPage('cart')">
-    <div class="active-bar"></div>
-    <div class="bnav-icon-wrap">
-      <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-    </div>
+  <button class="bitem" id="btn-cart" onclick="switchPage('cart')">
+    <div class="bbar"></div>
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     Cart
   </button>
-  <button class="bnav-item" id="btn-profile" onclick="switchPage('profile')">
-    <div class="active-bar"></div>
-    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  <button class="bitem" id="btn-profile" onclick="switchPage('profile')">
+    <div class="bbar"></div>
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     Profile
   </button>
-  <button class="bnav-item" id="btn-contact" onclick="switchPage('contact')">
-    <div class="active-bar"></div>
-    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.39 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+  <button class="bitem" id="btn-contact" onclick="switchPage('contact')">
+    <div class="bbar"></div>
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.39 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
     Contact
   </button>
-  <button class="bnav-item" id="btn-settings" onclick="switchPage('settings')">
-    <div class="active-bar"></div>
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+  <button class="bitem" id="btn-settings" onclick="switchPage('settings')">
+    <div class="bbar"></div>
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     Settings
   </button>
 </nav>
- 
+
 <script>
-  const prices = { '1': 299, '2': 499, '3': 749 };
-  const labels = { '1': 'Classic Oil (1 bottle)', '2': 'Power Pack (1 bottle)', '3': 'Family Pack (3 bottles)' };
- 
-  function updatePrice() {
-    const qty = document.getElementById('quantity').value;
-    const el = document.getElementById('priceTotal');
-    if (qty && prices[qty]) {
-      el.textContent = '₹' + prices[qty];
-    } else {
-      el.textContent = '—';
-    }
-  }
- 
+  const priceMap = { 'pain_149':149, 'hair_199':199, 'balm_99':99, 'combo_399':399 };
+
   function switchPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.bitem').forEach(b => b.classList.remove('active'));
     document.getElementById('page-' + name).classList.add('active');
     document.getElementById('btn-' + name).classList.add('active');
-    window.scrollTo(0, 0);
+    window.scrollTo(0,0);
   }
- 
-  function toggleDark() {
-    const t = document.getElementById('darkToggle');
-    const d = document.getElementById('darkModeDesc');
-    t.classList.toggle('on');
-    d.textContent = t.classList.contains('on') ? 'Enabled' : 'Disabled';
+
+  function goOrder(type) {
+    switchPage('home');
+    setTimeout(() => {
+      document.getElementById('order-sec').scrollIntoView({behavior:'smooth'});
+      if(type==='pain') document.getElementById('product').value='pain_149';
+      if(type==='hair') document.getElementById('product').value='hair_199';
+      if(type==='balm') document.getElementById('product').value='balm_99';
+      calcPrice();
+    }, 100);
   }
- 
-  function setLang(lang) {
-    document.getElementById('langEn').classList.toggle('active-lang', lang === 'en');
-    document.getElementById('langHi').classList.toggle('active-lang', lang === 'hi');
+
+  function calcPrice() {
+    const v = document.getElementById('product').value;
+    const el = document.getElementById('totalAmt');
+    el.textContent = priceMap[v] ? '₹' + priceMap[v] : '—';
   }
- 
- 
- 
-  function showSuccess() {
-    document.getElementById('successModal').classList.add('show');
-    document.getElementById('submitBtn').textContent = 'Abhi Order Karein';
-    document.getElementById('submitBtn').disabled = false;
-    document.querySelector('.order-form').reset();
-    document.getElementById('priceTotal').textContent = '—';
+
+  function placeOrder(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Order ho raha hai...';
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = '🛒 Abhi Order Karein';
+      document.querySelector('.oform').reset();
+      document.getElementById('totalAmt').textContent = '—';
+      document.getElementById('modal').classList.add('show');
+    }, 900);
   }
- 
+
   function closeModal() {
-    document.getElementById('successModal').classList.remove('show');
+    document.getElementById('modal').classList.remove('show');
+  }
+
+  function toggleDark() {
+    const btn = document.getElementById('darkBtn');
+    const desc = document.getElementById('darkDesc');
+    btn.classList.toggle('on');
+    desc.textContent = btn.classList.contains('on') ? 'Enabled' : 'Disabled';
+  }
+
+  function setLang(l) {
+    document.getElementById('lEn').classList.toggle('act', l==='en');
+    document.getElementById('lHi').classList.toggle('act', l==='hi');
   }
 </script>
 </body>
