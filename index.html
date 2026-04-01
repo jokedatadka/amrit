@@ -148,7 +148,6 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="topnav">
   <svg width="34" height="34" viewBox="0 0 100 100" style="flex-shrink:0">
     <path d="M50 8 C50 8 76 40 76 61 C76 75 64.6 86 50 86 C35.4 86 24 75 24 61 C24 40 50 8 50 8Z" fill="#C8960C"/>
@@ -168,7 +167,6 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   </div>
 </nav>
 
-<!-- HOME -->
 <div id="page-home" class="page">
   <div class="hero">
     <span class="hero-badge">🌿 100% AYURVEDIC</span>
@@ -309,7 +307,6 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   </div>
 </div>
 
-<!-- CART -->
 <div id="page-cart" class="page">
   <div class="page-wrap">
     <div class="cart-wrap">
@@ -320,7 +317,6 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   </div>
 </div>
 
-<!-- PROFILE -->
 <div id="page-profile" class="page">
   <div class="page-wrap">
     <div class="profile-top">
@@ -335,7 +331,6 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   </div>
 </div>
 
-<!-- CONTACT -->
 <div id="page-contact" class="page">
   <div class="page-wrap">
     <div class="page-header"><h2>Contact Us</h2><p>We're here to help you</p></div>
@@ -347,7 +342,6 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   </div>
 </div>
 
-<!-- SETTINGS -->
 <div id="page-settings" class="page">
   <div class="page-wrap">
     <div class="page-header"><h2>Settings</h2></div>
@@ -378,7 +372,6 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   </div>
 </div>
 
-<!-- ADMIN -->
 <div id="page-admin" class="page">
   <div class="page-wrap">
     <div class="page-header"><h2>Admin Panel</h2><p>Saare orders yahan dikhenge</p></div>
@@ -390,7 +383,6 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   </div>
 </div>
 
-<!-- SUCCESS MODAL -->
 <div class="modal-bg" id="modal">
   <div class="modal-box">
     <div class="mico">🎉</div>
@@ -400,7 +392,6 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
 <nav class="bnav">
   <button class="bitem" id="btn-home" onclick="showPage('home')">
     <div class="bbar"></div>
@@ -463,28 +454,73 @@ function calcPrice() {
 function placeOrder(e) {
   e.preventDefault();
   var btn = document.getElementById('submitBtn');
-  btn.disabled=true; btn.textContent='Order ho raha hai...';
-  var order = {
-    id: Date.now(),
-    naam: document.getElementById('naam').value,
-    phone: document.getElementById('phone').value,
-    address: document.getElementById('address').value,
-    city: document.getElementById('city').value,
-    pincode: document.getElementById('pincode').value,
-    product: document.getElementById('product').value,
-    payment: document.getElementById('payment').value,
-    total: priceMap[document.getElementById('product').value]||0,
-    time: new Date().toLocaleString()
-  };
-  var orders = JSON.parse(localStorage.getItem('da_orders')||'[]');
-  orders.unshift(order);
-  localStorage.setItem('da_orders', JSON.stringify(orders));
-  setTimeout(function(){
-    btn.disabled=false; btn.textContent='🛒 Abhi Order Karein';
+  btn.disabled = true; 
+  btn.textContent = 'Order bheja ja raha hai...'; // Text change while loading
+
+  // Form se data nikalna
+  var naam = document.getElementById('naam').value;
+  var phone = document.getElementById('phone').value;
+  var address = document.getElementById('address').value;
+  var city = document.getElementById('city').value;
+  var pincode = document.getElementById('pincode').value;
+  
+  // Value (pain_149) ki jagah pura text (Pain Relief Oil - ₹149) uthana sheet ke liye
+  var productSelect = document.getElementById('product');
+  var productText = productSelect.options[productSelect.selectedIndex].text;
+  var productRawVal = productSelect.value;
+  
+  var paymentSelect = document.getElementById('payment');
+  var paymentText = paymentSelect.options[paymentSelect.selectedIndex].text;
+
+  // Google Sheet bhejne ke liye data taiyar karna
+  var formData = new FormData();
+  formData.append('NAAM', naam);
+  formData.append('PHONE', phone);
+  formData.append('ADDRESS', address);
+  formData.append('SHEHER', city);
+  formData.append('PINCODE', pincode);
+  formData.append('PRODUCT', productText);
+  formData.append('PAYMENT', paymentText);
+
+  // Aapka Web App URL
+  var sheetUrl = 'https://script.google.com/macros/s/AKfycby_eBics5oM9m60KcGF4gA-NSeSGfvnxXa77eVku8Nffi3aH_S9P5WUnKU0dEadWf8y/exec';
+
+  // Background mein sheet ko data bhejna (Page redirect nahi hoga)
+  fetch(sheetUrl, {
+    method: 'POST',
+    body: formData,
+    mode: 'no-cors' // Yeh zaroori hai Google sheet integration ke liye
+  })
+  .then(function() {
+    // Sheet mein jane ke baad local Admin panel mein bhi save karna
+    var order = {
+      id: Date.now(),
+      naam: naam,
+      phone: phone,
+      address: address,
+      city: city,
+      pincode: pincode,
+      product: productText,
+      payment: paymentText,
+      total: priceMap[productRawVal] || 0,
+      time: new Date().toLocaleString()
+    };
+    var orders = JSON.parse(localStorage.getItem('da_orders')||'[]');
+    orders.unshift(order);
+    localStorage.setItem('da_orders', JSON.stringify(orders));
+
+    // Form clear karna aur Success message dikhana
+    btn.disabled = false; 
+    btn.textContent = '🛒 Abhi Order Karein';
     document.querySelector('.oform').reset();
-    document.getElementById('totalAmt').textContent='—';
+    document.getElementById('totalAmt').textContent = '—';
     document.getElementById('modal').classList.add('show');
-  },900);
+  })
+  .catch(function(error) {
+    alert("Internet connection check karein, order nahi ja paya.");
+    btn.disabled = false; 
+    btn.textContent = '🛒 Abhi Order Karein';
+  });
 }
 
 function closeModal(){ document.getElementById('modal').classList.remove('show'); }
