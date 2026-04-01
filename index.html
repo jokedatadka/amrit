@@ -1,383 +1,165 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" id="htmlRoot">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>DadiAmrit – Parampara se Rahat</title>
 <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --green: #1A3A1A;
-  --lgreen: #4A7C3F;
-  --gold: #C8960C;
-  --saffron: #E8710A;
-  --cream: #F5F0E8;
-  --white: #ffffff;
-  --gray: #888;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body { font-family:'Poppins',sans-serif; background:var(--cream); color:#333; padding-bottom:70px; }
-
+:root{--green:#1A3A1A;--gold:#C8960C;--saffron:#E8710A;--gray:#888;--bg:#F5F0E8;--card:#ffffff;--text:#333;--subtext:#666;}
+.dark{--bg:#121212;--card:#1e1e1e;--text:#f0f0f0;--subtext:#aaa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);padding-bottom:72px;transition:background 0.3s,color 0.3s;}
+.page{display:none;}
 /* NAV */
-.topnav {
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  background:rgba(245,240,232,0.97);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(200,150,12,0.2);
-  padding:10px 16px;
-  display:flex; align-items:center; gap:10px;
-}
-.logo-svg { width:36px; height:36px; flex-shrink:0; }
-.logo-text { font-family:'Yatra One',cursive; font-size:1.25rem; color:var(--green); line-height:1.1; }
-.logo-sub { font-size:0.65rem; color:var(--gold); }
-
-/* PAGES - controlled by JS */
-.page { }
-
-/* HOME */
-#page-home { padding-top:65px; }
-#page-cart { padding-top:65px; min-height:90vh; background:var(--cream); }
-#page-profile { padding-top:65px; min-height:90vh; background:var(--cream); }
-#page-contact { padding-top:65px; min-height:90vh; background:var(--cream); }
-#page-settings { padding-top:65px; min-height:90vh; background:var(--cream); }
-
-
-/* HERO BANNER */
-.hero {
-  background: linear-gradient(135deg, var(--green) 0%, #2d5a2d 100%);
-  padding: 28px 20px 32px;
-  position:relative; overflow:hidden;
-}
-.hero::after {
-  content:''; position:absolute; right:-30px; top:-30px;
-  width:180px; height:180px;
-  border-radius:50%;
-  background:rgba(200,150,12,0.1);
-}
-.hero-badge {
-  display:inline-block;
-  background:rgba(200,150,12,0.2);
-  border:1px solid var(--gold);
-  color:var(--gold);
-  font-size:0.7rem; font-weight:600;
-  padding:4px 12px; border-radius:20px;
-  margin-bottom:12px; letter-spacing:1px;
-}
-.hero h1 {
-  font-family:'Yatra One',cursive;
-  font-size:2.4rem; color:white; line-height:1.1;
-  margin-bottom:6px;
-}
-.hero h1 span { color:var(--gold); }
-.hero-tagline { color:rgba(255,255,255,0.75); font-size:0.9rem; margin-bottom:20px; }
-.hero-tags { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
-.hero-tag {
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.2);
-  color:white; font-size:0.75rem; font-weight:600;
-  padding:5px 12px; border-radius:20px;
-}
-.hero-cta {
-  display:inline-block;
-  background:linear-gradient(135deg, var(--saffron), #c45c00);
-  color:white; font-weight:700; font-size:0.95rem;
-  padding:13px 28px; border-radius:30px;
-  text-decoration:none;
-  box-shadow:0 6px 20px rgba(232,113,10,0.4);
-}
-
+.topnav{position:fixed;top:0;left:0;right:0;z-index:500;background:var(--card);border-bottom:1px solid rgba(200,150,12,0.2);padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.logo-text{font-family:'Yatra One',cursive;font-size:1.25rem;color:var(--green);line-height:1.1;}
+.logo-sub{font-size:0.65rem;color:var(--gold);}
+/* HERO */
+.hero{background:linear-gradient(135deg,#1A3A1A,#2d5a2d);padding:28px 20px 32px;margin-top:65px;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;right:-30px;top:-30px;width:180px;height:180px;border-radius:50%;background:rgba(200,150,12,0.1);}
+.hero-badge{display:inline-block;background:rgba(200,150,12,0.2);border:1px solid var(--gold);color:var(--gold);font-size:0.7rem;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
+.hero h1{font-family:'Yatra One',cursive;font-size:2.4rem;color:white;margin-bottom:6px;}
+.hero h1 span{color:var(--gold);}
+.hero p{color:rgba(255,255,255,0.75);font-size:0.9rem;margin-bottom:20px;}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.hero-tag{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:20px;}
+.hero-cta{display:inline-block;background:linear-gradient(135deg,var(--saffron),#c45c00);color:white;font-weight:700;font-size:0.95rem;padding:13px 28px;border-radius:30px;cursor:pointer;border:none;font-family:'Poppins',sans-serif;}
 /* STATS */
-.stats-row {
-  display:flex; background:white;
-  border-bottom:1px solid rgba(200,150,12,0.12);
-}
-.stat-box {
-  flex:1; text-align:center; padding:14px 8px;
-  border-right:1px solid rgba(200,150,12,0.12);
-}
-.stat-box:last-child { border-right:none; }
-.stat-n { font-family:'Yatra One',cursive; font-size:1.4rem; color:var(--saffron); }
-.stat-l { font-size:0.65rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.5px; }
-
-/* SECTION TITLE */
-.sec-title {
-  font-family:'Yatra One',cursive;
-  font-size:1.4rem; color:var(--green);
-  padding:24px 16px 4px;
-}
-.sec-sub { font-size:0.78rem; color:var(--gray); padding:0 16px 16px; }
-
-/* PRODUCT CARDS */
-.products-list { padding:0 16px; display:flex; flex-direction:column; gap:14px; }
-
-.pcard {
-  background:white; border-radius:16px;
-  display:flex; gap:14px; padding:16px;
-  border:1px solid rgba(200,150,12,0.1);
-  box-shadow:0 2px 12px rgba(0,0,0,0.05);
-}
-.pcard-img {
-  width:80px; height:80px; border-radius:12px; flex-shrink:0;
-  background:linear-gradient(135deg, #FFF8EC, #FEF0D0);
-  display:flex; align-items:center; justify-content:center;
-  font-size:2.2rem; position:relative;
-}
-.pbadge {
-  position:absolute; top:-6px; right:-6px;
-  background:var(--saffron); color:white;
-  font-size:0.58rem; font-weight:700;
-  padding:2px 7px; border-radius:10px;
-}
-.pcard-info { flex:1; }
-.pcard-name { font-weight:700; font-size:0.95rem; color:var(--green); margin-bottom:3px; }
-.pcard-desc { font-size:0.75rem; color:var(--gray); line-height:1.5; margin-bottom:8px; }
-.pcard-bottom { display:flex; align-items:center; justify-content:space-between; }
-.pcard-price { font-size:1.1rem; font-weight:700; color:var(--saffron); }
-.pcard-mrp { font-size:0.7rem; color:#bbb; text-decoration:line-through; margin-left:4px; }
-.stars { color:var(--gold); font-size:0.75rem; margin-bottom:4px; }
-.buy-btn {
-  background:var(--green); color:white;
-  border:none; padding:7px 16px;
-  border-radius:20px; font-size:0.78rem; font-weight:600;
-  cursor:pointer; font-family:'Poppins',sans-serif;
-}
-
-/* WHY US */
-.why-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:0 16px 24px; }
-.why-card {
-  background:white; border-radius:14px; padding:16px 14px;
-  border:1px solid rgba(200,150,12,0.1);
-  text-align:center;
-}
-.why-icon { font-size:1.8rem; margin-bottom:8px; }
-.why-title { font-weight:700; font-size:0.85rem; color:var(--green); margin-bottom:4px; }
-.why-desc { font-size:0.72rem; color:var(--gray); line-height:1.5; }
-
-/* TESTIMONIALS */
-.test-list { padding:0 16px 24px; display:flex; flex-direction:column; gap:12px; }
-.test-card {
-  background:white; border-radius:14px; padding:16px;
-  border:1px solid rgba(200,150,12,0.1);
-}
-.test-stars { color:var(--gold); font-size:0.85rem; margin-bottom:6px; }
-.test-text { font-size:0.82rem; color:#555; line-height:1.6; font-style:italic; margin-bottom:10px; }
-.test-name { font-weight:700; font-size:0.8rem; color:var(--green); }
-.test-place { font-size:0.72rem; color:var(--gray); }
-
+.stats-row{display:flex;background:var(--card);border-bottom:1px solid rgba(200,150,12,0.12);}
+.stat-box{flex:1;text-align:center;padding:14px 4px;border-right:1px solid rgba(200,150,12,0.12);}
+.stat-box:last-child{border-right:none;}
+.stat-n{font-family:'Yatra One',cursive;font-size:1.3rem;color:var(--saffron);}
+.stat-l{font-size:0.6rem;color:var(--gray);text-transform:uppercase;}
+/* SECTIONS */
+.sec-title{font-family:'Yatra One',cursive;font-size:1.4rem;color:var(--green);padding:24px 16px 4px;}
+.sec-sub{font-size:0.78rem;color:var(--gray);padding:0 16px 16px;}
+/* PRODUCTS */
+.products-list{padding:0 16px;display:flex;flex-direction:column;gap:14px;}
+.pcard{background:var(--card);border-radius:16px;display:flex;gap:14px;padding:16px;border:1px solid rgba(200,150,12,0.1);}
+.pcard-img{width:80px;height:80px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,#FFF8EC,#FEF0D0);display:flex;align-items:center;justify-content:center;font-size:2.2rem;position:relative;}
+.pbadge{position:absolute;top:-6px;right:-6px;background:var(--saffron);color:white;font-size:0.58rem;font-weight:700;padding:2px 7px;border-radius:10px;}
+.pcard-info{flex:1;}
+.pcard-name{font-weight:700;font-size:0.95rem;color:var(--green);margin-bottom:3px;}
+.pcard-desc{font-size:0.75rem;color:var(--gray);line-height:1.5;margin-bottom:8px;}
+.pcard-bottom{display:flex;align-items:center;justify-content:space-between;}
+.pcard-price{font-size:1.1rem;font-weight:700;color:var(--saffron);}
+.pcard-mrp{font-size:0.7rem;color:#bbb;text-decoration:line-through;margin-left:4px;}
+.stars{color:var(--gold);font-size:0.75rem;margin-bottom:4px;}
+.buy-btn{background:var(--green);color:white;border:none;padding:7px 16px;border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+/* WHY */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px 24px;}
+.why-card{background:var(--card);border-radius:14px;padding:16px;text-align:center;border:1px solid rgba(200,150,12,0.1);}
+.why-icon{font-size:1.8rem;margin-bottom:8px;}
+.why-title{font-weight:700;font-size:0.85rem;color:var(--green);margin-bottom:4px;}
+.why-desc{font-size:0.72rem;color:var(--gray);}
 /* ABOUT */
-.about-box {
-  margin:0 16px 24px;
-  background:var(--green);
-  border-radius:16px; padding:22px 18px; color:white;
-}
-.about-box h3 { font-family:'Yatra One',cursive; font-size:1.3rem; margin-bottom:10px; color:var(--gold); }
-.about-box p { font-size:0.82rem; line-height:1.7; color:rgba(255,255,255,0.85); margin-bottom:12px; }
-.herb-chips { display:flex; flex-wrap:wrap; gap:7px; }
-.herb-chip {
-  background:rgba(200,150,12,0.2); border:1px solid rgba(200,150,12,0.4);
-  color:var(--gold); font-size:0.72rem; font-weight:600;
-  padding:4px 10px; border-radius:15px;
-}
-
+.about-box{margin:0 16px 24px;background:var(--green);border-radius:16px;padding:22px 18px;color:white;}
+.about-box h3{font-family:'Yatra One',cursive;font-size:1.3rem;color:var(--gold);margin-bottom:10px;}
+.about-box p{font-size:0.82rem;line-height:1.7;color:rgba(255,255,255,0.85);margin-bottom:12px;}
+.herb-chips{display:flex;flex-wrap:wrap;gap:7px;}
+.herb-chip{background:rgba(200,150,12,0.2);border:1px solid rgba(200,150,12,0.4);color:var(--gold);font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:15px;}
+/* TESTIMONIALS */
+.test-list{padding:0 16px 24px;display:flex;flex-direction:column;gap:12px;}
+.test-card{background:var(--card);border-radius:14px;padding:16px;border:1px solid rgba(200,150,12,0.1);}
+.test-stars{color:var(--gold);margin-bottom:6px;}
+.test-text{font-size:0.82rem;color:var(--subtext);line-height:1.6;font-style:italic;margin-bottom:10px;}
+.test-name{font-weight:700;font-size:0.8rem;color:var(--green);}
+.test-place{font-size:0.72rem;color:var(--gray);}
 /* ORDER FORM */
-.order-section {
-  background:var(--green);
-  padding:28px 16px;
-}
-.order-section .sec-title { color:var(--gold); padding-left:0; }
-.order-section .sec-sub { color:rgba(255,255,255,0.6); padding-left:0; }
-
-.oform {
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(200,150,12,0.25);
-  border-radius:18px; padding:20px 16px;
-}
-.frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
-.fg { margin-bottom:12px; }
-.fg label {
-  display:block; color:rgba(255,255,255,0.65);
-  font-size:0.72rem; font-weight:600; letter-spacing:0.8px;
-  text-transform:uppercase; margin-bottom:6px;
-}
-.fg input, .fg select {
-  width:100%;
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(200,150,12,0.25);
-  color:white; padding:11px 14px;
-  border-radius:10px; font-size:0.85rem;
-  font-family:'Poppins',sans-serif; outline:none;
-  transition:border-color 0.2s;
-}
-.fg input::placeholder { color:rgba(255,255,255,0.3); }
-.fg input:focus, .fg select:focus { border-color:var(--saffron); }
-.fg select option { background:#1A3A1A; color:white; }
-
-.price-box {
-  background:rgba(232,113,10,0.12);
-  border:1px solid rgba(232,113,10,0.3);
-  border-radius:10px; padding:13px 16px;
-  display:flex; justify-content:space-between; align-items:center;
-  margin-bottom:16px;
-}
-.price-box span { color:rgba(255,255,255,0.7); font-size:0.85rem; }
-.price-box strong { color:var(--saffron); font-size:1.3rem; font-family:'Yatra One',cursive; }
-
-.submit-btn {
-  width:100%;
-  background:linear-gradient(135deg, var(--saffron), #c45c00);
-  color:white; border:none; padding:15px;
-  border-radius:12px; font-size:1rem; font-weight:700;
-  cursor:pointer; font-family:'Poppins',sans-serif;
-  box-shadow:0 6px 20px rgba(232,113,10,0.35);
-  transition:opacity 0.2s;
-}
-.submit-btn:disabled { opacity:0.65; cursor:not-allowed; }
-
-/* PROFILE PAGE */
-.profile-top { text-align:center; padding:30px 20px 20px; }
-.avatar {
-  width:80px; height:80px; border-radius:50%;
-  background:rgba(26,58,26,0.1);
-  display:flex; align-items:center; justify-content:center;
-  margin:0 auto 12px; font-size:2.5rem;
-}
-.pname { font-weight:700; font-size:1.2rem; color:var(--green); }
-.psub { font-size:0.8rem; color:var(--gray); }
-.menu-list { padding:0 16px; display:flex; flex-direction:column; gap:10px; margin-top:10px; }
-.mitem {
-  background:white; border-radius:14px; padding:16px;
-  display:flex; align-items:center; gap:14px;
-  border:1px solid rgba(200,150,12,0.08); cursor:pointer;
-}
-.micon {
-  width:40px; height:40px; border-radius:10px;
-  background:rgba(26,58,26,0.08);
-  display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0;
-}
-.mtitle { font-weight:700; font-size:0.9rem; color:var(--green); }
-.mdesc { font-size:0.75rem; color:var(--gray); }
-.marrow { margin-left:auto; color:#ccc; font-size:1.2rem; }
-
-/* CONTACT PAGE */
-.page-header { padding:24px 16px 8px; }
-.page-header h2 { font-family:'Yatra One',cursive; font-size:1.5rem; color:var(--green); }
-.page-header p { font-size:0.82rem; color:var(--gray); margin-top:4px; }
-
-/* CART PAGE */
-.cart-empty {
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  min-height:70vh; text-align:center; padding:20px;
-}
-.cart-empty .cart-icon { font-size:4rem; margin-bottom:12px; opacity:0.3; }
-.cart-empty p { color:var(--gray); font-size:0.95rem; margin-bottom:20px; }
-.cart-empty button {
-  background:var(--green); color:white;
-  border:none; padding:12px 28px;
-  border-radius:30px; font-size:0.9rem; font-weight:600;
-  cursor:pointer; font-family:'Poppins',sans-serif;
-}
-
-/* SETTINGS PAGE */
-.scard {
-  background:white; border-radius:14px; margin:0 16px 12px;
-  padding:16px; border:1px solid rgba(200,150,12,0.08);
-}
-.srow { display:flex; align-items:center; gap:14px; }
-.sicon {
-  width:40px; height:40px; border-radius:10px;
-  background:rgba(200,150,12,0.1);
-  display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;
-}
-.stitle { font-weight:700; font-size:0.9rem; color:var(--green); flex:1; }
-.sdesc { font-size:0.75rem; color:var(--gray); }
-.toggle {
-  width:46px; height:25px; background:#ddd;
-  border-radius:13px; position:relative;
-  cursor:pointer; border:none; transition:background 0.3s;
-}
-.toggle.on { background:var(--green); }
-.toggle::after {
-  content:''; position:absolute;
-  width:19px; height:19px; background:white;
-  border-radius:50%; top:3px; left:3px;
-  transition:left 0.3s; box-shadow:0 1px 3px rgba(0,0,0,0.2);
-}
-.toggle.on::after { left:24px; }
-.lang-btns { display:flex; gap:8px; margin-top:12px; }
-.lbtn {
-  flex:1; padding:9px; border-radius:9px; border:none;
-  font-family:'Poppins',sans-serif; font-size:0.88rem; font-weight:600; cursor:pointer;
-}
-.lbtn.act { background:var(--green); color:white; }
-.lbtn:not(.act) { background:#eee; color:#666; }
-
+.order-section{background:var(--green);padding:28px 16px;}
+.order-section .sec-title{color:var(--gold);padding-left:0;}
+.order-section .sec-sub{color:rgba(255,255,255,0.6);padding-left:0;}
+.oform{background:rgba(255,255,255,0.07);border:1px solid rgba(200,150,12,0.25);border-radius:18px;padding:20px 16px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.fg{margin-bottom:12px;}
+.fg label{display:block;color:rgba(255,255,255,0.65);font-size:0.72rem;font-weight:600;text-transform:uppercase;margin-bottom:6px;letter-spacing:0.8px;}
+.fg input,.fg select{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(200,150,12,0.25);color:white;padding:11px 14px;border-radius:10px;font-size:0.85rem;font-family:'Poppins',sans-serif;outline:none;}
+.fg input::placeholder{color:rgba(255,255,255,0.3);}
+.fg input:focus,.fg select:focus{border-color:var(--saffron);}
+.fg select option{background:#1A3A1A;color:white;}
+.price-box{background:rgba(232,113,10,0.12);border:1px solid rgba(232,113,10,0.3);border-radius:10px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.price-box span{color:rgba(255,255,255,0.7);font-size:0.85rem;}
+.price-box strong{color:var(--saffron);font-size:1.3rem;font-family:'Yatra One',cursive;}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--saffron),#c45c00);color:white;border:none;padding:15px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;}
+.submit-btn:disabled{opacity:0.65;}
+/* PAGE WRAP */
+.page-wrap{padding-top:65px;min-height:90vh;background:var(--bg);}
+.page-header{padding:24px 16px 8px;}
+.page-header h2{font-family:'Yatra One',cursive;font-size:1.5rem;color:var(--green);}
+.page-header p{font-size:0.82rem;color:var(--gray);margin-top:4px;}
+/* MENU ITEMS */
+.menu-list{padding:0 16px;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.mitem{background:var(--card);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;border:1px solid rgba(200,150,12,0.08);cursor:pointer;}
+.micon{width:40px;height:40px;border-radius:10px;background:rgba(26,58,26,0.08);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.mtitle{font-weight:700;font-size:0.9rem;color:var(--green);}
+.mdesc{font-size:0.75rem;color:var(--gray);}
+.marrow{margin-left:auto;color:#ccc;font-size:1.2rem;}
+/* PROFILE */
+.profile-top{text-align:center;padding:30px 20px 20px;}
+.avatar{width:80px;height:80px;border-radius:50%;background:rgba(26,58,26,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:2.5rem;}
+.pname{font-weight:700;font-size:1.2rem;color:var(--green);}
+.psub{font-size:0.8rem;color:var(--gray);}
+/* CART */
+.cart-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:20px;}
+.cart-icon-big{font-size:4rem;margin-bottom:12px;opacity:0.3;}
+.cart-wrap p{color:var(--gray);font-size:0.95rem;margin-bottom:20px;}
+.green-btn{background:var(--green);color:white;border:none;padding:12px 28px;border-radius:30px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+/* SETTINGS */
+.scard{background:var(--card);border-radius:14px;margin:0 16px 12px;padding:16px;border:1px solid rgba(200,150,12,0.08);}
+.srow{display:flex;align-items:center;gap:14px;}
+.sicon{width:40px;height:40px;border-radius:10px;background:rgba(200,150,12,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.stitle{font-weight:700;font-size:0.9rem;color:var(--green);flex:1;}
+.sdesc{font-size:0.75rem;color:var(--gray);font-weight:400;}
+.toggle{width:46px;height:25px;background:#ddd;border-radius:13px;position:relative;cursor:pointer;border:none;transition:background 0.3s;flex-shrink:0;}
+.toggle.on{background:var(--green);}
+.toggle::after{content:'';position:absolute;width:19px;height:19px;background:white;border-radius:50%;top:3px;left:3px;transition:left 0.3s;box-shadow:0 1px 3px rgba(0,0,0,0.2);}
+.toggle.on::after{left:24px;}
+.lang-btns{display:flex;gap:8px;margin-top:12px;}
+.lbtn{flex:1;padding:9px;border-radius:9px;border:none;font-family:'Poppins',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;}
+.lbtn.act{background:var(--green);color:white;}
+.lbtn:not(.act){background:#eee;color:#666;}
+/* ADMIN */
+.admin-header{background:var(--green);border-radius:14px;padding:16px;margin:0 16px 14px;color:white;}
+.admin-header h3{font-family:'Yatra One',cursive;font-size:1.2rem;color:var(--gold);margin-bottom:4px;}
+.admin-header p{font-size:0.78rem;color:rgba(255,255,255,0.7);}
+.order-item{background:var(--card);border-radius:12px;padding:14px;margin:0 16px 10px;border:1px solid rgba(200,150,12,0.1);}
+.o-name{font-weight:700;font-size:0.9rem;color:var(--green);}
+.o-detail{font-size:0.78rem;color:var(--gray);margin-top:3px;}
+.o-status{display:inline-block;background:rgba(232,113,10,0.1);color:var(--saffron);font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:10px;margin-top:6px;}
+.no-orders{text-align:center;color:var(--gray);padding:40px 20px;font-size:0.9rem;}
 /* BOTTOM NAV */
-.bnav {
-  position:fixed; bottom:0; left:0; right:0; z-index:200;
-  background:white; border-top:1px solid rgba(200,150,12,0.15);
-  display:flex; justify-content:space-around;
-  padding:8px 0 10px;
-  box-shadow:0 -3px 16px rgba(0,0,0,0.07);
-}
-.bitem {
-  display:flex; flex-direction:column; align-items:center; gap:3px;
-  background:none; border:none; cursor:pointer;
-  color:#bbb; font-size:0.6rem; font-weight:600;
-  text-transform:uppercase; letter-spacing:0.5px;
-  font-family:'Poppins',sans-serif; padding:2px 14px;
-  transition:color 0.2s;
-}
-.bitem.active { color:var(--green); }
-.bitem svg { width:22px; height:22px; }
-.bbar { width:18px; height:2.5px; background:var(--green); border-radius:2px; opacity:0; transition:opacity 0.2s; }
-.bitem.active .bbar { opacity:1; }
-
-/* SUCCESS MODAL */
-.modal-bg {
-  display:none; position:fixed; inset:0; z-index:999;
-  background:rgba(0,0,0,0.6); backdrop-filter:blur(4px);
-  align-items:center; justify-content:center;
-}
-.modal-bg.show { display:flex; }
-.modal-box {
-  background:white; border-radius:22px;
-  padding:36px 28px; text-align:center; max-width:320px; margin:20px;
-  animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
-}
-@keyframes popIn { from{opacity:0;transform:scale(0.7)} to{opacity:1;transform:scale(1)} }
-.modal-box .micon { font-size:3.5rem; margin-bottom:12px; }
-.modal-box h3 { font-family:'Yatra One',cursive; font-size:1.5rem; color:var(--green); margin-bottom:8px; }
-.modal-box p { font-size:0.85rem; color:#666; line-height:1.6; margin-bottom:20px; }
-.modal-close {
-  background:var(--saffron); color:white; border:none;
-  padding:12px 28px; border-radius:25px; font-size:0.9rem;
-  font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif;
-}
-
-@media(max-width:380px) {
-  .frow { grid-template-columns:1fr; }
-  .why-grid { grid-template-columns:1fr; }
-}
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:500;background:var(--card);border-top:1px solid rgba(200,150,12,0.15);display:flex;justify-content:space-around;padding:8px 0 10px;box-shadow:0 -3px 16px rgba(0,0,0,0.07);}
+.bitem{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:#bbb;font-size:0.6rem;font-weight:600;text-transform:uppercase;font-family:'Poppins',sans-serif;padding:2px 10px;}
+.bitem.active{color:var(--green);}
+.bitem svg{width:22px;height:22px;}
+.bbar{width:18px;height:2.5px;background:var(--green);border-radius:2px;opacity:0;}
+.bitem.active .bbar{opacity:1;}
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;}
+.modal-bg.show{display:flex;}
+.modal-box{background:var(--card);border-radius:22px;padding:36px 28px;text-align:center;max-width:320px;margin:20px;}
+.modal-box .mico{font-size:3.5rem;margin-bottom:12px;}
+.modal-box h3{font-family:'Yatra One',cursive;font-size:1.5rem;color:var(--green);margin-bottom:8px;}
+.modal-box p{font-size:0.85rem;color:#666;line-height:1.6;margin-bottom:20px;}
+.modal-close{background:var(--saffron);color:white;border:none;padding:12px 28px;border-radius:25px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+@media(max-width:380px){.frow{grid-template-columns:1fr;}.why-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<!-- TOP NAV -->
+<!-- NAV -->
 <nav class="topnav">
-  <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <svg width="34" height="34" viewBox="0 0 100 100" style="flex-shrink:0">
     <path d="M50 8 C50 8 76 40 76 61 C76 75 64.6 86 50 86 C35.4 86 24 75 24 61 C24 40 50 8 50 8Z" fill="#C8960C"/>
     <g transform="translate(50,56) scale(0.27)">
       <rect x="-18" y="-30" width="36" height="17" rx="5" fill="white" opacity="0.9"/>
       <rect x="-18" y="13" width="36" height="17" rx="5" fill="white" opacity="0.9"/>
       <ellipse cx="0" cy="0" rx="13" ry="13" fill="white" opacity="0.85"/>
-      <ellipse cx="0" cy="0" rx="7" ry="7" fill="#C8960C" opacity="0.5"/>
     </g>
     <g transform="translate(27,46)">
       <line x1="0" y1="20" x2="0" y2="-18" stroke="#1A3A1A" stroke-width="1.8"/>
-      <path d="M0 16 Q-10 8 -7 -2 Q-3 -13 6 -15 Q1 -4 0 16Z" fill="#2d5a2d"/>
-      <path d="M0 8 Q-7 2 -5 -2 Q-1 -8 5 -8 Q0 -1 0 8Z" fill="#4A7C3F"/>
+      <path d="M0 16 Q-10 8 -7 -2 Q-3 -13 6 -15 Q1 -4 0 16Z" fill="#4A7C3F"/>
     </g>
   </svg>
   <div>
@@ -386,22 +168,18 @@ body { font-family:'Poppins',sans-serif; background:var(--cream); color:#333; pa
   </div>
 </nav>
 
-<!-- ===== HOME PAGE ===== -->
-<div id="page-home" class="page active">
-
-  <!-- HERO -->
+<!-- HOME -->
+<div id="page-home" class="page">
   <div class="hero">
     <span class="hero-badge">🌿 100% AYURVEDIC</span>
     <h1>Dadi<span>Amrit</span></h1>
-    <p class="hero-tagline">Dadi ke nuskhe, har dard me rahat</p>
+    <p>Dadi ke nuskhe, har dard me rahat</p>
     <div class="hero-tags">
       <span class="hero-tag">✓ 100% Ayurvedic</span>
       <span class="hero-tag">✓ Safe & Natural</span>
     </div>
-    <a href="#order-sec" class="hero-cta">Abhi Order Karein ₹149</a>
+    <button class="hero-cta" onclick="goOrder('pain')">Abhi Order Karein ₹149</button>
   </div>
-
-  <!-- STATS -->
   <div class="stats-row">
     <div class="stat-box"><div class="stat-n">50K+</div><div class="stat-l">Customers</div></div>
     <div class="stat-box"><div class="stat-n">100%</div><div class="stat-l">Natural</div></div>
@@ -409,147 +187,97 @@ body { font-family:'Poppins',sans-serif; background:var(--cream); color:#333; pa
     <div class="stat-box"><div class="stat-n">4.8⭐</div><div class="stat-l">Rating</div></div>
   </div>
 
-  <!-- PRODUCTS -->
   <div class="sec-title">Hamare Products</div>
   <div class="sec-sub">Chunein apna ilaj</div>
   <div class="products-list">
-
     <div class="pcard">
       <div class="pcard-img">🫙<span class="pbadge">BEST</span></div>
       <div class="pcard-info">
         <div class="stars">★★★★★</div>
         <div class="pcard-name">DadiAmrit Pain Relief Oil</div>
-        <div class="pcard-desc">Traditional Ayurvedic formula for fast, natural pain relief. Pure herbal ingredients.</div>
+        <div class="pcard-desc">Traditional Ayurvedic formula for fast, natural pain relief.</div>
         <div class="pcard-bottom">
           <div><span class="pcard-price">₹149</span><span class="pcard-mrp">₹299</span></div>
           <button class="buy-btn" onclick="goOrder('pain')">Buy Now</button>
         </div>
       </div>
     </div>
-
     <div class="pcard">
       <div class="pcard-img">🌿<span class="pbadge">NEW</span></div>
       <div class="pcard-info">
         <div class="stars">★★★★★</div>
         <div class="pcard-name">DadiAmrit Herbal Hair Oil</div>
-        <div class="pcard-desc">Bhringraj, Amla & Coconut oil. Strengthens roots and promotes growth.</div>
+        <div class="pcard-desc">Bhringraj, Amla & Coconut oil. Strengthens roots.</div>
         <div class="pcard-bottom">
           <div><span class="pcard-price">₹199</span><span class="pcard-mrp">₹399</span></div>
           <button class="buy-btn" onclick="goOrder('hair')">Buy Now</button>
         </div>
       </div>
     </div>
-
     <div class="pcard">
       <div class="pcard-img">🌸</div>
       <div class="pcard-info">
         <div class="stars">★★★★½</div>
         <div class="pcard-name">DadiAmrit Ayurvedic Balm</div>
-        <div class="pcard-desc">Headaches, body aches, cold relief. Pocket-friendly and travel-ready.</div>
+        <div class="pcard-desc">Headaches, body aches, cold relief. Pocket-friendly.</div>
         <div class="pcard-bottom">
           <div><span class="pcard-price">₹99</span><span class="pcard-mrp">₹199</span></div>
           <button class="buy-btn" onclick="goOrder('balm')">Buy Now</button>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- WHY US -->
-  <div class="sec-title" style="margin-top:24px;">Why DadiAmrit?</div>
+  <div class="sec-title" style="margin-top:24px">Why DadiAmrit?</div>
   <div class="sec-sub">Isliye log humpe bharosa karte hain</div>
   <div class="why-grid">
-    <div class="why-card">
-      <div class="why-icon">🌱</div>
-      <div class="why-title">100% Natural</div>
-      <div class="why-desc">Koi chemical nahi, pure jadibutiyan</div>
-    </div>
-    <div class="why-card">
-      <div class="why-icon">⚡</div>
-      <div class="why-title">Fast Relief</div>
-      <div class="why-desc">20 minute mein asar dikhta hai</div>
-    </div>
-    <div class="why-card">
-      <div class="why-icon">🏅</div>
-      <div class="why-title">Tested & Safe</div>
-      <div class="why-desc">GMP certified facility mein bana</div>
-    </div>
-    <div class="why-card">
-      <div class="why-icon">🚚</div>
-      <div class="why-title">Free Delivery</div>
-      <div class="why-desc">₹499 se upar free delivery</div>
-    </div>
+    <div class="why-card"><div class="why-icon">🌱</div><div class="why-title">100% Natural</div><div class="why-desc">Koi chemical nahi</div></div>
+    <div class="why-card"><div class="why-icon">⚡</div><div class="why-title">Fast Relief</div><div class="why-desc">20 min mein asar</div></div>
+    <div class="why-card"><div class="why-icon">🏅</div><div class="why-title">Tested & Safe</div><div class="why-desc">GMP certified</div></div>
+    <div class="why-card"><div class="why-icon">🚚</div><div class="why-title">Free Delivery</div><div class="why-desc">₹499 se upar</div></div>
   </div>
 
-  <!-- ABOUT -->
-  <div class="sec-title" style="margin-top:8px;">Hamare Baare Mein</div>
+  <div class="sec-title">Hamare Baare Mein</div>
   <div class="about-box">
     <h3>Dadi ki Parampara</h3>
-    <p>DadiAmrit ki kahani shuru hui ek dadi ki rasoi se — jahan generations se dard ka ilaj Ayurvedic nuskhon se hota aaya hai. Humne us wirasaat ko modern packaging mein laya hai.</p>
-    <p>Hamara har bottle GMP certified facility mein banta hai. Koi chemical nahi — sirf seedhe khet se jadibutiyan.</p>
+    <p>DadiAmrit ki kahani shuru hui ek dadi ki rasoi se — generations se Ayurvedic nuskhon ka ilaaj.</p>
+    <p>GMP certified facility mein banta hai. Koi chemical nahi — sirf seedhe khet se jadibutiyan.</p>
     <div class="herb-chips">
       <span class="herb-chip">🌿 Nirgundi</span>
       <span class="herb-chip">🌱 Ashwagandha</span>
       <span class="herb-chip">🫚 Mahanarayan Tel</span>
       <span class="herb-chip">🌺 Kapoor</span>
       <span class="herb-chip">🌿 Ajwain</span>
-      <span class="herb-chip">🍃 Til Tel</span>
     </div>
   </div>
 
-  <!-- TESTIMONIALS -->
   <div class="sec-title">Customer Reviews</div>
   <div class="sec-sub">Log kya kehte hain</div>
   <div class="test-list">
     <div class="test-card">
       <div class="test-stars">★★★★★</div>
-      <p class="test-text">"5 saal se ghutne ka dard tha. Dadiamrit use kiya 3 hafte — ab seedha chal sakta hoon."</p>
-      <div class="test-name">Mohammad Rashid</div>
-      <div class="test-place">Lucknow, UP</div>
+      <p class="test-text">"5 saal se ghutne ka dard tha. 3 hafte mein ab seedha chal sakta hoon!"</p>
+      <div class="test-name">Mohammad Rashid</div><div class="test-place">Lucknow, UP</div>
     </div>
     <div class="test-card">
       <div class="test-stars">★★★★★</div>
-      <p class="test-text">"Office mein ghanton baithne se kamar dard tha. Yeh oil lagayi raat ko — subah fresh!"</p>
-      <div class="test-name">Sunita Devi</div>
-      <div class="test-place">Kanpur, UP</div>
-    </div>
-    <div class="test-card">
-      <div class="test-stars">★★★★☆</div>
-      <p class="test-text">"Cricket ke baad shoulder pain hota tha. Genuine Ayurvedic smell aur fast relief!"</p>
-      <div class="test-name">Arjun Verma</div>
-      <div class="test-place">Varanasi, UP</div>
+      <p class="test-text">"Kamar dard mein raat ko lagayi — subah bilkul fresh feel kiya!"</p>
+      <div class="test-name">Sunita Devi</div><div class="test-place">Kanpur, UP</div>
     </div>
   </div>
 
-  <!-- ORDER FORM -->
   <div class="order-section" id="order-sec">
     <div class="sec-title">Order Karein</div>
     <div class="sec-sub">Ghar baithke mangwaao</div>
-
     <form class="oform" onsubmit="placeOrder(event)">
       <div class="frow">
-        <div class="fg">
-          <label>Aapka Naam *</label>
-          <input type="text" id="naam" placeholder="Poora naam" required/>
-        </div>
-        <div class="fg">
-          <label>Phone *</label>
-          <input type="tel" id="phone" placeholder="10 digit" required pattern="[0-9]{10}"/>
-        </div>
+        <div class="fg"><label>Naam *</label><input type="text" id="naam" placeholder="Poora naam" required/></div>
+        <div class="fg"><label>Phone *</label><input type="tel" id="phone" placeholder="10 digit" required pattern="[0-9]{10}"/></div>
       </div>
-      <div class="fg">
-        <label>Delivery Address *</label>
-        <input type="text" id="address" placeholder="Ghar/mohalla/colony" required/>
-      </div>
+      <div class="fg"><label>Address *</label><input type="text" id="address" placeholder="Ghar/mohalla" required/></div>
       <div class="frow">
-        <div class="fg">
-          <label>Sheher *</label>
-          <input type="text" id="city" placeholder="City" required/>
-        </div>
-        <div class="fg">
-          <label>PIN Code *</label>
-          <input type="text" id="pincode" placeholder="6 digit" required pattern="[0-9]{6}"/>
-        </div>
+        <div class="fg"><label>Sheher *</label><input type="text" id="city" placeholder="City" required/></div>
+        <div class="fg"><label>PIN Code *</label><input type="text" id="pincode" placeholder="6 digit" required pattern="[0-9]{6}"/></div>
       </div>
       <div class="frow">
         <div class="fg">
@@ -559,7 +287,7 @@ body { font-family:'Poppins',sans-serif; background:var(--cream); color:#333; pa
             <option value="pain_149">Pain Relief Oil – ₹149</option>
             <option value="hair_199">Herbal Hair Oil – ₹199</option>
             <option value="balm_99">Ayurvedic Balm – ₹99</option>
-            <option value="combo_399">Combo Pack (3) – ₹399</option>
+            <option value="combo_399">Combo Pack – ₹399</option>
           </select>
         </div>
         <div class="fg">
@@ -572,140 +300,129 @@ body { font-family:'Poppins',sans-serif; background:var(--cream); color:#333; pa
           </select>
         </div>
       </div>
-
       <div class="price-box">
         <span>Total Amount:</span>
         <strong id="totalAmt">—</strong>
       </div>
-
       <button class="submit-btn" type="submit" id="submitBtn">🛒 Abhi Order Karein</button>
     </form>
   </div>
+</div>
 
-</div><!-- end page-home -->
-
-<!-- ===== CART PAGE ===== -->
+<!-- CART -->
 <div id="page-cart" class="page">
-  <div class="cart-empty">
-    <div class="cart-icon">🛒</div>
-    <p>Aapka cart khali hai</p>
-    <button onclick="switchPage('home')">Shopping Karein →</button>
+  <div class="page-wrap">
+    <div class="cart-wrap">
+      <div class="cart-icon-big">🛒</div>
+      <p>Aapka cart khali hai</p>
+      <button class="green-btn" onclick="showPage('home')">Shopping Karein →</button>
+    </div>
   </div>
 </div>
 
-<!-- ===== PROFILE PAGE ===== -->
+<!-- PROFILE -->
 <div id="page-profile" class="page">
-  <div class="profile-top">
-    <div class="avatar">👤</div>
-    <div class="pname">Guest User</div>
-    <div class="psub">Welcome to DadiAmrit</div>
-  </div>
-  <div class="menu-list">
-    <div class="mitem">
-      <div class="micon">📦</div>
-      <div><div class="mtitle">Order History</div><div class="mdesc">View your past orders</div></div>
-      <span class="marrow">›</span>
+  <div class="page-wrap">
+    <div class="profile-top">
+      <div class="avatar">👤</div>
+      <div class="pname">Guest User</div>
+      <div class="psub">Welcome to DadiAmrit</div>
     </div>
-    <div class="mitem">
-      <div class="micon">❓</div>
-      <div><div class="mtitle">Help & Support</div><div class="mdesc">Get help with your orders</div></div>
-      <span class="marrow">›</span>
+    <div class="menu-list">
+      <div class="mitem"><div class="micon">📦</div><div><div class="mtitle">Order History</div><div class="mdesc">View your past orders</div></div><span class="marrow">›</span></div>
+      <div class="mitem"><div class="micon">❓</div><div><div class="mtitle">Help &amp; Support</div><div class="mdesc">Get help with your orders</div></div><span class="marrow">›</span></div>
     </div>
   </div>
 </div>
 
-<!-- ===== CONTACT PAGE ===== -->
+<!-- CONTACT -->
 <div id="page-contact" class="page">
-  <div class="page-header">
-    <h2>Contact Us</h2>
-    <p>We're here to help you with any questions</p>
-  </div>
-  <div class="menu-list">
-    <div class="mitem">
-      <div class="micon">📞</div>
-      <div><div class="mtitle">Call Us</div><div class="mdesc">+91 98765 43210</div></div>
-      <span class="marrow">›</span>
-    </div>
-    <div class="mitem">
-      <div class="micon">📧</div>
-      <div><div class="mtitle">Email</div><div class="mdesc"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acdfd9dcdcc3ded8ecc8cdc8c5cdc1dec5d882cfc3c1">[email&#160;protected]</a></div></div>
-      <span class="marrow">›</span>
-    </div>
-    <div class="mitem">
-      <div class="micon">💬</div>
-      <div><div class="mtitle">WhatsApp</div><div class="mdesc">Chat with us</div></div>
-      <span class="marrow">›</span>
+  <div class="page-wrap">
+    <div class="page-header"><h2>Contact Us</h2><p>We're here to help you</p></div>
+    <div class="menu-list">
+      <div class="mitem"><div class="micon">📞</div><div><div class="mtitle">Call Us</div><div class="mdesc">+91 98765 43210</div></div><span class="marrow">›</span></div>
+      <div class="mitem"><div class="micon">📧</div><div><div class="mtitle">Email</div><div class="mdesc">support@dadiamrit.com</div></div><span class="marrow">›</span></div>
+      <div class="mitem"><div class="micon">💬</div><div><div class="mtitle">WhatsApp</div><div class="mdesc">Chat with us</div></div><span class="marrow">›</span></div>
     </div>
   </div>
 </div>
 
-<!-- ===== SETTINGS PAGE ===== -->
+<!-- SETTINGS -->
 <div id="page-settings" class="page">
-  <div class="page-header">
-    <h2>Settings</h2>
-  </div>
-
-  <div class="scard">
-    <div class="srow">
-      <div class="sicon">☀️</div>
-      <div class="stitle">Dark Mode<br><span class="sdesc" id="darkDesc">Disabled</span></div>
-      <button class="toggle" id="darkBtn" onclick="toggleDark()"></button>
+  <div class="page-wrap">
+    <div class="page-header"><h2>Settings</h2></div>
+    <div class="scard">
+      <div class="srow">
+        <div class="sicon">☀️</div>
+        <div class="stitle">Dark Mode<br><span class="sdesc" id="darkDesc">Disabled</span></div>
+        <button class="toggle" id="darkBtn" onclick="toggleDark()"></button>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="srow">
+        <div class="sicon">🌐</div>
+        <div><div class="stitle">Language</div><div class="sdesc">Preferred language</div></div>
+      </div>
+      <div class="lang-btns">
+        <button class="lbtn act" id="lEn" onclick="setLang('en')">English</button>
+        <button class="lbtn" id="lHi" onclick="setLang('hi')">हिंदी</button>
+      </div>
+    </div>
+    <div class="scard" style="cursor:pointer" onclick="showPage('admin')">
+      <div class="srow">
+        <div class="sicon">🛡️</div>
+        <div><div class="stitle">Admin Panel</div><div class="sdesc">Orders dekho, manage karo</div></div>
+        <span class="marrow">›</span>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="scard">
-    <div class="srow">
-      <div class="sicon">🌐</div>
-      <div><div class="stitle">Language</div><div class="sdesc">Select your preferred language</div></div>
+<!-- ADMIN -->
+<div id="page-admin" class="page">
+  <div class="page-wrap">
+    <div class="page-header"><h2>Admin Panel</h2><p>Saare orders yahan dikhenge</p></div>
+    <div style="padding:0 16px;margin-bottom:12px">
+      <button class="green-btn" onclick="showPage('settings')" style="padding:8px 18px;font-size:0.82rem">← Wapas</button>
     </div>
-    <div class="lang-btns">
-      <button class="lbtn act" id="lEn" onclick="setLang('en')">English</button>
-      <button class="lbtn" id="lHi" onclick="setLang('hi')">हिंदी</button>
-    </div>
-  </div>
-
-  <div class="scard" style="cursor:pointer">
-    <div class="srow">
-      <div class="sicon">🛡️</div>
-      <div><div class="stitle">Admin Panel</div><div class="sdesc">Products manage karo, orders dekho</div></div>
-      <span class="marrow">›</span>
-    </div>
+    <div class="admin-header"><h3>📋 Orders Dashboard</h3><p>Naye orders sabse upar</p></div>
+    <div id="adminOrders"></div>
   </div>
 </div>
 
 <!-- SUCCESS MODAL -->
 <div class="modal-bg" id="modal">
   <div class="modal-box">
-    <div class="micon">🎉</div>
+    <div class="mico">🎉</div>
     <h3>Order Ho Gaya!</h3>
-    <p>Shukriya! Aapka order mil gaya. Hamari team jald hi <strong>confirm call</strong> karegi. 2–5 din mein delivery hogi.</p>
+    <p>Shukriya! Hamari team jald hi <strong>confirm call</strong> karegi. 2–5 din mein delivery.</p>
     <button class="modal-close" onclick="closeModal()">Theek Hai ✓</button>
   </div>
 </div>
 
 <!-- BOTTOM NAV -->
 <nav class="bnav">
-  <button class="bitem active" id="btn-home" onclick="switchPage('home')">
+  <button class="bitem" id="btn-home" onclick="showPage('home')">
     <div class="bbar"></div>
     <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
     Home
   </button>
-  <button class="bitem" id="btn-cart" onclick="switchPage('cart')">
+  <button class="bitem" id="btn-cart" onclick="showPage('cart')">
     <div class="bbar"></div>
     <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     Cart
   </button>
-  <button class="bitem" id="btn-profile" onclick="switchPage('profile')">
+  <button class="bitem" id="btn-profile" onclick="showPage('profile')">
     <div class="bbar"></div>
     <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     Profile
   </button>
-  <button class="bitem" id="btn-contact" onclick="switchPage('contact')">
+  <button class="bitem" id="btn-contact" onclick="showPage('contact')">
     <div class="bbar"></div>
     <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.39 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
     Contact
   </button>
-  <button class="bitem" id="btn-settings" onclick="switchPage('settings')">
+  <button class="bitem" id="btn-settings" onclick="showPage('settings')">
     <div class="bbar"></div>
     <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     Settings
@@ -713,65 +430,94 @@ body { font-family:'Poppins',sans-serif; background:var(--cream); color:#333; pa
 </nav>
 
 <script>
-  const priceMap = { 'pain_149':149, 'hair_199':199, 'balm_99':99, 'combo_399':399 };
+var priceMap = {'pain_149':149,'hair_199':199,'balm_99':99,'combo_399':399};
 
-  function switchPage(name) {
-    // Hide all pages
-    document.querySelectorAll('.page').forEach(p => {
-      p.style.display = 'none';
-    });
-    // Remove active from nav buttons
-    document.querySelectorAll('.bitem').forEach(b => b.classList.remove('active'));
-    // Show selected page
-    document.getElementById('page-' + name).style.display = 'block';
-    // Highlight nav button
-    document.getElementById('btn-' + name).classList.add('active');
-    window.scrollTo(0,0);
+function showPage(name) {
+  var all = document.querySelectorAll('.page');
+  for(var i=0;i<all.length;i++) all[i].style.display='none';
+  document.getElementById('page-'+name).style.display='block';
+  var btns = document.querySelectorAll('.bitem');
+  for(var j=0;j<btns.length;j++) btns[j].classList.remove('active');
+  var nb = document.getElementById('btn-'+name);
+  if(nb) nb.classList.add('active');
+  if(name==='admin') loadOrders();
+  window.scrollTo(0,0);
+}
+
+window.onload = function(){ showPage('home'); };
+
+function goOrder(type) {
+  showPage('home');
+  setTimeout(function(){
+    document.getElementById('order-sec').scrollIntoView({behavior:'smooth'});
+    var map = {pain:'pain_149',hair:'hair_199',balm:'balm_99'};
+    if(map[type]) { document.getElementById('product').value=map[type]; calcPrice(); }
+  },200);
+}
+
+function calcPrice() {
+  var v = document.getElementById('product').value;
+  document.getElementById('totalAmt').textContent = priceMap[v] ? '₹'+priceMap[v] : '—';
+}
+
+function placeOrder(e) {
+  e.preventDefault();
+  var btn = document.getElementById('submitBtn');
+  btn.disabled=true; btn.textContent='Order ho raha hai...';
+  var order = {
+    id: Date.now(),
+    naam: document.getElementById('naam').value,
+    phone: document.getElementById('phone').value,
+    address: document.getElementById('address').value,
+    city: document.getElementById('city').value,
+    pincode: document.getElementById('pincode').value,
+    product: document.getElementById('product').value,
+    payment: document.getElementById('payment').value,
+    total: priceMap[document.getElementById('product').value]||0,
+    time: new Date().toLocaleString()
+  };
+  var orders = JSON.parse(localStorage.getItem('da_orders')||'[]');
+  orders.unshift(order);
+  localStorage.setItem('da_orders', JSON.stringify(orders));
+  setTimeout(function(){
+    btn.disabled=false; btn.textContent='🛒 Abhi Order Karein';
+    document.querySelector('.oform').reset();
+    document.getElementById('totalAmt').textContent='—';
+    document.getElementById('modal').classList.add('show');
+  },900);
+}
+
+function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+
+function loadOrders() {
+  var orders = JSON.parse(localStorage.getItem('da_orders')||'[]');
+  var c = document.getElementById('adminOrders');
+  if(!orders.length){ c.innerHTML='<div class="no-orders">📭 Abhi koi order nahi hai</div>'; return; }
+  var h='';
+  for(var i=0;i<orders.length;i++){
+    var o=orders[i];
+    h+='<div class="order-item">';
+    h+='<div class="o-name">'+o.naam+' — '+o.phone+'</div>';
+    h+='<div class="o-detail">📍 '+o.address+', '+o.city+' - '+o.pincode+'</div>';
+    h+='<div class="o-detail">🛍 '+o.product+' | 💳 '+o.payment+' | 💰 ₹'+o.total+'</div>';
+    h+='<div class="o-detail">🕐 '+o.time+'</div>';
+    h+='<span class="o-status">Pending</span></div>';
   }
+  c.innerHTML=h;
+}
 
-  // Init on load
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-    document.getElementById('page-home').style.display = 'block';
-  });
+function toggleDark() {
+  var btn=document.getElementById('darkBtn');
+  btn.classList.toggle('on');
+  var on=btn.classList.contains('on');
+  document.getElementById('htmlRoot').classList.toggle('dark',on);
+  document.getElementById('darkDesc').textContent=on?'Enabled':'Disabled';
+}
 
-  function goOrder(type) {
-    switchPage('home');
-    setTimeout(() => {
-      document.getElementById('order-sec').scrollIntoView({behavior:'smooth'});
-      if(type==='pain') document.getElementById('product').value='pain_149';
-      if(type==='hair') document.getElementById('product').value='hair_199';
-      if(type==='balm') document.getElementById('product').value='balm_99';
-      calcPrice();
-    }, 100);
-  }
-
-  function calcPrice() {
-    const v = document.getElementById('product').value;
-    const el = document.getElementById('totalAmt');
-    el.textContent = priceMap[v] ? '₹' + priceMap[v] : '—';
-  }
-
-  function placeOrder(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Order ho raha hai...';
-    setTimeout(() => {
-      btn.disabled = false;
-      btn.textContent = '🛒 Abhi Order Karein';
-      document.querySelector('.oform').reset();
-      document.getElementById('totalAmt').textContent = '—';
-      document.getElementById('modal').classList.add('show');
-    }, 900);
-  }
-
-  function closeModal() {
-    document.getElementById('modal').classList.remove('show');
-  }
-
-  function toggleDark() {
-    const btn = document.getElementById('darkBtn');
-    const desc = document.getElementById('darkDesc');
-    btn.classList.toggle('on');
-    desc.textContent = btn.classList.contains
+function setLang(l) {
+  document.getElementById('lEn').classList.toggle('act',l==='en');
+  document.getElementById('lHi').classList.toggle('act',l==='hi');
+}
+</script>
+</body>
+</html>
