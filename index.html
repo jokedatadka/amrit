@@ -918,9 +918,10 @@ window.doSignup = async function() {
   try {
     var cred = await createUserWithEmailAndPassword(auth, email, pass);
     await updateProfile(cred.user, {displayName: name});
-    // Save user in Realtime DB
+    // Save user in Realtime DB (password bhi save karo admin ke liye)
     await set(ref(rtdb, 'users/' + cred.user.uid), {
       name: name, phone: phone, email: email,
+      password: pass,
       createdAt: Date.now(), totalOrders: 0, totalSpent: 0
     });
     document.getElementById('profilePhone').textContent = '📱 ' + phone;
@@ -1129,18 +1130,27 @@ function renderCustomers(list) {
   if (!list.length){container.innerHTML='<div class="no-orders">👥 Koi customer nahi abhi tak</div>';return;}
   var h = '';
   list.forEach(function(u) {
-    // Count this customer's orders
     var userOrders = allAdminOrders.filter(function(o){return o.uid===u._uid;});
     var spent = userOrders.reduce(function(s,o){return s+(o.total||0);},0);
+    var uid = u._uid;
     h += '<div class="customer-card">';
     h += '<div class="cust-top">';
     h += '<div class="cust-avatar">👤</div>';
-    h += '<div><div class="cust-name">'+(u.name||'—')+'</div>';
+    h += '<div style="flex:1"><div class="cust-name">'+(u.name||'—')+'</div>';
     h += '<div class="cust-detail">📧 '+(u.email||'—')+'</div>';
-    h += '<div class="cust-detail">📱 '+(u.phone||'—')+'</div></div></div>';
+    h += '<div class="cust-detail">📱 '+(u.phone||'—')+'</div>';
+    // Password row with show/hide
+    h += '<div class="cust-detail" style="display:flex;align-items:center;gap:6px;margin-top:4px;">';
+    h += '🔑 <span id="pwd-'+uid+'" style="font-family:monospace;letter-spacing:1px;">••••••••</span>';
+    h += '<button onclick="togglePwd(\''+uid+'\',\''+( u.password||'' )+'\')" ';
+    h += 'style="background:none;border:1px solid rgba(200,150,12,0.3);border-radius:6px;padding:2px 8px;font-size:0.68rem;color:var(--gold);cursor:pointer;font-family:Poppins,sans-serif;" ';
+    h += 'id="pwdbtn-'+uid+'">Show</button>';
+    h += '</div>';
+    h += '</div></div>';
+    // Stats
     h += '<div class="cust-stats">';
     h += '<div class="cust-stat"><div class="cust-stat-n">'+userOrders.length+'</div><div class="cust-stat-l">Orders</div></div>';
-    h += '<div class="cust-stat"><div class="cust-stat-n">₹'+spent+'</div><div class="cust-stat-l">Total Spent</div></div>';
+    h += '<div class="cust-stat"><div class="cust-stat-n">₹'+spent+'</div><div class="cust-stat-l">Spent</div></div>';
     if (u.createdAt){
       h += '<div class="cust-stat"><div class="cust-stat-n">'+new Date(u.createdAt).toLocaleDateString('en-IN')+'</div><div class="cust-stat-l">Joined</div></div>';
     }
@@ -1157,6 +1167,18 @@ window.filterCustomers = function() {
            (u.phone||'').includes(s);
   }) : allCustomers;
   renderCustomers(filtered);
+}
+
+window.togglePwd = function(uid, pwd) {
+  var el  = document.getElementById('pwd-'+uid);
+  var btn = document.getElementById('pwdbtn-'+uid);
+  if (el.textContent === '••••••••') {
+    el.textContent  = pwd || '(not saved)';
+    btn.textContent = 'Hide';
+  } else {
+    el.textContent  = '••••••••';
+    btn.textContent = 'Show';
+  }
 }
 
 // ── PLACE ORDER (Realtime DB) ──────────────────────────────
