@@ -11,9 +11,50 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);padding-bottom:72px;transition:background 0.3s,color 0.3s;}
 .page{display:none;}
+
+/* NAV */
 .topnav{position:fixed;top:0;left:0;right:0;z-index:500;background:var(--card);border-bottom:1px solid rgba(200,150,12,0.2);padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
 .logo-text{font-family:'Yatra One',cursive;font-size:1.25rem;color:var(--green);line-height:1.1;}
 .logo-sub{font-size:0.65rem;color:var(--gold);}
+.nav-user-btn{margin-left:auto;background:rgba(26,58,26,0.08);border:none;border-radius:20px;padding:6px 14px;font-size:0.75rem;font-weight:600;color:var(--green);cursor:pointer;font-family:'Poppins',sans-serif;}
+
+/* AUTH SCREEN */
+.auth-screen{position:fixed;inset:0;z-index:900;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;overflow-y:auto;}
+.auth-logo{font-family:'Yatra One',cursive;font-size:2.2rem;color:var(--green);text-align:center;margin-bottom:4px;}
+.auth-logo span{color:var(--gold);}
+.auth-sub{font-size:0.78rem;color:var(--gray);text-align:center;margin-bottom:28px;}
+.auth-box{background:var(--card);border-radius:22px;padding:26px 22px;width:100%;max-width:380px;box-shadow:0 8px 40px rgba(0,0,0,0.08);}
+.auth-tabs{display:flex;background:#f0ebe0;border-radius:12px;padding:4px;margin-bottom:22px;gap:4px;}
+.auth-tab{flex:1;padding:8px;border:none;border-radius:9px;font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;background:transparent;color:var(--gray);transition:all 0.2s;}
+.auth-tab.act{background:var(--green);color:white;}
+.auth-field{margin-bottom:14px;}
+.auth-field label{display:block;font-size:0.72rem;font-weight:600;color:var(--subtext);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:6px;}
+.auth-field input{width:100%;border:1.5px solid #e0d8c8;border-radius:10px;padding:11px 14px;font-size:0.88rem;font-family:'Poppins',sans-serif;color:var(--text);background:var(--bg);outline:none;transition:border 0.2s;}
+.auth-field input:focus{border-color:var(--gold);}
+.auth-btn{width:100%;background:linear-gradient(135deg,var(--green),#2d5a2d);color:white;border:none;padding:13px;border-radius:12px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;margin-top:6px;}
+.auth-btn:disabled{opacity:0.6;}
+.auth-err{color:#e53935;font-size:0.78rem;text-align:center;margin-top:10px;min-height:18px;}
+.auth-divider{text-align:center;color:var(--gray);font-size:0.75rem;margin:16px 0;position:relative;}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:#e0d8c8;}
+.auth-divider::before{left:0;} .auth-divider::after{right:0;}
+.guest-link{text-align:center;margin-top:14px;}
+.guest-link button{background:none;border:none;color:var(--gray);font-size:0.8rem;cursor:pointer;text-decoration:underline;font-family:'Poppins',sans-serif;}
+
+/* ADMIN LOGIN */
+.admin-login-screen{position:fixed;inset:0;z-index:950;background:#0d1f0d;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
+.admin-login-screen.show{display:flex;}
+.admin-login-box{background:#1a3a1a;border:1px solid rgba(200,150,12,0.3);border-radius:22px;padding:30px 24px;width:100%;max-width:360px;}
+.admin-login-box h2{font-family:'Yatra One',cursive;color:var(--gold);font-size:1.5rem;text-align:center;margin-bottom:6px;}
+.admin-login-box p{color:rgba(255,255,255,0.5);font-size:0.75rem;text-align:center;margin-bottom:24px;}
+.admin-field label{display:block;font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:6px;}
+.admin-field input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(200,150,12,0.25);color:white;padding:11px 14px;border-radius:10px;font-size:0.88rem;font-family:'Poppins',sans-serif;outline:none;margin-bottom:14px;}
+.admin-field input:focus{border-color:var(--gold);}
+.admin-field input::placeholder{color:rgba(255,255,255,0.25);}
+.admin-login-btn{width:100%;background:linear-gradient(135deg,var(--gold),#a07008);color:white;border:none;padding:13px;border-radius:12px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;}
+.admin-login-err{color:#ff6b6b;font-size:0.78rem;text-align:center;margin-top:10px;min-height:18px;}
+.admin-back-btn{background:none;border:none;color:rgba(255,255,255,0.4);font-size:0.78rem;cursor:pointer;font-family:'Poppins',sans-serif;margin-top:16px;display:block;width:100%;text-align:center;}
+
+/* HERO */
 .hero{background:linear-gradient(135deg,#1A3A1A,#2d5a2d);padding:28px 20px 32px;margin-top:65px;position:relative;overflow:hidden;}
 .hero::after{content:'';position:absolute;right:-30px;top:-30px;width:180px;height:180px;border-radius:50%;background:rgba(200,150,12,0.1);}
 .hero-badge{display:inline-block;background:rgba(200,150,12,0.2);border:1px solid var(--gold);color:var(--gold);font-size:0.7rem;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
@@ -23,43 +64,58 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
 .hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
 .hero-tag{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:20px;}
 .hero-cta{display:inline-block;background:linear-gradient(135deg,var(--saffron),#c45c00);color:white;font-weight:700;font-size:0.95rem;padding:13px 28px;border-radius:30px;cursor:pointer;border:none;font-family:'Poppins',sans-serif;}
+
+/* STATS */
 .stats-row{display:flex;background:var(--card);border-bottom:1px solid rgba(200,150,12,0.12);}
 .stat-box{flex:1;text-align:center;padding:14px 4px;border-right:1px solid rgba(200,150,12,0.12);}
 .stat-box:last-child{border-right:none;}
 .stat-n{font-family:'Yatra One',cursive;font-size:1.3rem;color:var(--saffron);}
 .stat-l{font-size:0.6rem;color:var(--gray);text-transform:uppercase;}
+
+/* SECTIONS */
 .sec-title{font-family:'Yatra One',cursive;font-size:1.4rem;color:var(--green);padding:24px 16px 4px;}
 .sec-sub{font-size:0.78rem;color:var(--gray);padding:0 16px 16px;}
+
+/* PRODUCTS */
 .products-list{padding:0 16px;display:flex;flex-direction:column;gap:14px;}
 .pcard{background:var(--card);border-radius:16px;display:flex;gap:14px;padding:16px;border:1px solid rgba(200,150,12,0.1);}
 .pcard-img{width:80px;height:80px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,#FFF8EC,#FEF0D0);display:flex;align-items:center;justify-content:center;font-size:2.2rem;position:relative;}
 .pbadge{position:absolute;top:-6px;right:-6px;background:var(--saffron);color:white;font-size:0.58rem;font-weight:700;padding:2px 7px;border-radius:10px;}
-.pcard-info{flex:1;min-width:0;}
+.pcard-info{flex:1;}
 .pcard-name{font-weight:700;font-size:0.95rem;color:var(--green);margin-bottom:3px;}
 .pcard-desc{font-size:0.75rem;color:var(--gray);line-height:1.5;margin-bottom:8px;}
 .pcard-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
 .pcard-price{font-size:1.1rem;font-weight:700;color:var(--saffron);}
 .pcard-mrp{font-size:0.7rem;color:#bbb;text-decoration:line-through;margin-left:4px;}
 .stars{color:var(--gold);font-size:0.75rem;margin-bottom:4px;}
-.btn-row{display:flex;gap:6px;}
-.buy-btn{background:var(--green);color:white;border:none;padding:7px 14px;border-radius:20px;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
-.cart-btn{background:transparent;color:var(--gold);border:1.5px solid var(--gold);padding:7px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+.buy-btn{background:var(--green);color:white;border:none;padding:7px 14px;border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+.cart-btn{background:transparent;color:var(--saffron);border:1.5px solid var(--saffron);padding:7px 10px;border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:all 0.2s;}
+.cart-btn:active{background:var(--saffron);color:white;}
+.btn-group{display:flex;align-items:center;gap:5px;}
+
+/* WHY */
 .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px 24px;}
 .why-card{background:var(--card);border-radius:14px;padding:16px;text-align:center;border:1px solid rgba(200,150,12,0.1);}
 .why-icon{font-size:1.8rem;margin-bottom:8px;}
 .why-title{font-weight:700;font-size:0.85rem;color:var(--green);margin-bottom:4px;}
 .why-desc{font-size:0.72rem;color:var(--gray);}
+
+/* ABOUT */
 .about-box{margin:0 16px 24px;background:var(--green);border-radius:16px;padding:22px 18px;color:white;}
 .about-box h3{font-family:'Yatra One',cursive;font-size:1.3rem;color:var(--gold);margin-bottom:10px;}
 .about-box p{font-size:0.82rem;line-height:1.7;color:rgba(255,255,255,0.85);margin-bottom:12px;}
 .herb-chips{display:flex;flex-wrap:wrap;gap:7px;}
 .herb-chip{background:rgba(200,150,12,0.2);border:1px solid rgba(200,150,12,0.4);color:var(--gold);font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:15px;}
+
+/* TESTIMONIALS */
 .test-list{padding:0 16px 24px;display:flex;flex-direction:column;gap:12px;}
 .test-card{background:var(--card);border-radius:14px;padding:16px;border:1px solid rgba(200,150,12,0.1);}
 .test-stars{color:var(--gold);margin-bottom:6px;}
 .test-text{font-size:0.82rem;color:var(--subtext);line-height:1.6;font-style:italic;margin-bottom:10px;}
 .test-name{font-weight:700;font-size:0.8rem;color:var(--green);}
 .test-place{font-size:0.72rem;color:var(--gray);}
+
+/* ORDER FORM */
 .order-section{background:var(--green);padding:28px 16px;}
 .order-section .sec-title{color:var(--gold);padding-left:0;}
 .order-section .sec-sub{color:rgba(255,255,255,0.6);padding-left:0;}
@@ -76,44 +132,62 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
 .price-box strong{color:var(--saffron);font-size:1.3rem;font-family:'Yatra One',cursive;}
 .submit-btn{width:100%;background:linear-gradient(135deg,var(--saffron),#c45c00);color:white;border:none;padding:15px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;}
 .submit-btn:disabled{opacity:0.65;}
+
+/* LOGIN WALL (order ke upar) */
+.login-wall{background:rgba(255,255,255,0.07);border:1px solid rgba(200,150,12,0.25);border-radius:18px;padding:28px 20px;text-align:center;}
+.login-wall h3{font-family:'Yatra One',cursive;color:var(--gold);font-size:1.2rem;margin-bottom:8px;}
+.login-wall p{color:rgba(255,255,255,0.65);font-size:0.82rem;margin-bottom:18px;line-height:1.6;}
+.login-wall-btn{background:linear-gradient(135deg,var(--saffron),#c45c00);color:white;border:none;padding:12px 28px;border-radius:25px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;}
+
+/* PAGE WRAP */
 .page-wrap{padding-top:65px;min-height:90vh;background:var(--bg);}
 .page-header{padding:24px 16px 8px;}
 .page-header h2{font-family:'Yatra One',cursive;font-size:1.5rem;color:var(--green);}
 .page-header p{font-size:0.82rem;color:var(--gray);margin-top:4px;}
+
+/* MENU ITEMS */
 .menu-list{padding:0 16px;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
-.mitem{background:var(--card);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;border:1px solid rgba(200,150,12,0.08);cursor:pointer;text-decoration:none;color:inherit;}
+.mitem{background:var(--card);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;border:1px solid rgba(200,150,12,0.08);cursor:pointer;}
 .micon{width:40px;height:40px;border-radius:10px;background:rgba(26,58,26,0.08);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
 .mtitle{font-weight:700;font-size:0.9rem;color:var(--green);}
 .mdesc{font-size:0.75rem;color:var(--gray);}
 .marrow{margin-left:auto;color:#ccc;font-size:1.2rem;}
+
+/* PROFILE */
 .profile-top{text-align:center;padding:30px 20px 20px;}
 .avatar{width:80px;height:80px;border-radius:50%;background:rgba(26,58,26,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:2.5rem;}
 .pname{font-weight:700;font-size:1.2rem;color:var(--green);}
 .psub{font-size:0.8rem;color:var(--gray);}
+.logout-btn{background:rgba(233,30,30,0.08);color:#e53935;border:1px solid rgba(233,30,30,0.2);padding:10px 24px;border-radius:20px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;margin-top:12px;}
+.my-orders-box{margin:0 16px;background:var(--card);border-radius:14px;border:1px solid rgba(200,150,12,0.1);overflow:hidden;}
+.my-order-item{padding:14px 16px;border-bottom:1px solid rgba(200,150,12,0.08);}
+.my-order-item:last-child{border-bottom:none;}
+.mo-product{font-weight:700;font-size:0.88rem;color:var(--green);}
+.mo-detail{font-size:0.75rem;color:var(--gray);margin-top:2px;}
+.mo-status{display:inline-block;background:rgba(232,113,10,0.1);color:var(--saffron);font-size:0.68rem;font-weight:700;padding:2px 9px;border-radius:8px;margin-top:5px;}
+
 /* CART */
-.cart-page-wrap{padding-top:65px;min-height:90vh;background:var(--bg);}
-.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:65vh;text-align:center;padding:20px;}
+.cart-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:20px;}
 .cart-icon-big{font-size:4rem;margin-bottom:12px;opacity:0.3;}
-.cart-items-list{padding:12px 16px;display:flex;flex-direction:column;gap:10px;}
-.cart-item{background:var(--card);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;border:1px solid rgba(200,150,12,0.1);}
-.ci-emoji{font-size:1.8rem;width:44px;height:44px;background:linear-gradient(135deg,#FFF8EC,#FEF0D0);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.ci-info{flex:1;min-width:0;}
-.ci-name{font-weight:700;font-size:0.88rem;color:var(--green);}
-.ci-price{font-size:0.82rem;color:var(--saffron);font-weight:600;margin-top:2px;}
-.ci-qty{display:flex;align-items:center;gap:8px;margin-top:6px;}
-.qty-btn{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gold);background:transparent;color:var(--gold);font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.qty-num{font-weight:700;font-size:0.9rem;min-width:18px;text-align:center;}
-.ci-remove{background:none;border:none;color:#ccc;font-size:1.2rem;cursor:pointer;padding:4px;flex-shrink:0;}
-.cart-footer{background:var(--card);border-top:1px solid rgba(200,150,12,0.12);padding:16px;position:sticky;bottom:72px;}
-.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.cart-total-label{font-size:0.85rem;color:var(--gray);}
-.cart-total-amt{font-family:'Yatra One',cursive;font-size:1.4rem;color:var(--saffron);}
-.checkout-btn{width:100%;background:linear-gradient(135deg,var(--saffron),#c45c00);color:white;border:none;padding:14px;border-radius:12px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;}
-/* CART BADGE */
-.cart-badge{position:absolute;top:-4px;right:-6px;background:var(--saffron);color:white;font-size:0.55rem;font-weight:700;padding:2px 5px;border-radius:8px;min-width:16px;text-align:center;display:none;}
-/* TOAST */
-.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(20px);background:#1A3A1A;color:white;padding:10px 20px;border-radius:25px;font-size:0.82rem;font-weight:600;z-index:9999;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.cart-wrap p{color:var(--gray);font-size:0.95rem;margin-bottom:20px;}
+.green-btn{background:var(--green);color:white;border:none;padding:12px 28px;border-radius:30px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+.cart-item-list{padding:0 16px;display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.cart-item{background:var(--card);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;border:1px solid rgba(200,150,12,0.12);}
+.cart-item-emoji{font-size:2rem;width:52px;height:52px;background:linear-gradient(135deg,#FFF8EC,#FEF0D0);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cart-item-info{flex:1;}
+.cart-item-name{font-weight:700;font-size:0.88rem;color:var(--green);margin-bottom:2px;}
+.cart-item-price{font-size:0.85rem;color:var(--saffron);font-weight:600;}
+.cart-item-qty{display:flex;align-items:center;gap:8px;margin-top:6px;}
+.qty-btn{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gold);background:transparent;color:var(--green);font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.qty-num{font-weight:700;font-size:0.9rem;color:var(--text);min-width:18px;text-align:center;}
+.cart-remove{background:none;border:none;color:#ccc;font-size:1.3rem;cursor:pointer;padding:4px;}
+.cart-summary{margin:0 16px;background:var(--card);border-radius:14px;padding:16px;border:1px solid rgba(200,150,12,0.15);}
+.cart-summary-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:0.85rem;color:var(--subtext);}
+.cart-summary-row.total{font-size:1rem;font-weight:700;color:var(--text);border-top:1px solid rgba(200,150,12,0.15);padding-top:10px;margin-top:6px;}
+.cart-checkout-btn{width:100%;background:linear-gradient(135deg,var(--saffron),#c45c00);color:white;border:none;padding:14px;border-radius:12px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;margin-top:14px;}
+.cart-badge{position:absolute;top:-5px;right:-5px;background:var(--saffron);color:white;font-size:0.55rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.cart-nav-wrap{position:relative;display:inline-block;}
+
 /* SETTINGS */
 .scard{background:var(--card);border-radius:14px;margin:0 16px 12px;padding:16px;border:1px solid rgba(200,150,12,0.08);}
 .srow{display:flex;align-items:center;gap:14px;}
@@ -128,16 +202,72 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
 .lbtn{flex:1;padding:9px;border-radius:9px;border:none;font-family:'Poppins',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;}
 .lbtn.act{background:var(--green);color:white;}
 .lbtn:not(.act){background:#eee;color:#666;}
-/* ADMIN */
-.admin-header{background:var(--green);border-radius:14px;padding:16px;margin:0 16px 14px;color:white;}
-.admin-header h3{font-family:'Yatra One',cursive;font-size:1.2rem;color:var(--gold);margin-bottom:4px;}
-.admin-header p{font-size:0.78rem;color:rgba(255,255,255,0.7);}
-.order-item{background:var(--card);border-radius:12px;padding:14px;margin:0 16px 10px;border:1px solid rgba(200,150,12,0.1);}
-.o-name{font-weight:700;font-size:0.9rem;color:var(--green);}
-.o-detail{font-size:0.78rem;color:var(--gray);margin-top:3px;}
-.o-status{display:inline-block;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(232,113,10,0.1);color:var(--saffron);}
+
+/* ADMIN PANEL */
+.admin-panel-header{background:var(--green);padding:20px 16px 16px;margin-top:65px;}
+.admin-panel-header h2{font-family:'Yatra One',cursive;color:var(--gold);font-size:1.4rem;}
+.admin-panel-header p{color:rgba(255,255,255,0.6);font-size:0.78rem;margin-top:2px;}
+.admin-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.admin-logout-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;padding:6px 14px;border-radius:20px;font-size:0.72rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+.admin-stats{display:flex;gap:10px;padding:14px 16px;background:var(--card);border-bottom:1px solid rgba(200,150,12,0.1);}
+.astat{flex:1;text-align:center;background:rgba(26,58,26,0.05);border-radius:10px;padding:10px 6px;}
+.astat-n{font-family:'Yatra One',cursive;font-size:1.2rem;color:var(--saffron);}
+.astat-l{font-size:0.6rem;color:var(--gray);text-transform:uppercase;}
+.order-filters{display:flex;gap:8px;padding:12px 16px;overflow-x:auto;}
+.filter-btn{flex-shrink:0;padding:6px 14px;border-radius:20px;border:1.5px solid rgba(200,150,12,0.2);background:var(--card);color:var(--gray);font-size:0.75rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+.filter-btn.act{background:var(--green);color:white;border-color:var(--green);}
+.order-item{background:var(--card);border-radius:14px;padding:16px;margin:0 16px 10px;border:1px solid rgba(200,150,12,0.1);}
+.o-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;}
+.o-id{font-size:0.68rem;color:var(--gray);}
+.o-name{font-weight:700;font-size:0.95rem;color:var(--green);}
+.o-detail{font-size:0.78rem;color:var(--gray);margin-top:4px;line-height:1.5;}
+.o-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
+.o-status{display:inline-block;font-size:0.7rem;font-weight:700;padding:4px 12px;border-radius:10px;}
+.o-status.pending{background:rgba(232,113,10,0.12);color:#E8710A;}
+.o-status.confirmed{background:rgba(33,150,243,0.12);color:#1976D2;}
+.o-status.shipped{background:rgba(103,58,183,0.12);color:#673AB7;}
+.o-status.out-for-delivery{background:rgba(255,152,0,0.14);color:#E65100;}
+.o-status.delivered{background:rgba(46,125,50,0.12);color:#2e7d32;}
+.o-status.cancelled{background:rgba(233,30,99,0.12);color:#c62828;}
+.o-amt{font-family:'Yatra One',cursive;font-size:1.1rem;color:var(--saffron);}
+.status-select{border:1px solid rgba(200,150,12,0.25);background:var(--bg);color:var(--text);padding:5px 8px;border-radius:8px;font-size:0.75rem;font-family:'Poppins',sans-serif;cursor:pointer;font-weight:600;}
 .no-orders{text-align:center;color:var(--gray);padding:40px 20px;font-size:0.9rem;}
-.green-btn{background:var(--green);color:white;border:none;padding:12px 28px;border-radius:30px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+.admin-search{padding:12px 16px;}
+.admin-search input{width:100%;border:1.5px solid rgba(200,150,12,0.2);border-radius:10px;padding:10px 14px;font-size:0.85rem;font-family:'Poppins',sans-serif;background:var(--card);color:var(--text);outline:none;}
+/* ADMIN TABS */
+.admin-tabs-bar{display:flex;background:var(--card);border-bottom:2px solid rgba(200,150,12,0.15);padding:0 16px;}
+.admin-tab-btn{flex:1;padding:13px 0;border:none;background:transparent;font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:600;color:var(--gray);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s;}
+.admin-tab-btn.act{color:var(--green);border-bottom-color:var(--green);}
+/* CUSTOMER CARDS */
+.customer-card{background:var(--card);border-radius:14px;padding:14px 16px;margin:0 16px 10px;border:1px solid rgba(200,150,12,0.1);}
+.cust-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.cust-avatar{width:42px;height:42px;border-radius:50%;background:rgba(26,58,26,0.1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.cust-name{font-weight:700;font-size:0.9rem;color:var(--green);}
+.cust-detail{font-size:0.75rem;color:var(--gray);margin-top:2px;}
+.cust-stats{display:flex;gap:10px;margin-top:8px;}
+.cust-stat{background:rgba(26,58,26,0.05);border-radius:8px;padding:6px 12px;text-align:center;}
+.cust-stat-n{font-weight:700;font-size:0.88rem;color:var(--saffron);}
+.cust-stat-l{font-size:0.62rem;color:var(--gray);}
+/* ORDER TRACKER (customer side) */
+.order-tracker{display:flex;align-items:center;gap:0;margin:10px 0 2px;overflow-x:auto;padding-bottom:4px;}
+.tracker-step{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.tracker-dot{width:22px;height:22px;border-radius:50%;border:2px solid #ddd;background:white;display:flex;align-items:center;justify-content:center;font-size:0.65rem;transition:all 0.3s;position:relative;z-index:1;}
+.tracker-dot.done{background:var(--green);border-color:var(--green);color:white;}
+.tracker-dot.active{background:var(--saffron);border-color:var(--saffron);color:white;box-shadow:0 0 0 3px rgba(232,113,10,0.2);}
+.tracker-label{font-size:0.58rem;color:var(--gray);margin-top:4px;text-align:center;max-width:54px;line-height:1.3;}
+.tracker-label.done{color:var(--green);font-weight:600;}
+.tracker-label.active{color:var(--saffron);font-weight:700;}
+.tracker-line{width:24px;height:2px;background:#ddd;margin-bottom:18px;flex-shrink:0;}
+.tracker-line.done{background:var(--green);}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:500;background:var(--card);border-top:1px solid rgba(200,150,12,0.15);display:flex;justify-content:space-around;padding:8px 0 10px;box-shadow:0 -3px 16px rgba(0,0,0,0.07);}
+.bitem{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:#bbb;font-size:0.6rem;font-weight:600;text-transform:uppercase;font-family:'Poppins',sans-serif;padding:2px 10px;}
+.bitem.active{color:var(--green);}
+.bitem svg{width:22px;height:22px;}
+.bbar{width:18px;height:2.5px;background:var(--green);border-radius:2px;opacity:0;}
+.bitem.active .bbar{opacity:1;}
+
 /* MODAL */
 .modal-bg{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;}
 .modal-bg.show{display:flex;}
@@ -146,24 +276,100 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
 .modal-box h3{font-family:'Yatra One',cursive;font-size:1.5rem;color:var(--green);margin-bottom:8px;}
 .modal-box p{font-size:0.85rem;color:#666;line-height:1.6;margin-bottom:20px;}
 .modal-close{background:var(--saffron);color:white;border:none;padding:12px 28px;border-radius:25px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
-.admin-loading{text-align:center;padding:30px;color:var(--gray);font-size:0.9rem;}
-.spinner{display:inline-block;width:24px;height:24px;border:3px solid rgba(26,58,26,0.15);border-top-color:var(--green);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:8px;}
+
+/* TOAST */
+.cart-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1A3A1A;color:white;padding:10px 22px;border-radius:30px;font-size:0.82rem;font-weight:600;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;}
+.cart-toast.show{opacity:1;}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;}
+.loading-overlay.hide{display:none;}
+.spinner{width:40px;height:40px;border:3px solid rgba(26,58,26,0.1);border-top:3px solid var(--green);border-radius:50%;animation:spin 0.8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.hist-item{background:var(--card);border-radius:12px;padding:14px;margin:0 16px 10px;border:1px solid rgba(200,150,12,0.1);}
-/* BOTTOM NAV */
-.bnav{position:fixed;bottom:0;left:0;right:0;z-index:500;background:var(--card);border-top:1px solid rgba(200,150,12,0.15);display:flex;justify-content:space-around;padding:8px 0 10px;box-shadow:0 -3px 16px rgba(0,0,0,0.07);}
-.bitem{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:#bbb;font-size:0.6rem;font-weight:600;text-transform:uppercase;font-family:'Poppins',sans-serif;padding:2px 10px;position:relative;}
-.bitem.active{color:var(--green);}
-.bitem svg{width:22px;height:22px;}
-.bbar{width:18px;height:2.5px;background:var(--green);border-radius:2px;opacity:0;}
-.bitem.active .bbar{opacity:1;}
+
 @media(max-width:380px){.frow{grid-template-columns:1fr;}.why-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<div class="toast" id="toast"></div>
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div style="font-size:0.82rem;color:var(--gray)">Loading...</div>
+</div>
 
+<!-- AUTH SCREEN -->
+<div class="auth-screen" id="authScreen" style="display:none;">
+  <div class="auth-logo">Dadi<span>Amrit</span></div>
+  <div class="auth-sub">🌿 Parampara se rahat</div>
+  <div class="auth-box">
+    <div class="auth-tabs">
+      <button class="auth-tab act" id="tabLogin" onclick="switchAuthTab('login')">Login</button>
+      <button class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="formLogin">
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="aapka@email.com"/>
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="Password"/>
+      </div>
+      <button class="auth-btn" id="loginBtn" onclick="doLogin()">🔐 Login Karein</button>
+      <div class="auth-err" id="loginErr"></div>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="formSignup" style="display:none;">
+      <div class="auth-field">
+        <label>Poora Naam</label>
+        <input type="text" id="signupName" placeholder="Aapka naam"/>
+      </div>
+      <div class="auth-field">
+        <label>Phone</label>
+        <input type="tel" id="signupPhone" placeholder="10 digit mobile number" maxlength="10"/>
+      </div>
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="aapka@email.com"/>
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" id="signupPass" placeholder="Min 6 characters"/>
+      </div>
+      <button class="auth-btn" id="signupBtn" onclick="doSignup()">✅ Account Banayein</button>
+      <div class="auth-err" id="signupErr"></div>
+    </div>
+
+    <div class="guest-link">
+      <button onclick="continueAsGuest()">Abhi nahi, sirf dekhna hai →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN SCREEN -->
+<div class="admin-login-screen" id="adminLoginScreen">
+  <div class="admin-login-box">
+    <h2>🛡️ Admin Login</h2>
+    <p>Sirf authorized admin access kar sakta hai</p>
+    <div class="admin-field">
+      <label>Admin Email</label>
+      <input type="email" id="adminEmail" placeholder="admin@dadiamrit.com"/>
+    </div>
+    <div class="admin-field">
+      <label>Admin Password</label>
+      <input type="password" id="adminPass" placeholder="Admin password"/>
+    </div>
+    <button class="admin-login-btn" onclick="doAdminLogin()">🔓 Admin Login</button>
+    <div class="admin-login-err" id="adminLoginErr"></div>
+    <button class="admin-back-btn" onclick="closeAdminLogin()">← Wapas jaao</button>
+  </div>
+</div>
+
+<!-- TOP NAV -->
 <nav class="topnav">
   <svg width="34" height="34" viewBox="0 0 100 100" style="flex-shrink:0">
     <path d="M50 8 C50 8 76 40 76 61 C76 75 64.6 86 50 86 C35.4 86 24 75 24 61 C24 40 50 8 50 8Z" fill="#C8960C"/>
@@ -181,13 +387,10 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
     <div class="logo-text">DadiAmrit</div>
     <div class="logo-sub">Parampara se rahat</div>
   </div>
-  <div id="fbIndicator" style="margin-left:auto;font-size:0.65rem;display:flex;align-items:center;gap:4px;color:#bbb;">
-    <span id="fbDot" style="width:7px;height:7px;border-radius:50%;background:#bbb;display:inline-block;"></span>
-    <span id="fbLabel">DB...</span>
-  </div>
+  <button class="nav-user-btn" id="navUserBtn" onclick="navUserClick()">Login</button>
 </nav>
 
-<!-- HOME -->
+<!-- HOME PAGE -->
 <div id="page-home" class="page">
   <div class="hero">
     <span class="hero-badge">🌿 100% AYURVEDIC</span>
@@ -217,8 +420,8 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
         <div class="pcard-desc">Traditional Ayurvedic formula for fast, natural pain relief.</div>
         <div class="pcard-bottom">
           <div><span class="pcard-price">₹149</span><span class="pcard-mrp">₹299</span></div>
-          <div class="btn-row">
-            <button class="cart-btn" onclick="addToCart('pain_149','DadiAmrit Pain Relief Oil',149,'🫙')">🛒 Cart</button>
+          <div class="btn-group">
+            <button class="cart-btn" onclick="addToCart('pain_149','DadiAmrit Pain Relief Oil','🫙',149)">+ Cart</button>
             <button class="buy-btn" onclick="goOrder('pain')">Buy Now</button>
           </div>
         </div>
@@ -232,8 +435,8 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
         <div class="pcard-desc">Bhringraj, Amla & Coconut oil. Strengthens roots.</div>
         <div class="pcard-bottom">
           <div><span class="pcard-price">₹199</span><span class="pcard-mrp">₹399</span></div>
-          <div class="btn-row">
-            <button class="cart-btn" onclick="addToCart('hair_199','DadiAmrit Herbal Hair Oil',199,'🌿')">🛒 Cart</button>
+          <div class="btn-group">
+            <button class="cart-btn" onclick="addToCart('hair_199','DadiAmrit Herbal Hair Oil','🌿',199)">+ Cart</button>
             <button class="buy-btn" onclick="goOrder('hair')">Buy Now</button>
           </div>
         </div>
@@ -247,24 +450,9 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
         <div class="pcard-desc">Headaches, body aches, cold relief. Pocket-friendly.</div>
         <div class="pcard-bottom">
           <div><span class="pcard-price">₹99</span><span class="pcard-mrp">₹199</span></div>
-          <div class="btn-row">
-            <button class="cart-btn" onclick="addToCart('balm_99','DadiAmrit Ayurvedic Balm',99,'🌸')">🛒 Cart</button>
+          <div class="btn-group">
+            <button class="cart-btn" onclick="addToCart('balm_99','DadiAmrit Ayurvedic Balm','🌸',99)">+ Cart</button>
             <button class="buy-btn" onclick="goOrder('balm')">Buy Now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="pcard">
-      <div class="pcard-img">🎁<span class="pbadge">SAVE</span></div>
-      <div class="pcard-info">
-        <div class="stars">★★★★★</div>
-        <div class="pcard-name">DadiAmrit Combo Pack</div>
-        <div class="pcard-desc">Pain Oil + Hair Oil + Balm — teeno saath sabse sasti deal!</div>
-        <div class="pcard-bottom">
-          <div><span class="pcard-price">₹399</span><span class="pcard-mrp">₹697</span></div>
-          <div class="btn-row">
-            <button class="cart-btn" onclick="addToCart('combo_399','DadiAmrit Combo Pack',399,'🎁')">🛒 Cart</button>
-            <button class="buy-btn" onclick="goOrder('combo')">Buy Now</button>
           </div>
         </div>
       </div>
@@ -286,8 +474,11 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
     <p>DadiAmrit ki kahani shuru hui ek dadi ki rasoi se — generations se Ayurvedic nuskhon ka ilaaj.</p>
     <p>GMP certified facility mein banta hai. Koi chemical nahi — sirf seedhe khet se jadibutiyan.</p>
     <div class="herb-chips">
-      <span class="herb-chip">🌿 Nirgundi</span><span class="herb-chip">🌱 Ashwagandha</span>
-      <span class="herb-chip">🫚 Mahanarayan Tel</span><span class="herb-chip">🌺 Kapoor</span><span class="herb-chip">🌿 Ajwain</span>
+      <span class="herb-chip">🌿 Nirgundi</span>
+      <span class="herb-chip">🌱 Ashwagandha</span>
+      <span class="herb-chip">🫚 Mahanarayan Tel</span>
+      <span class="herb-chip">🌺 Kapoor</span>
+      <span class="herb-chip">🌿 Ajwain</span>
     </div>
   </div>
 
@@ -309,7 +500,16 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   <div class="order-section" id="order-sec">
     <div class="sec-title">Order Karein</div>
     <div class="sec-sub">Ghar baithke mangwaao</div>
-    <form class="oform" onsubmit="placeOrder(event)">
+
+    <!-- Login Wall (guest ke liye) -->
+    <div class="login-wall" id="loginWall" style="display:none;">
+      <h3>🔐 Pehle Login Karein</h3>
+      <p>Order karne ke liye account banana zaroori hai.<br>Isse aap apne orders track kar sakte hain.</p>
+      <button class="login-wall-btn" onclick="showAuthScreen()">Login / Sign Up Karein</button>
+    </div>
+
+    <!-- Order Form (logged-in ke liye) -->
+    <form class="oform" id="orderForm" onsubmit="placeOrder(event)" style="display:none;">
       <div class="frow">
         <div class="fg"><label>Naam *</label><input type="text" id="naam" placeholder="Poora naam" required/></div>
         <div class="fg"><label>Phone *</label><input type="tel" id="phone" placeholder="10 digit" required pattern="[0-9]{10}"/></div>
@@ -340,91 +540,68 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
           </select>
         </div>
       </div>
-      <div class="price-box"><span>Total Amount:</span><strong id="totalAmt">—</strong></div>
+      <div class="price-box">
+        <span>Total Amount:</span>
+        <strong id="totalAmt">—</strong>
+      </div>
       <button class="submit-btn" type="submit" id="submitBtn">🛒 Abhi Order Karein</button>
     </form>
   </div>
 </div>
 
-<!-- CART -->
+<!-- CART PAGE -->
 <div id="page-cart" class="page">
-  <div class="cart-page-wrap">
-    <div class="page-header"><h2>🛒 Mera Cart</h2><p id="cartHeaderSub">0 items</p></div>
-    <div id="cartEmpty" class="cart-empty">
+  <div class="page-wrap">
+    <div class="page-header"><h2>🛒 Mera Cart</h2><p id="cart-count-text">Cart khali hai</p></div>
+    <div id="cart-empty" class="cart-wrap" style="display:none">
       <div class="cart-icon-big">🛒</div>
       <p>Aapka cart khali hai</p>
       <button class="green-btn" onclick="showPage('home')">Shopping Karein →</button>
     </div>
-    <div id="cartItemsList" class="cart-items-list"></div>
-    <div id="cartFooter" class="cart-footer" style="display:none;">
-      <div class="cart-total-row">
-        <span class="cart-total-label">Kul Rakam:</span>
-        <span class="cart-total-amt" id="cartTotalAmt">₹0</span>
+    <div id="cart-filled" style="display:none">
+      <div class="cart-item-list" id="cart-items-container"></div>
+      <div class="cart-summary">
+        <div class="cart-summary-row"><span>Items</span><span id="cart-items-count">0 items</span></div>
+        <div class="cart-summary-row"><span>Delivery</span><span style="color:#4caf50">FREE</span></div>
+        <div class="cart-summary-row total"><span>Total</span><span id="cart-total-price" style="color:var(--saffron)">₹0</span></div>
+        <button class="cart-checkout-btn" onclick="cartCheckout()">🛒 Abhi Order Karein</button>
       </div>
-      <button class="checkout-btn" onclick="checkoutFromCart()">✅ Order Place Karein</button>
     </div>
   </div>
 </div>
 
-<!-- PROFILE -->
+<!-- PROFILE PAGE -->
 <div id="page-profile" class="page">
   <div class="page-wrap">
     <div class="profile-top">
       <div class="avatar">👤</div>
-      <div class="pname">Guest User</div>
-      <div class="psub">Welcome to DadiAmrit</div>
+      <div class="pname" id="profileName">Guest User</div>
+      <div class="psub" id="profileEmail">-</div>
+      <div class="psub" id="profilePhone" style="margin-top:2px;"></div>
+      <button class="logout-btn" id="profileLogoutBtn" onclick="doLogout()" style="display:none;">Logout</button>
+      <button class="green-btn" id="profileLoginBtn" onclick="showAuthScreen()" style="margin-top:12px;display:none;">Login / Sign Up</button>
     </div>
-    <div class="menu-list">
-      <div class="mitem" onclick="showPage('orderhistory')">
-        <div class="micon">📦</div>
-        <div><div class="mtitle">Order History</div><div class="mdesc">Apne purane orders dekho</div></div>
-        <span class="marrow">›</span>
-      </div>
-      <a class="mitem" href="https://wa.me/919876543210?text=Namaste!%20DadiAmrit%20support%20chahiye." target="_blank">
-        <div class="micon">💬</div>
-        <div><div class="mtitle">Help &amp; Support</div><div class="mdesc">WhatsApp pe poochho</div></div>
-        <span class="marrow">›</span>
-      </a>
+    <div style="padding:0 16px 8px;"><div class="sec-title" style="padding:0 0 4px;">Mere Orders</div></div>
+    <div class="my-orders-box" id="myOrdersBox">
+      <div style="padding:20px;text-align:center;color:var(--gray);font-size:0.85rem;">Login karein apne orders dekhne ke liye</div>
     </div>
+    <div style="height:20px;"></div>
   </div>
 </div>
 
-<!-- ORDER HISTORY -->
-<div id="page-orderhistory" class="page">
-  <div class="page-wrap">
-    <div class="page-header"><h2>📦 Order History</h2><p>Aapke saare orders</p></div>
-    <div style="padding:0 16px;margin-bottom:12px;">
-      <button class="green-btn" onclick="showPage('profile')" style="padding:8px 18px;font-size:0.82rem">← Wapas</button>
-    </div>
-    <div id="orderHistoryList"></div>
-  </div>
-</div>
-
-<!-- CONTACT -->
+<!-- CONTACT PAGE -->
 <div id="page-contact" class="page">
   <div class="page-wrap">
-    <div class="page-header"><h2>Contact Us</h2><p>Hum yahan hain aapke liye</p></div>
+    <div class="page-header"><h2>Contact Us</h2><p>We're here to help you</p></div>
     <div class="menu-list">
-      <a class="mitem" href="tel:+919876543210">
-        <div class="micon">📞</div>
-        <div><div class="mtitle">Call Us</div><div class="mdesc">+91 98765 43210</div></div>
-        <span class="marrow">›</span>
-      </a>
-      <a class="mitem" href="mailto:support@dadiamrit.com">
-        <div class="micon">📧</div>
-        <div><div class="mtitle">Email</div><div class="mdesc">support@dadiamrit.com</div></div>
-        <span class="marrow">›</span>
-      </a>
-      <a class="mitem" href="https://wa.me/919876543210?text=Namaste!%20DadiAmrit%20ke%20baare%20mein%20poochna%20tha." target="_blank">
-        <div class="micon">💬</div>
-        <div><div class="mtitle">WhatsApp</div><div class="mdesc">Abhi chat karein</div></div>
-        <span class="marrow">›</span>
-      </a>
+      <div class="mitem"><div class="micon">📞</div><div><div class="mtitle">Call Us</div><div class="mdesc">+91 98765 43210</div></div><span class="marrow">›</span></div>
+      <div class="mitem"><div class="micon">📧</div><div><div class="mtitle">Email</div><div class="mdesc">support@dadiamrit.com</div></div><span class="marrow">›</span></div>
+      <div class="mitem"><div class="micon">💬</div><div><div class="mtitle">WhatsApp</div><div class="mdesc">Chat with us</div></div><span class="marrow">›</span></div>
     </div>
   </div>
 </div>
 
-<!-- SETTINGS -->
+<!-- SETTINGS PAGE -->
 <div id="page-settings" class="page">
   <div class="page-wrap">
     <div class="page-header"><h2>Settings</h2></div>
@@ -445,45 +622,42 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
         <button class="lbtn" id="lHi" onclick="setLang('hi')">हिंदी</button>
       </div>
     </div>
-    <div class="scard" style="cursor:pointer" onclick="showPage('admin')">
+    <div class="scard" style="cursor:pointer" onclick="openAdminLogin()">
       <div class="srow">
         <div class="sicon">🛡️</div>
-        <div><div class="stitle">Admin Panel</div><div class="sdesc">Orders dekho, manage karo</div></div>
+        <div><div class="stitle">Admin Panel</div><div class="sdesc">Admin login required</div></div>
         <span class="marrow">›</span>
       </div>
     </div>
-    <div class="scard">
-      <div class="srow">
-        <div class="sicon">🔥</div>
-        <div><div class="stitle">Firebase Database</div><div class="sdesc" id="fbStatusText">Connecting...</div></div>
-        <span id="fbStatusDot" style="width:10px;height:10px;border-radius:50%;background:#bbb;flex-shrink:0;"></span>
+  </div>
+</div>
+
+<!-- ADMIN PANEL PAGE -->
+<div id="page-admin" class="page" style="padding-bottom:0;">
+  <div class="admin-panel-header">
+    <div class="admin-topbar">
+      <div>
+        <h2>📋 Admin Panel</h2>
+        <p>DadiAmrit Orders Dashboard</p>
       </div>
+      <button class="admin-logout-btn" onclick="adminLogout()">Logout</button>
     </div>
   </div>
-</div>
-
-<!-- ADMIN -->
-<div id="page-admin" class="page">
-  <div class="page-wrap">
-    <div class="page-header"><h2>Admin Panel</h2><p>Saare orders — <strong style="color:var(--saffron)">Real-Time</strong> 🔥</p></div>
-    <div style="padding:0 16px;margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-      <button class="green-btn" onclick="showPage('settings')" style="padding:8px 18px;font-size:0.82rem">← Wapas</button>
-      <button class="green-btn" onclick="clearAllOrders()" style="padding:8px 18px;font-size:0.82rem;background:#c0392b;">🗑 Sab Clear</button>
-      <span id="orderCountLabel" style="font-size:0.78rem;color:var(--gray);margin-left:auto;"></span>
-    </div>
-    <div class="admin-header"><h3>📋 Orders Dashboard</h3><p>Naye orders sabse upar · Firebase se live</p></div>
-    <div id="adminOrders"><div class="admin-loading"><div class="spinner"></div><br>Load ho raha hai...</div></div>
+  <div class="admin-stats" id="adminStats">
+    <div class="astat"><div class="astat-n" id="statTotal">0</div><div class="astat-l">Total Orders</div></div>
+    <div class="astat"><div class="astat-n" id="statRevenue">₹0</div><div class="astat-l">Revenue</div></div>
+    <div class="astat"><div class="astat-n" id="statPending">0</div><div class="astat-l">Pending</div></div>
   </div>
-</div>
-
-<!-- SUCCESS MODAL -->
-<div class="modal-bg" id="modal">
-  <div class="modal-box">
-    <div class="mico">🎉</div>
-    <h3>Order Ho Gaya!</h3>
-    <p>Shukriya! Hamari team jald hi <strong>confirm call</strong> karegi. 2–5 din mein delivery.</p>
-    <button class="modal-close" onclick="closeModal()">Theek Hai ✓</button>
+  <div class="admin-search">
+    <input type="text" id="adminSearchInput" placeholder="🔍 Search by naam, phone, product..." oninput="filterAdminOrders()"/>
   </div>
+  <div class="order-filters">
+    <button class="filter-btn act" onclick="setAdminFilter('all',this)">Sabhi</button>
+    <button class="filter-btn" onclick="setAdminFilter('Pending',this)">Pending</button>
+    <button class="filter-btn" onclick="setAdminFilter('Delivered',this)">Delivered</button>
+    <button class="filter-btn" onclick="setAdminFilter('Cancelled',this)">Cancelled</button>
+  </div>
+  <div id="adminOrders" style="padding-top:8px;padding-bottom:30px;"></div>
 </div>
 
 <!-- BOTTOM NAV -->
@@ -495,8 +669,10 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   </button>
   <button class="bitem" id="btn-cart" onclick="showPage('cart')">
     <div class="bbar"></div>
-    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-    <span id="cartNavBadge" class="cart-badge"></span>
+    <span class="cart-nav-wrap">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+    </span>
     Cart
   </button>
   <button class="bitem" id="btn-profile" onclick="showPage('profile')">
@@ -516,259 +692,694 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   </button>
 </nav>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
-<script>
-// FIREBASE INIT
-firebase.initializeApp({
-  apiKey:"AIzaSyAM9KxqeUzCOSZFkrL5DOvXGEAUFBqS3j0",
-  authDomain:"dadiamrit-11950.firebaseapp.com",
-  databaseURL:"https://dadiamrit-11950-default-rtdb.firebaseio.com",
-  projectId:"dadiamrit-11950",
-  storageBucket:"dadiamrit-11950.firebasestorage.app",
-  messagingSenderId:"346309731257",
-  appId:"1:346309731257:web:e56570ec095a8626f9cc68",
-  measurementId:"G-RZJKKYWSST"
+<!-- SUCCESS MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <div class="mico">🎉</div>
+    <h3>Order Ho Gaya!</h3>
+    <p>Shukriya! Hamari team jald hi <strong>confirm call</strong> karegi. 2–5 din mein delivery.</p>
+    <button class="modal-close" onclick="closeModal()">Theek Hai ✓</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="cart-toast" id="cart-toast"></div>
+
+<!-- ADMIN PANEL PAGE — UPDATED with 2 tabs + full status -->
+<div id="page-admin" class="page" style="padding-bottom:0;">
+  <div class="admin-panel-header">
+    <div class="admin-topbar">
+      <div>
+        <h2>📋 Admin Panel</h2>
+        <p id="adminWelcomeText">DadiAmrit Dashboard</p>
+      </div>
+      <button class="admin-logout-btn" onclick="adminLogout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="admin-stats" id="adminStats">
+    <div class="astat"><div class="astat-n" id="statTotal">0</div><div class="astat-l">Total Orders</div></div>
+    <div class="astat"><div class="astat-n" id="statRevenue">₹0</div><div class="astat-l">Revenue</div></div>
+    <div class="astat"><div class="astat-n" id="statPending">0</div><div class="astat-l">Pending</div></div>
+    <div class="astat"><div class="astat-n" id="statCustomers">0</div><div class="astat-l">Customers</div></div>
+  </div>
+
+  <!-- ADMIN TABS -->
+  <div class="admin-tabs-bar">
+    <button class="admin-tab-btn act" id="atab-orders" onclick="switchAdminTab('orders')">📦 Orders</button>
+    <button class="admin-tab-btn" id="atab-customers" onclick="switchAdminTab('customers')">👥 Customers</button>
+  </div>
+
+  <!-- ORDERS TAB -->
+  <div id="adminTabOrders">
+    <div class="admin-search">
+      <input type="text" id="adminSearchInput" placeholder="🔍 Search naam, phone, product..." oninput="filterAdminOrders()"/>
+    </div>
+    <div class="order-filters">
+      <button class="filter-btn act" onclick="setAdminFilter('all',this)">Sabhi</button>
+      <button class="filter-btn" onclick="setAdminFilter('Pending',this)">🕐 Pending</button>
+      <button class="filter-btn" onclick="setAdminFilter('Confirmed',this)">✅ Confirmed</button>
+      <button class="filter-btn" onclick="setAdminFilter('Shipped',this)">🚚 Shipped</button>
+      <button class="filter-btn" onclick="setAdminFilter('Out for Delivery',this)">🛵 Out for Delivery</button>
+      <button class="filter-btn" onclick="setAdminFilter('Delivered',this)">🎉 Delivered</button>
+      <button class="filter-btn" onclick="setAdminFilter('Cancelled',this)">❌ Cancelled</button>
+    </div>
+    <div id="adminOrders" style="padding-top:8px;padding-bottom:30px;"></div>
+  </div>
+
+  <!-- CUSTOMERS TAB -->
+  <div id="adminTabCustomers" style="display:none;">
+    <div class="admin-search">
+      <input type="text" id="customerSearchInput" placeholder="🔍 Search naam, email, phone..." oninput="filterCustomers()"/>
+    </div>
+    <div id="adminCustomers" style="padding-top:8px;padding-bottom:30px;"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bnav">
+  <button class="bitem" id="btn-home" onclick="showPage('home')">
+    <div class="bbar"></div>
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    Home
+  </button>
+  <button class="bitem" id="btn-cart" onclick="showPage('cart')">
+    <div class="bbar"></div>
+    <span class="cart-nav-wrap">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+    </span>
+    Cart
+  </button>
+  <button class="bitem" id="btn-profile" onclick="showPage('profile')">
+    <div class="bbar"></div>
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Profile
+  </button>
+  <button class="bitem" id="btn-contact" onclick="showPage('contact')">
+    <div class="bbar"></div>
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.39 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+    Contact
+  </button>
+  <button class="bitem" id="btn-settings" onclick="showPage('settings')">
+    <div class="bbar"></div>
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Settings
+  </button>
+</nav>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <div class="mico">🎉</div>
+    <h3>Order Ho Gaya!</h3>
+    <p>Shukriya! Hamari team jald hi <strong>confirm call</strong> karegi. 2–5 din mein delivery.</p>
+    <button class="modal-close" onclick="closeModal()">Theek Hai ✓</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="cart-toast" id="cart-toast"></div>
+
+
+<!-- Firebase SDK with Realtime Database -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getDatabase, ref, push, set, get, update, onValue, query as dbQuery, orderByChild } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAM9KxqeUzCOSZFkrL5DOvXGEAUFBqS3j0",
+  authDomain: "dadiamrit-11950.firebaseapp.com",
+  projectId: "dadiamrit-11950",
+  storageBucket: "dadiamrit-11950.firebasestorage.app",
+  messagingSenderId: "346309731257",
+  appId: "1:346309731257:web:e56570ec095a8626f9cc68",
+  databaseURL: "https://dadiamrit-11950-default-rtdb.firebaseio.com"
+};
+
+const ADMIN_EMAIL    = "admin@dadiamrit.com";
+const ADMIN_PASSWORD = "Admin@DadiAmrit#2024";
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const rtdb = getDatabase(app);
+
+// ── State ──────────────────────────────────────────────────
+var priceMap      = {pain_149:149, hair_199:199, balm_99:99, combo_399:399};
+var currentUser   = null;
+var isAdminLoggedIn = false;
+var cart          = JSON.parse(localStorage.getItem('da_cart') || '[]');
+var allAdminOrders   = [];
+var allCustomers     = [];
+var adminFilter   = 'all';
+var activeAdminTab   = 'orders';
+
+const STATUS_STEPS = ['Pending','Confirmed','Shipped','Out for Delivery','Delivered'];
+
+// ── AUTH STATE ─────────────────────────────────────────────
+onAuthStateChanged(auth, function(user) {
+  document.getElementById('loadingOverlay').classList.add('hide');
+  if (user) {
+    currentUser = user;
+    // Admin check: agar admin email se logged in hai to admin panel
+    if (user.email === ADMIN_EMAIL) {
+      isAdminLoggedIn = true;
+      document.getElementById('adminLoginScreen').classList.remove('show');
+      showPage('admin');
+      loadAdminData();
+    } else {
+      onUserLoggedIn(user);
+    }
+  } else {
+    currentUser   = null;
+    isAdminLoggedIn = false;
+    onUserLoggedOut();
+  }
 });
-var analytics = firebase.analytics();
-var db = firebase.database();
-var ordersRef = db.ref('orders');
 
-// Connection indicator
-db.ref('.info/connected').on('value',function(s){
-  var ok=s.val()===true;
-  document.getElementById('fbDot').style.background=ok?'#27ae60':'#e67e22';
-  document.getElementById('fbLabel').textContent=ok?'🔥 Live':'⚠ Offline';
-  document.getElementById('fbLabel').style.color=ok?'#27ae60':'#e67e22';
-  document.getElementById('fbStatusText').textContent=ok?'Connected — Real-time ON':'Disconnected';
-  document.getElementById('fbStatusDot').style.background=ok?'#27ae60':'#e67e22';
-});
-
-// ---- CART ----
-var cart=[];
-var priceMap={'pain_149':149,'hair_199':199,'balm_99':99,'combo_399':399};
-
-function addToCart(key,name,price,emoji){
-  var ex=cart.find(function(i){return i.key===key;});
-  if(ex){ex.qty++;showToast('➕ '+name+' (×'+ex.qty+')');}
-  else{cart.push({key:key,name:name,price:price,emoji:emoji,qty:1});showToast('🛒 Cart mein add hua!');}
+function onUserLoggedIn(user) {
+  var name = user.displayName || user.email.split('@')[0];
+  document.getElementById('navUserBtn').textContent = '👤 ' + name.split(' ')[0];
+  document.getElementById('profileName').textContent  = user.displayName || 'User';
+  document.getElementById('profileEmail').textContent = user.email;
+  document.getElementById('profileLogoutBtn').style.display = 'inline-block';
+  document.getElementById('profileLoginBtn').style.display  = 'none';
+  document.getElementById('loginWall').style.display   = 'none';
+  document.getElementById('orderForm').style.display   = 'block';
+  if (user.displayName) document.getElementById('naam').value = user.displayName;
+  document.getElementById('authScreen').style.display = 'none';
+  loadMyOrders(user.uid);
+  showPage('home');
   updateCartBadge();
 }
 
-function updateCartBadge(){
-  var total=cart.reduce(function(s,i){return s+i.qty;},0);
-  var b=document.getElementById('cartNavBadge');
-  b.textContent=total; b.style.display=total>0?'block':'none';
+function onUserLoggedOut() {
+  document.getElementById('navUserBtn').textContent = 'Login';
+  document.getElementById('profileName').textContent  = 'Guest User';
+  document.getElementById('profileEmail').textContent = '-';
+  document.getElementById('profileLogoutBtn').style.display = 'none';
+  document.getElementById('profileLoginBtn').style.display  = 'inline-block';
+  document.getElementById('loginWall').style.display   = 'block';
+  document.getElementById('orderForm').style.display   = 'none';
+  document.getElementById('myOrdersBox').innerHTML = '<div style="padding:20px;text-align:center;color:var(--gray);font-size:0.85rem;">Login karein apne orders dekhne ke liye</div>';
+  showPage('home');
+  updateCartBadge();
 }
 
-function renderCart(){
-  var empty=document.getElementById('cartEmpty');
-  var list=document.getElementById('cartItemsList');
-  var footer=document.getElementById('cartFooter');
-  var sub=document.getElementById('cartHeaderSub');
-  if(!cart.length){
-    empty.style.display='flex'; list.innerHTML=''; footer.style.display='none';
-    sub.textContent='0 items'; return;
+// ── AUTH UI ────────────────────────────────────────────────
+window.showAuthScreen = function() { document.getElementById('authScreen').style.display = 'flex'; }
+
+window.switchAuthTab = function(tab) {
+  document.getElementById('tabLogin').classList.toggle('act',  tab==='login');
+  document.getElementById('tabSignup').classList.toggle('act', tab==='signup');
+  document.getElementById('formLogin').style.display  = tab==='login'  ? 'block' : 'none';
+  document.getElementById('formSignup').style.display = tab==='signup' ? 'block' : 'none';
+  document.getElementById('loginErr').textContent  = '';
+  document.getElementById('signupErr').textContent = '';
+}
+
+window.doSignup = async function() {
+  var name  = document.getElementById('signupName').value.trim();
+  var phone = document.getElementById('signupPhone').value.trim();
+  var email = document.getElementById('signupEmail').value.trim();
+  var pass  = document.getElementById('signupPass').value;
+  var errEl = document.getElementById('signupErr');
+  var btn   = document.getElementById('signupBtn');
+
+  if (!name||!phone||!email||!pass){errEl.textContent='Sabhi fields bharein';return;}
+  if (phone.length!==10){errEl.textContent='Phone 10 digit ka hona chahiye';return;}
+  if (pass.length<6){errEl.textContent='Password min 6 characters';return;}
+
+  btn.disabled=true; btn.textContent='Account ban raha hai...';
+  try {
+    var cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, {displayName: name});
+    // Save user in Realtime DB
+    await set(ref(rtdb, 'users/' + cred.user.uid), {
+      name: name, phone: phone, email: email,
+      createdAt: Date.now(), totalOrders: 0, totalSpent: 0
+    });
+    document.getElementById('profilePhone').textContent = '📱 ' + phone;
+    showToast('✅ Welcome ' + name + '!');
+  } catch(e) {
+    errEl.textContent = e.code==='auth/email-already-in-use' ? 'Email pehle se registered hai' : e.message;
   }
-  empty.style.display='none'; footer.style.display='block';
-  var tot=cart.reduce(function(s,i){return s+i.qty;},0);
-  var amt=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
-  sub.textContent=tot+' item'+(tot>1?'s':'');
-  document.getElementById('cartTotalAmt').textContent='₹'+amt;
-  var h='';
-  cart.forEach(function(item,idx){
-    h+='<div class="cart-item">';
-    h+='<div class="ci-emoji">'+item.emoji+'</div>';
-    h+='<div class="ci-info"><div class="ci-name">'+escHtml(item.name)+'</div>';
-    h+='<div class="ci-price">₹'+item.price+' × '+item.qty+' = ₹'+(item.price*item.qty)+'</div>';
-    h+='<div class="ci-qty"><button class="qty-btn" onclick="changeQty('+idx+',-1)">−</button>';
-    h+='<span class="qty-num">'+item.qty+'</span>';
-    h+='<button class="qty-btn" onclick="changeQty('+idx+',1)">+</button></div></div>';
-    h+='<button class="ci-remove" onclick="removeFromCart('+idx+')">🗑</button></div>';
-  });
-  list.innerHTML=h;
+  btn.disabled=false; btn.textContent='✅ Account Banayein';
 }
 
-function changeQty(idx,d){cart[idx].qty+=d;if(cart[idx].qty<=0)cart.splice(idx,1);updateCartBadge();renderCart();}
-function removeFromCart(idx){cart.splice(idx,1);updateCartBadge();renderCart();}
+window.doLogin = async function() {
+  var email = document.getElementById('loginEmail').value.trim();
+  var pass  = document.getElementById('loginPass').value;
+  var errEl = document.getElementById('loginErr');
+  var btn   = document.getElementById('loginBtn');
 
-function checkoutFromCart(){
-  if(!cart.length)return;
+  if (!email||!pass){errEl.textContent='Email aur password daalein';return;}
+  btn.disabled=true; btn.textContent='Login ho raha hai...';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    showToast('✅ Login ho gaya!');
+  } catch(e) {
+    errEl.textContent = e.code==='auth/invalid-credential' ? 'Email ya password galat hai' : e.message;
+  }
+  btn.disabled=false; btn.textContent='🔐 Login Karein';
+}
+
+window.doLogout = async function() {
+  await signOut(auth);
+  showToast('Logout ho gaye');
+}
+
+window.continueAsGuest = function() { document.getElementById('authScreen').style.display='none'; }
+window.navUserClick    = function() { currentUser ? showPage('profile') : showAuthScreen(); }
+
+// ── ADMIN LOGIN ────────────────────────────────────────────
+window.openAdminLogin  = function() { document.getElementById('adminLoginScreen').classList.add('show'); }
+window.closeAdminLogin = function() {
+  document.getElementById('adminLoginScreen').classList.remove('show');
+  document.getElementById('adminLoginErr').textContent='';
+}
+
+window.doAdminLogin = async function() {
+  var email = document.getElementById('adminEmail').value.trim();
+  var pass  = document.getElementById('adminPass').value;
+  var errEl = document.getElementById('adminLoginErr');
+
+  if (email !== ADMIN_EMAIL){errEl.textContent='Admin email galat hai';return;}
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    // onAuthStateChanged will handle the rest
+  } catch(e) {
+    if (e.code==='auth/invalid-credential') {
+      try {
+        await createUserWithEmailAndPassword(auth, email, pass);
+        showToast('🛡️ Admin account ban gaya!');
+      } catch(e2){ errEl.textContent='Error: '+e2.message; }
+    } else { errEl.textContent='Password galat hai'; }
+  }
+}
+
+window.adminLogout = async function() {
+  isAdminLoggedIn = false;
+  await signOut(auth);
+  showPage('settings');
+  showToast('Admin logout ho gaye');
+}
+
+// ── ADMIN TABS ─────────────────────────────────────────────
+window.switchAdminTab = function(tab) {
+  activeAdminTab = tab;
+  document.getElementById('atab-orders').classList.toggle('act',    tab==='orders');
+  document.getElementById('atab-customers').classList.toggle('act', tab==='customers');
+  document.getElementById('adminTabOrders').style.display    = tab==='orders'    ? 'block' : 'none';
+  document.getElementById('adminTabCustomers').style.display = tab==='customers' ? 'block' : 'none';
+  if (tab==='customers') renderCustomers(allCustomers);
+}
+
+// ── LOAD ADMIN DATA (Realtime DB) ──────────────────────────
+function loadAdminData() {
+  document.getElementById('adminOrders').innerHTML = '<div class="no-orders">⏳ Orders load ho rahe hain...</div>';
+  document.getElementById('adminWelcomeText').textContent = ADMIN_EMAIL + ' ka panel';
+
+  // Live listener for orders
+  onValue(ref(rtdb, 'orders'), function(snap) {
+    allAdminOrders = [];
+    var totalRev = 0, pendingCount = 0;
+    if (snap.exists()) {
+      snap.forEach(function(child) {
+        var o = child.val();
+        o._id = child.key;
+        allAdminOrders.push(o);
+        totalRev += (o.total || 0);
+        if (!o.status || o.status==='Pending') pendingCount++;
+      });
+      // Sort newest first
+      allAdminOrders.sort(function(a,b){ return (b.createdAt||0)-(a.createdAt||0); });
+    }
+    document.getElementById('statTotal').textContent   = allAdminOrders.length;
+    document.getElementById('statRevenue').textContent = '₹' + totalRev;
+    document.getElementById('statPending').textContent = pendingCount;
+    filterAdminOrders();
+  });
+
+  // Live listener for customers/users
+  onValue(ref(rtdb, 'users'), function(snap) {
+    allCustomers = [];
+    if (snap.exists()) {
+      snap.forEach(function(child) {
+        var u = child.val();
+        u._uid = child.key;
+        allCustomers.push(u);
+      });
+    }
+    document.getElementById('statCustomers').textContent = allCustomers.length;
+    if (activeAdminTab==='customers') renderCustomers(allCustomers);
+  });
+}
+
+function renderAdminOrders(orders) {
+  var container = document.getElementById('adminOrders');
+  if (!orders.length){container.innerHTML='<div class="no-orders">📭 Koi order nahi mila</div>';return;}
+  var h = '';
+  orders.forEach(function(o) {
+    var date  = o.createdAt ? new Date(o.createdAt).toLocaleString('en-IN') : '-';
+    var st    = o.status || 'Pending';
+    var stKey = st.toLowerCase().replace(/ /g,'-');
+    h += '<div class="order-item">';
+    h += '<div class="o-top"><div>';
+    h += '<div class="o-id">Order #'+(o._id||'').slice(-6).toUpperCase()+'</div>';
+    h += '<div class="o-name">'+o.naam+' — '+o.phone+'</div>';
+    h += '<div style="font-size:0.72rem;color:var(--subtext);">'+o.userEmail+'</div>';
+    h += '</div><div class="o-amt">₹'+o.total+'</div></div>';
+    h += '<div class="o-detail">🛍 '+o.product+'</div>';
+    h += '<div class="o-detail">📍 '+o.address+', '+o.city+' – '+o.pincode+'</div>';
+    h += '<div class="o-detail">💳 '+o.payment+' | 🕐 '+date+'</div>';
+    // Status tracker bar
+    h += buildTrackerHTML(st);
+    h += '<div class="o-bottom">';
+    h += '<span class="o-status '+stKey+'">'+st+'</span>';
+    h += '<select class="status-select" onchange="updateOrderStatus(\''+o._id+'\',this.value)">';
+    ['Pending','Confirmed','Shipped','Out for Delivery','Delivered','Cancelled'].forEach(function(s){
+      h += '<option value="'+s+'"'+(st===s?' selected':'')+'>'+s+'</option>';
+    });
+    h += '</select></div></div>';
+  });
+  container.innerHTML = h;
+}
+
+function buildTrackerHTML(currentStatus) {
+  if (currentStatus === 'Cancelled') {
+    return '<div style="font-size:0.75rem;color:#c62828;margin:8px 0;font-weight:600;">❌ Order Cancelled</div>';
+  }
+  var idx = STATUS_STEPS.indexOf(currentStatus);
+  var h = '<div class="order-tracker">';
+  STATUS_STEPS.forEach(function(s, i) {
+    var cls = i < idx ? 'done' : i === idx ? 'active' : '';
+    var icon = i < idx ? '✓' : i===0?'🕐':i===1?'✅':i===2?'🚚':i===3?'🛵':'🎉';
+    h += '<div class="tracker-step">';
+    h += '<div class="tracker-dot '+cls+'">'+icon+'</div>';
+    h += '<div class="tracker-label '+cls+'">'+s+'</div>';
+    h += '</div>';
+    if (i < STATUS_STEPS.length-1) {
+      h += '<div class="tracker-line '+(i<idx?'done':'')+'"></div>';
+    }
+  });
+  h += '</div>';
+  return h;
+}
+
+window.updateOrderStatus = async function(orderId, newStatus) {
+  try {
+    await update(ref(rtdb, 'orders/'+orderId), {status: newStatus});
+    showToast('✅ Status → ' + newStatus);
+  } catch(e) {
+    showToast('❌ Update nahi ho saka: '+e.message);
+  }
+}
+
+window.setAdminFilter = function(filter, btn) {
+  adminFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('act');});
+  btn.classList.add('act');
+  filterAdminOrders();
+}
+
+window.filterAdminOrders = function() {
+  var search = (document.getElementById('adminSearchInput')||{value:''}).value.toLowerCase();
+  var filtered = allAdminOrders.filter(function(o) {
+    var st = o.status||'Pending';
+    var matchFilter = adminFilter==='all' || st===adminFilter;
+    var matchSearch = !search ||
+      (o.naam||'').toLowerCase().includes(search) ||
+      (o.phone||'').includes(search) ||
+      (o.product||'').toLowerCase().includes(search) ||
+      (o.userEmail||'').toLowerCase().includes(search);
+    return matchFilter && matchSearch;
+  });
+  renderAdminOrders(filtered);
+}
+
+// ── CUSTOMERS ─────────────────────────────────────────────
+function renderCustomers(list) {
+  var container = document.getElementById('adminCustomers');
+  if (!list.length){container.innerHTML='<div class="no-orders">👥 Koi customer nahi abhi tak</div>';return;}
+  var h = '';
+  list.forEach(function(u) {
+    // Count this customer's orders
+    var userOrders = allAdminOrders.filter(function(o){return o.uid===u._uid;});
+    var spent = userOrders.reduce(function(s,o){return s+(o.total||0);},0);
+    h += '<div class="customer-card">';
+    h += '<div class="cust-top">';
+    h += '<div class="cust-avatar">👤</div>';
+    h += '<div><div class="cust-name">'+(u.name||'—')+'</div>';
+    h += '<div class="cust-detail">📧 '+(u.email||'—')+'</div>';
+    h += '<div class="cust-detail">📱 '+(u.phone||'—')+'</div></div></div>';
+    h += '<div class="cust-stats">';
+    h += '<div class="cust-stat"><div class="cust-stat-n">'+userOrders.length+'</div><div class="cust-stat-l">Orders</div></div>';
+    h += '<div class="cust-stat"><div class="cust-stat-n">₹'+spent+'</div><div class="cust-stat-l">Total Spent</div></div>';
+    if (u.createdAt){
+      h += '<div class="cust-stat"><div class="cust-stat-n">'+new Date(u.createdAt).toLocaleDateString('en-IN')+'</div><div class="cust-stat-l">Joined</div></div>';
+    }
+    h += '</div></div>';
+  });
+  container.innerHTML = h;
+}
+
+window.filterCustomers = function() {
+  var s = (document.getElementById('customerSearchInput')||{value:''}).value.toLowerCase();
+  var filtered = s ? allCustomers.filter(function(u){
+    return (u.name||'').toLowerCase().includes(s) ||
+           (u.email||'').toLowerCase().includes(s) ||
+           (u.phone||'').includes(s);
+  }) : allCustomers;
+  renderCustomers(filtered);
+}
+
+// ── PLACE ORDER (Realtime DB) ──────────────────────────────
+window.placeOrder = async function(e) {
+  e.preventDefault();
+  if (!currentUser){showAuthScreen();return;}
+  var btn = document.getElementById('submitBtn');
+  btn.disabled=true; btn.textContent='Order bheja ja raha hai...';
+
+  var naam          = document.getElementById('naam').value;
+  var phone         = document.getElementById('phone').value;
+  var address       = document.getElementById('address').value;
+  var city          = document.getElementById('city').value;
+  var pincode       = document.getElementById('pincode').value;
+  var productSelect = document.getElementById('product');
+  var productText   = productSelect.options[productSelect.selectedIndex].text;
+  var productRawVal = productSelect.value;
+  var paymentSelect = document.getElementById('payment');
+  var paymentText   = paymentSelect.options[paymentSelect.selectedIndex].text;
+
+  try {
+    var orderRef = push(ref(rtdb, 'orders'));
+    await set(orderRef, {
+      uid:         currentUser.uid,
+      userEmail:   currentUser.email,
+      userName:    currentUser.displayName || naam,
+      naam:        naam,
+      phone:       phone,
+      address:     address,
+      city:        city,
+      pincode:     pincode,
+      product:     productText,
+      productId:   productRawVal,
+      payment:     paymentText,
+      total:       priceMap[productRawVal] || 0,
+      status:      'Pending',
+      createdAt:   Date.now()
+    });
+
+    // Update user's stats
+    var userSnap = await get(ref(rtdb, 'users/'+currentUser.uid));
+    if (userSnap.exists()) {
+      var ud = userSnap.val();
+      await update(ref(rtdb, 'users/'+currentUser.uid), {
+        totalOrders: (ud.totalOrders||0) + 1,
+        totalSpent:  (ud.totalSpent||0) + (priceMap[productRawVal]||0)
+      });
+    }
+
+    // Also send to Google Sheet
+    var fd = new FormData();
+    fd.append('NAAM',naam); fd.append('PHONE',phone);
+    fd.append('ADDRESS',address); fd.append('SHEHER',city);
+    fd.append('PINCODE',pincode); fd.append('PRODUCT',productText);
+    fd.append('PAYMENT',paymentText);
+    fetch('https://script.google.com/macros/s/AKfycby_eBics5oM9m60KcGF4gA-NSeSGfvnxXa77eVku8Nffi3aH_S9P5WUnKU0dEadWf8y/exec',
+      {method:'POST',body:fd,mode:'no-cors'}).catch(function(){});
+
+    btn.disabled=false; btn.textContent='🛒 Abhi Order Karein';
+    document.querySelector('.oform').reset();
+    document.getElementById('totalAmt').textContent='—';
+    document.getElementById('modal').classList.add('show');
+    loadMyOrders(currentUser.uid);
+
+  } catch(err) {
+    alert('Order nahi gaya: '+err.message);
+    btn.disabled=false; btn.textContent='🛒 Abhi Order Karein';
+  }
+}
+
+// ── MY ORDERS (customer side with tracker) ─────────────────
+async function loadMyOrders(uid) {
+  var box = document.getElementById('myOrdersBox');
+  try {
+    var snap = await get(ref(rtdb, 'orders'));
+    if (!snap.exists()){
+      box.innerHTML='<div style="padding:20px;text-align:center;color:var(--gray);font-size:0.85rem;">📦 Koi order nahi abhi tak</div>';
+      return;
+    }
+    var myOrders = [];
+    snap.forEach(function(child){
+      var o = child.val(); o._id = child.key;
+      if (o.uid===uid) myOrders.push(o);
+    });
+    myOrders.sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0);});
+    if (!myOrders.length){
+      box.innerHTML='<div style="padding:20px;text-align:center;color:var(--gray);font-size:0.85rem;">📦 Koi order nahi abhi tak</div>';
+      return;
+    }
+    var h = '';
+    myOrders.forEach(function(o){
+      var date = o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-IN') : '-';
+      var st = o.status||'Pending';
+      h += '<div class="my-order-item">';
+      h += '<div class="mo-product">'+o.product+'</div>';
+      h += '<div class="mo-detail">💰 ₹'+o.total+' | 💳 '+o.payment+' | 📅 '+date+'</div>';
+      h += buildTrackerHTML(st);
+      h += '</div>';
+    });
+    box.innerHTML = h;
+  } catch(e) {
+    box.innerHTML='<div style="padding:20px;text-align:center;color:var(--gray);">Orders load nahi ho sake</div>';
+  }
+}
+
+// ── CART ───────────────────────────────────────────────────
+window.addToCart = function(id, name, emoji, price) {
+  var ex = cart.find(function(i){return i.id===id;});
+  if (ex) ex.qty+=1;
+  else cart.push({id:id,name:name,emoji:emoji,price:price,qty:1});
+  localStorage.setItem('da_cart', JSON.stringify(cart));
+  updateCartBadge();
+  showToast('✓ '+name+' cart mein add hua!');
+}
+
+window.removeFromCart = function(id) {
+  cart = cart.filter(function(i){return i.id!==id;});
+  localStorage.setItem('da_cart',JSON.stringify(cart));
+  updateCartBadge(); renderCart();
+}
+
+window.changeQty = function(id, delta) {
+  var item = cart.find(function(i){return i.id===id;});
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty<=0){window.removeFromCart(id);return;}
+  localStorage.setItem('da_cart',JSON.stringify(cart));
+  updateCartBadge(); renderCart();
+}
+
+function updateCartBadge() {
+  var total = cart.reduce(function(s,i){return s+i.qty;},0);
+  var badge = document.getElementById('cart-badge');
+  if (total>0){badge.style.display='flex';badge.textContent=total>9?'9+':total;}
+  else badge.style.display='none';
+}
+
+function renderCart() {
+  var empty     = document.getElementById('cart-empty');
+  var filled    = document.getElementById('cart-filled');
+  var countText = document.getElementById('cart-count-text');
+  var container = document.getElementById('cart-items-container');
+  if (!cart.length){empty.style.display='flex';filled.style.display='none';countText.textContent='Cart khali hai';return;}
+  empty.style.display='none'; filled.style.display='block';
+  var tq = cart.reduce(function(s,i){return s+i.qty;},0);
+  var ta = cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+  countText.textContent=tq+' item'+(tq>1?'s':'')+' cart mein';
+  document.getElementById('cart-items-count').textContent=tq+' item'+(tq>1?'s':'');
+  document.getElementById('cart-total-price').textContent='₹'+ta;
+  var html='';
+  cart.forEach(function(item){
+    html+='<div class="cart-item">';
+    html+='<div class="cart-item-emoji">'+item.emoji+'</div>';
+    html+='<div class="cart-item-info">';
+    html+='<div class="cart-item-name">'+item.name+'</div>';
+    html+='<div class="cart-item-price">₹'+(item.price*item.qty)+'</div>';
+    html+='<div class="cart-item-qty">';
+    html+='<button class="qty-btn" onclick="changeQty(\''+item.id+'\',-1)">−</button>';
+    html+='<span class="qty-num">'+item.qty+'</span>';
+    html+='<button class="qty-btn" onclick="changeQty(\''+item.id+'\',1)">+</button>';
+    html+='</div></div>';
+    html+='<button class="cart-remove" onclick="removeFromCart(\''+item.id+'\')">🗑</button>';
+    html+='</div>';
+  });
+  container.innerHTML=html;
+}
+
+window.cartCheckout = function() {
+  if (!currentUser){showAuthScreen();return;}
   showPage('home');
   setTimeout(function(){
     document.getElementById('order-sec').scrollIntoView({behavior:'smooth'});
-    document.getElementById('product').value=cart[0].key;
-    calcPrice();
+    if (cart.length===1){document.getElementById('product').value=cart[0].id;calcPrice();}
   },200);
-  showToast('Form bharein aur order karein 👇');
 }
 
-// ---- NAVIGATION ----
-var adminListenerActive=false;
-
-function showPage(name){
+// ── PAGE NAV ───────────────────────────────────────────────
+window.showPage = function(name) {
+  if (name==='admin' && !isAdminLoggedIn){openAdminLogin();return;}
   document.querySelectorAll('.page').forEach(function(p){p.style.display='none';});
   document.getElementById('page-'+name).style.display='block';
   document.querySelectorAll('.bitem').forEach(function(b){b.classList.remove('active');});
   var nb=document.getElementById('btn-'+name);
-  if(nb) nb.classList.add('active');
-  if(name==='cart') renderCart();
-  if(name==='admin') setupAdminListener();
-  if(name==='orderhistory') renderOrderHistory();
+  if (nb) nb.classList.add('active');
+  if (name==='cart')    renderCart();
+  if (name==='admin' && isAdminLoggedIn) loadAdminData();
+  if (name==='profile' && currentUser)   loadMyOrders(currentUser.uid);
   window.scrollTo(0,0);
 }
 
-window.onload=function(){showPage('home');};
-
-// ---- ORDER FORM ----
-function goOrder(type){
+window.goOrder = function(type) {
   showPage('home');
   setTimeout(function(){
     document.getElementById('order-sec').scrollIntoView({behavior:'smooth'});
-    var map={pain:'pain_149',hair:'hair_199',balm:'balm_99',combo:'combo_399'};
-    if(map[type]){document.getElementById('product').value=map[type];calcPrice();}
+    var map={pain:'pain_149',hair:'hair_199',balm:'balm_99'};
+    if (map[type]){document.getElementById('product').value=map[type];calcPrice();}
   },200);
 }
 
-function calcPrice(){
+window.calcPrice = function() {
   var v=document.getElementById('product').value;
   document.getElementById('totalAmt').textContent=priceMap[v]?'₹'+priceMap[v]:'—';
 }
 
-function placeOrder(e){
-  e.preventDefault();
-  var btn=document.getElementById('submitBtn');
-  btn.disabled=true; btn.textContent='⏳ Bheja ja raha hai...';
-  var naam=document.getElementById('naam').value.trim();
-  var phone=document.getElementById('phone').value.trim();
-  var address=document.getElementById('address').value.trim();
-  var city=document.getElementById('city').value.trim();
-  var pincode=document.getElementById('pincode').value.trim();
-  var pSel=document.getElementById('product');
-  var productText=pSel.options[pSel.selectedIndex].text;
-  var productKey=pSel.value;
-  var paySel=document.getElementById('payment');
-  var paymentText=paySel.options[paySel.selectedIndex].text;
+window.closeModal = function(){document.getElementById('modal').classList.remove('show');}
 
-  var orderData={naam:naam,phone:phone,address:address,city:city,pincode:pincode,
-    product:productText,productKey:productKey,payment:paymentText,
-    total:priceMap[productKey]||0,status:'Pending',
-    timestamp:firebase.database.ServerValue.TIMESTAMP,
-    timeStr:new Date().toLocaleString('hi-IN')};
-
-  // Google Sheet
-  var fd=new FormData();
-  fd.append('NAAM',naam);fd.append('PHONE',phone);fd.append('ADDRESS',address);
-  fd.append('SHEHER',city);fd.append('PINCODE',pincode);fd.append('PRODUCT',productText);fd.append('PAYMENT',paymentText);
-  fetch('https://script.google.com/macros/s/AKfycby_eBics5oM9m60KcGF4gA-NSeSGfvnxXa77eVku8Nffi3aH_S9P5WUnKU0dEadWf8y/exec',{method:'POST',body:fd,mode:'no-cors'}).catch(function(){});
-
-  ordersRef.push(orderData).then(function(ref){
-    var hist=JSON.parse(localStorage.getItem('da_history')||'[]');
-    hist.unshift({id:ref.key,naam:naam,phone:phone,product:productText,total:orderData.total,time:orderData.timeStr,status:'Pending'});
-    localStorage.setItem('da_history',JSON.stringify(hist));
-    btn.disabled=false; btn.textContent='🛒 Abhi Order Karein';
-    document.querySelector('.oform').reset();
-    document.getElementById('totalAmt').textContent='—';
-    cart=[]; updateCartBadge();
-    document.getElementById('modal').classList.add('show');
-    analytics.logEvent('purchase',{value:orderData.total,currency:'INR'});
-  }).catch(function(err){
-    alert('❌ Order nahi gaya: '+err.message);
-    btn.disabled=false; btn.textContent='🛒 Abhi Order Karein';
-  });
-}
-
-function closeModal(){document.getElementById('modal').classList.remove('show');}
-
-// ---- ORDER HISTORY ----
-function renderOrderHistory(){
-  var hist=JSON.parse(localStorage.getItem('da_history')||'[]');
-  var c=document.getElementById('orderHistoryList');
-  if(!hist.length){
-    c.innerHTML='<div class="no-orders">📭 Abhi koi order nahi hai<br><br><button class="green-btn" onclick="showPage(\'home\')" style="margin-top:10px">Shopping Karein</button></div>';
-    return;
-  }
-  var h='';
-  hist.forEach(function(o){
-    h+='<div class="hist-item"><div class="o-name">'+escHtml(o.product)+'</div>';
-    h+='<div class="o-detail">👤 '+escHtml(o.naam)+' | 📞 '+escHtml(o.phone)+'</div>';
-    h+='<div class="o-detail">💰 ₹'+o.total+' | 🕐 '+escHtml(o.time)+'</div>';
-    h+='<span class="o-status">'+escHtml(o.status||'Pending')+'</span></div>';
-  });
-  c.innerHTML=h;
-}
-
-// ---- ADMIN ----
-function setupAdminListener(){
-  if(adminListenerActive) return;
-  adminListenerActive=true;
-  document.getElementById('adminOrders').innerHTML='<div class="admin-loading"><div class="spinner"></div><br>Load ho raha hai...</div>';
-  ordersRef.orderByChild('timestamp').on('value',function(snap){
-    renderAdminOrders(snap);
-  },function(err){
-    document.getElementById('adminOrders').innerHTML='<div class="no-orders">⚠️ '+err.message+'</div>';
-  });
-}
-
-function renderAdminOrders(snapshot){
-  var c=document.getElementById('adminOrders');
-  if(!snapshot.exists()){
-    c.innerHTML='<div class="no-orders">📭 Abhi koi order nahi hai</div>';
-    document.getElementById('orderCountLabel').textContent=''; return;
-  }
-  var orders=[];
-  snapshot.forEach(function(child){var o=child.val();o._key=child.key;orders.push(o);});
-  orders.reverse();
-  document.getElementById('orderCountLabel').textContent='Total: '+orders.length+' orders';
-  var h='';
-  orders.forEach(function(o){
-    var sc=o.status==='Delivered'?'#27ae60':o.status==='Cancelled'?'#c0392b':'var(--saffron)';
-    var t=o.timeStr||(o.timestamp?new Date(o.timestamp).toLocaleString('hi-IN'):'—');
-    h+='<div class="order-item">';
-    h+='<div class="o-name">'+escHtml(o.naam)+' — '+escHtml(o.phone)+'</div>';
-    h+='<div class="o-detail">📍 '+escHtml(o.address)+', '+escHtml(o.city)+' - '+escHtml(o.pincode)+'</div>';
-    h+='<div class="o-detail">🛍 '+escHtml(o.product)+' | 💳 '+escHtml(o.payment)+' | 💰 ₹'+o.total+'</div>';
-    h+='<div class="o-detail">🕐 '+escHtml(t)+'</div>';
-    h+='<div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;">';
-    h+='<span class="o-status" style="color:'+sc+'">'+escHtml(o.status||'Pending')+'</span>';
-    h+='<button onclick="updateStatus(\''+o._key+'\',\'Delivered\')" style="background:#27ae60;color:white;border:none;padding:3px 10px;border-radius:8px;font-size:0.68rem;cursor:pointer;font-family:Poppins,sans-serif">✓ Delivered</button>';
-    h+='<button onclick="updateStatus(\''+o._key+'\',\'Cancelled\')" style="background:#c0392b;color:white;border:none;padding:3px 10px;border-radius:8px;font-size:0.68rem;cursor:pointer;font-family:Poppins,sans-serif">✗ Cancel</button>';
-    h+='<button onclick="deleteOrder(\''+o._key+'\')" style="background:#888;color:white;border:none;padding:3px 10px;border-radius:8px;font-size:0.68rem;cursor:pointer;font-family:Poppins,sans-serif">🗑</button>';
-    h+='</div></div>';
-  });
-  c.innerHTML=h;
-}
-
-function updateStatus(key,status){db.ref('orders/'+key+'/status').set(status).catch(function(e){alert(e.message);});}
-function deleteOrder(key){if(!confirm('Delete karein?'))return;db.ref('orders/'+key).remove().catch(function(e){alert(e.message);});}
-function clearAllOrders(){if(!confirm('Saare orders delete karein?'))return;ordersRef.remove().catch(function(e){alert(e.message);});}
-
-// ---- TOAST ----
-var toastT;
-function showToast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  clearTimeout(toastT);
-  toastT=setTimeout(function(){t.classList.remove('show');},2200);
-}
-
-// ---- UI ----
-function toggleDark(){
+window.toggleDark = function() {
   var btn=document.getElementById('darkBtn');
   btn.classList.toggle('on');
   var on=btn.classList.contains('on');
   document.getElementById('htmlRoot').classList.toggle('dark',on);
   document.getElementById('darkDesc').textContent=on?'Enabled':'Disabled';
 }
-function setLang(l){
+
+window.setLang = function(l) {
   document.getElementById('lEn').classList.toggle('act',l==='en');
   document.getElementById('lHi').classList.toggle('act',l==='hi');
 }
-function escHtml(str){
-  if(!str&&str!==0)return'';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function showToast(msg) {
+  var t=document.getElementById('cart-toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2500);
 }
+
+window.updateCartBadge = updateCartBadge;
 </script>
 </body>
 </html>
