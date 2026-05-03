@@ -947,6 +947,7 @@ window.doLogin = async function() {
 }
 
 window.doLogout = async function() {
+  if (myOrdersListener) { myOrdersListener(); myOrdersListener = null; }
   await signOut(auth);
   showToast('Logout ho gaye');
 }
@@ -1224,39 +1225,57 @@ window.placeOrder = async function(e) {
   }
 }
 
-// ── MY ORDERS (customer side with tracker) ─────────────────
-async function loadMyOrders(uid) {
+// ── MY ORDERS (customer side — live listener) ──────────────
+var myOrdersListener = null;
+
+function loadMyOrders(uid) {
   var box = document.getElementById('myOrdersBox');
-  try {
-    var snap = await get(ref(rtdb, 'orders'));
-    if (!snap.exists()){
-      box.innerHTML='<div style="padding:20px;text-align:center;color:var(--gray);font-size:0.85rem;">📦 Koi order nahi abhi tak</div>';
-      return;
-    }
+  box.innerHTML = '<div style="padding:20px;text-align:center;color:var(--gray);font-size:0.85rem;">⏳ Orders load ho rahe hain...</div>';
+
+  // Remove previous listener if any
+  if (myOrdersListener) { myOrdersListener(); myOrdersListener = null; }
+
+  // Live listener — updates automatically when admin changes status
+  myOrdersListener = onValue(ref(rtdb, 'orders'), function(snap) {
     var myOrders = [];
-    snap.forEach(function(child){
-      var o = child.val(); o._id = child.key;
-      if (o.uid===uid) myOrders.push(o);
-    });
-    myOrders.sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0);});
-    if (!myOrders.length){
-      box.innerHTML='<div style="padding:20px;text-align:center;color:var(--gray);font-size:0.85rem;">📦 Koi order nahi abhi tak</div>';
+    if (snap.exists()) {
+      snap.forEach(function(child) {
+        var o = child.val();
+        o._id = child.key;
+        // Match by uid OR by email (fallback for older orders)
+        if (o.uid === uid || o.userEmail === (currentUser && currentUser.email)) {
+          myOrders.push(o);
+        }
+      });
+    }
+    myOrders.sort(function(a,b){ return (b.createdAt||0)-(a.createdAt||0); });
+
+    if (!myOrders.length) {
+      box.innerHTML = '<div style="padding:20px;text-align:center;color:var(--gray);font-size:0.85rem;">📦 Koi order nahi abhi tak<br><span style="font-size:0.72rem;">Order karein aur yahan track karein</span></div>';
       return;
     }
+
     var h = '';
-    myOrders.forEach(function(o){
+    myOrders.forEach(function(o) {
       var date = o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-IN') : '-';
-      var st = o.status||'Pending';
+      var st   = o.status || 'Pending';
+      var stKey = st.toLowerCase().replace(/ /g,'-');
       h += '<div class="my-order-item">';
+      h += '<div style="display:flex;justify-content:space-between;align-items:flex-start;">';
       h += '<div class="mo-product">'+o.product+'</div>';
-      h += '<div class="mo-detail">💰 ₹'+o.total+' | 💳 '+o.payment+' | 📅 '+date+'</div>';
+      h += '<span class="o-status '+stKey+'" style="font-size:0.65rem;padding:3px 9px;">'+st+'</span>';
+      h += '</div>';
+      h += '<div class="mo-detail">💰 ₹'+o.total+' | 💳 '+o.payment+'</div>';
+      h += '<div class="mo-detail">📅 '+date+'</div>';
       h += buildTrackerHTML(st);
       h += '</div>';
     });
     box.innerHTML = h;
-  } catch(e) {
-    box.innerHTML='<div style="padding:20px;text-align:center;color:var(--gray);">Orders load nahi ho sake</div>';
-  }
+  }, function(err) {
+    // Permission error — try fallback with just email match from localStorage
+    box.innerHTML = '<div style="padding:20px;text-align:center;color:#e53935;font-size:0.82rem;">❌ Orders load nahi ho sake.<br>Firebase Rules check karein.</div>';
+    console.error('loadMyOrders error:', err.message);
+  });
 }
 
 // ── CART ───────────────────────────────────────────────────
