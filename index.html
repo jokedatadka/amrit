@@ -502,7 +502,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
     <div class="sec-sub">Ghar baithke mangwaao</div>
 
     <!-- Login Wall (guest ke liye) -->
-    <div class="login-wall" id="loginWall" style="display:none;">
+    <div class="login-wall" id="loginWall" style="display:block;">
       <h3>🔐 Pehle Login Karein</h3>
       <p>Order karne ke liye account banana zaroori hai.<br>Isse aap apne orders track kar sakte hain.</p>
       <button class="login-wall-btn" onclick="showAuthScreen()">Login / Sign Up Karein</button>
@@ -579,7 +579,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
       <div class="psub" id="profileEmail">-</div>
       <div class="psub" id="profilePhone" style="margin-top:2px;"></div>
       <button class="logout-btn" id="profileLogoutBtn" onclick="doLogout()" style="display:none;">Logout</button>
-      <button class="green-btn" id="profileLoginBtn" onclick="showAuthScreen()" style="margin-top:12px;display:none;">Login / Sign Up</button>
+      <button class="green-btn" id="profileLoginBtn" onclick="showAuthScreen()" style="margin-top:12px;display:inline-block;">Login / Sign Up</button>
     </div>
     <div style="padding:0 16px 8px;"><div class="sec-title" style="padding:0 0 4px;">Mere Orders</div></div>
     <div class="my-orders-box" id="myOrdersBox">
@@ -879,11 +879,13 @@ function onUserLoggedOut() {
   document.getElementById('navUserBtn').textContent = 'Login';
   document.getElementById('profileName').textContent  = 'Guest User';
   document.getElementById('profileEmail').textContent = '-';
+  document.getElementById('profilePhone').textContent = '';
   document.getElementById('profileLogoutBtn').style.display = 'none';
   document.getElementById('profileLoginBtn').style.display  = 'inline-block';
   document.getElementById('loginWall').style.display   = 'block';
   document.getElementById('orderForm').style.display   = 'none';
   document.getElementById('myOrdersBox').innerHTML = '<div style="padding:20px;text-align:center;color:var(--gray);font-size:0.85rem;">Login karein apne orders dekhne ke liye</div>';
+  if (myOrdersListener) { myOrdersListener(); myOrdersListener = null; }
   showPage('home');
   updateCartBadge();
 }
