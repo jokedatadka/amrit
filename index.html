@@ -248,6 +248,18 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
 .cust-stat{background:rgba(26,58,26,0.05);border-radius:8px;padding:6px 12px;text-align:center;}
 .cust-stat-n{font-weight:700;font-size:0.88rem;color:var(--saffron);}
 .cust-stat-l{font-size:0.62rem;color:var(--gray);}
+/* CREDENTIALS TAB */
+.cred-card{background:var(--card);border-radius:14px;padding:16px;margin:0 16px 10px;border:1px solid rgba(200,150,12,0.15);position:relative;}
+.cred-num{position:absolute;top:12px;right:14px;font-size:0.68rem;color:var(--gray);background:rgba(200,150,12,0.1);padding:2px 8px;border-radius:8px;}
+.cred-name{font-weight:700;font-size:0.95rem;color:var(--green);margin-bottom:10px;}
+.cred-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;background:rgba(26,58,26,0.04);border-radius:8px;padding:9px 12px;}
+.cred-label{font-size:0.68rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;width:68px;flex-shrink:0;}
+.cred-value{font-size:0.82rem;color:var(--text);font-family:monospace;flex:1;word-break:break-all;}
+.cred-copy{background:none;border:1px solid rgba(200,150,12,0.25);border-radius:6px;padding:3px 8px;font-size:0.65rem;color:var(--gold);cursor:pointer;font-family:'Poppins',sans-serif;flex-shrink:0;}
+.cred-copy:active{background:var(--gold);color:white;}
+.show-pwd-btn{background:none;border:1px solid rgba(200,150,12,0.25);border-radius:6px;padding:3px 8px;font-size:0.65rem;color:var(--saffron);cursor:pointer;font-family:'Poppins',sans-serif;flex-shrink:0;margin-right:4px;}
+.cred-joined{font-size:0.7rem;color:var(--gray);margin-top:6px;}
+.new-badge{display:inline-block;background:rgba(46,125,50,0.12);color:#2e7d32;font-size:0.6rem;font-weight:700;padding:2px 7px;border-radius:8px;margin-left:6px;vertical-align:middle;}
 /* ORDER TRACKER (customer side) */
 .order-tracker{display:flex;align-items:center;gap:0;margin:10px 0 2px;overflow-x:auto;padding-bottom:4px;}
 .tracker-step{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
@@ -262,11 +274,13 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
 
 /* BOTTOM NAV */
 .bnav{position:fixed;bottom:0;left:0;right:0;z-index:500;background:var(--card);border-top:1px solid rgba(200,150,12,0.15);display:flex;justify-content:space-around;padding:8px 0 10px;box-shadow:0 -3px 16px rgba(0,0,0,0.07);}
-.bitem{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:#bbb;font-size:0.6rem;font-weight:600;text-transform:uppercase;font-family:'Poppins',sans-serif;padding:2px 10px;}
+.bitem{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:#bbb;font-size:0.6rem;font-weight:600;text-transform:uppercase;font-family:'Poppins',sans-serif;padding:2px 10px;transition:color 0.2s;}
 .bitem.active{color:var(--green);}
-.bitem svg{width:22px;height:22px;}
-.bbar{width:18px;height:2.5px;background:var(--green);border-radius:2px;opacity:0;}
+.bitem svg{width:22px;height:22px;stroke:currentColor;transition:stroke 0.2s;}
+.bitem.active svg{stroke:var(--green);}
+.bbar{width:18px;height:2.5px;background:var(--green);border-radius:2px;opacity:0;transition:opacity 0.2s;}
 .bitem.active .bbar{opacity:1;}
+.bitem.active .cart-nav-wrap svg{stroke:var(--green);}
 
 /* MODAL */
 .modal-bg{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;}
@@ -729,6 +743,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
   <div class="admin-tabs-bar">
     <button class="admin-tab-btn act" id="atab-orders" onclick="switchAdminTab('orders')">📦 Orders</button>
     <button class="admin-tab-btn" id="atab-customers" onclick="switchAdminTab('customers')">👥 Customers</button>
+    <button class="admin-tab-btn" id="atab-credentials" onclick="switchAdminTab('credentials')">🔑 Credentials</button>
   </div>
 
   <!-- ORDERS TAB -->
@@ -754,6 +769,19 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);pad
       <input type="text" id="customerSearchInput" placeholder="🔍 Search naam, email, phone..." oninput="filterCustomers()"/>
     </div>
     <div id="adminCustomers" style="padding-top:8px;padding-bottom:30px;"></div>
+  </div>
+
+  <!-- CREDENTIALS TAB -->
+  <div id="adminTabCredentials" style="display:none;">
+    <div style="padding:14px 16px 6px;">
+      <div style="background:rgba(232,113,10,0.08);border:1px solid rgba(232,113,10,0.25);border-radius:10px;padding:10px 14px;font-size:0.75rem;color:var(--saffron);line-height:1.6;">
+        🔒 <strong>Sirf Admin ke liye</strong> — Customer credentials yahan store hain. Kisi se share na karein.
+      </div>
+    </div>
+    <div class="admin-search">
+      <input type="text" id="credSearchInput" placeholder="🔍 Search naam ya email..." oninput="filterCredentials()"/>
+    </div>
+    <div id="adminCredentials" style="padding-top:4px;padding-bottom:30px;"></div>
   </div>
 </div>
 
@@ -994,11 +1022,13 @@ window.adminLogout = async function() {
 // ── ADMIN TABS ─────────────────────────────────────────────
 window.switchAdminTab = function(tab) {
   activeAdminTab = tab;
-  document.getElementById('atab-orders').classList.toggle('act',    tab==='orders');
-  document.getElementById('atab-customers').classList.toggle('act', tab==='customers');
-  document.getElementById('adminTabOrders').style.display    = tab==='orders'    ? 'block' : 'none';
-  document.getElementById('adminTabCustomers').style.display = tab==='customers' ? 'block' : 'none';
-  if (tab==='customers') renderCustomers(allCustomers);
+  ['orders','customers','credentials'].forEach(function(t){
+    document.getElementById('atab-'+t).classList.toggle('act', t===tab);
+    var el = document.getElementById('adminTab'+t.charAt(0).toUpperCase()+t.slice(1));
+    if (el) el.style.display = t===tab ? 'block' : 'none';
+  });
+  if (tab==='customers')    renderCustomers(allCustomers);
+  if (tab==='credentials')  renderCredentials(allCustomers);
 }
 
 // ── LOAD ADMIN DATA (Realtime DB) ──────────────────────────
@@ -1038,7 +1068,8 @@ function loadAdminData() {
       });
     }
     document.getElementById('statCustomers').textContent = allCustomers.length;
-    if (activeAdminTab==='customers') renderCustomers(allCustomers);
+    if (activeAdminTab==='customers')    renderCustomers(allCustomers);
+    if (activeAdminTab==='credentials')  renderCredentials(allCustomers);
   });
 }
 
@@ -1167,6 +1198,81 @@ window.filterCustomers = function() {
            (u.phone||'').includes(s);
   }) : allCustomers;
   renderCustomers(filtered);
+}
+
+// ── CREDENTIALS ────────────────────────────────────────────
+function renderCredentials(list) {
+  var container = document.getElementById('adminCredentials');
+  if (!list.length){
+    container.innerHTML='<div class="no-orders">🔑 Abhi koi registered customer nahi</div>';
+    return;
+  }
+  // Sort newest first
+  var sorted = list.slice().sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0);});
+  var h = '';
+  sorted.forEach(function(u, i) {
+    var uid = u._uid;
+    var isNew = u.createdAt && (Date.now()-u.createdAt) < 86400000; // 24 hrs mein joined
+    var joinDate = u.createdAt ? new Date(u.createdAt).toLocaleString('en-IN') : '-';
+    h += '<div class="cred-card">';
+    h += '<div class="cred-num">#'+(sorted.length - i)+'</div>';
+    h += '<div class="cred-name">👤 '+(u.name||'—')+(isNew?'<span class="new-badge">NEW</span>':'')+'</div>';
+    // Email row
+    h += '<div class="cred-row">';
+    h += '<span class="cred-label">📧 Email</span>';
+    h += '<span class="cred-value" id="email-'+uid+'">'+(u.email||'—')+'</span>';
+    h += '<button class="cred-copy" onclick="copyText(\''+uid+'\',\'email\')">Copy</button>';
+    h += '</div>';
+    // Password row
+    h += '<div class="cred-row">';
+    h += '<span class="cred-label">🔑 Pass</span>';
+    h += '<span class="cred-value" id="cpass-'+uid+'">••••••••</span>';
+    h += '<button class="show-pwd-btn" id="cpwdbtn-'+uid+'" onclick="toggleCredPwd(\''+uid+'\',\''+( u.password||'' )+'\')">Show</button>';
+    h += '<button class="cred-copy" onclick="copyCredPwd(\''+uid+'\',\''+( u.password||'' )+'\')">Copy</button>';
+    h += '</div>';
+    // Phone row
+    h += '<div class="cred-row">';
+    h += '<span class="cred-label">📱 Phone</span>';
+    h += '<span class="cred-value">'+(u.phone||'—')+'</span>';
+    h += '<button class="cred-copy" onclick="navigator.clipboard.writeText(\''+(u.phone||'')+'\')" >Copy</button>';
+    h += '</div>';
+    h += '<div class="cred-joined">🕐 Registered: '+joinDate+'</div>';
+    h += '</div>';
+  });
+  container.innerHTML = h;
+}
+
+window.filterCredentials = function() {
+  var s = (document.getElementById('credSearchInput')||{value:''}).value.toLowerCase();
+  var filtered = s ? allCustomers.filter(function(u){
+    return (u.name||'').toLowerCase().includes(s) ||
+           (u.email||'').toLowerCase().includes(s);
+  }) : allCustomers;
+  renderCredentials(filtered);
+}
+
+window.toggleCredPwd = function(uid, pwd) {
+  var el  = document.getElementById('cpass-'+uid);
+  var btn = document.getElementById('cpwdbtn-'+uid);
+  if (!pwd || pwd.trim()==='') { el.textContent='(not saved)'; btn.textContent='Hide'; return; }
+  if (el.textContent === '••••••••') {
+    el.textContent  = pwd;
+    btn.textContent = 'Hide';
+  } else {
+    el.textContent  = '••••••••';
+    btn.textContent = 'Show';
+  }
+}
+
+window.copyText = function(uid, field) {
+  var el = document.getElementById(field+'-'+uid);
+  if (el) { navigator.clipboard.writeText(el.textContent); showToast('✅ Copied!'); }
+}
+
+window.copyCredPwd = function(uid, pwd) {
+  if (!pwd) { showToast('Password save nahi tha'); return; }
+  navigator.clipboard.writeText(pwd);
+  showToast('✅ Password copied!');
 }
 
 window.togglePwd = function(uid, pwd) {
